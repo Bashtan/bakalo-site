@@ -92,15 +92,6 @@
   #articles { background: var(--paper); min-height: 100vh; align-items: flex-start; padding-top: 8rem; padding-bottom: 5rem; }
   .articles-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
 
-  /* Admin toggle */
-  .admin-toggle-wrap { display: flex; align-items: center; gap: 0.8rem; }
-  .admin-toggle-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-  .toggle-switch { position: relative; width: 40px; height: 22px; cursor: pointer; }
-  .toggle-switch input { opacity: 0; width: 0; height: 0; }
-  .toggle-slider { position: absolute; inset: 0; background: var(--rule); border-radius: 22px; transition: background 0.3s; }
-  .toggle-slider::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform 0.3s; }
-  .toggle-switch input:checked + .toggle-slider { background: var(--gold); }
-  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
 
   .btn-add-article { display: none; align-items: center; gap: 0.6rem; background: var(--ink); color: var(--paper); border: none; padding: 0.85rem 1.8rem; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; }
   .btn-add-article:hover { background: var(--gold); }
@@ -108,11 +99,23 @@
 
   /* Toolbar */
   .articles-toolbar { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
-  .search-input { flex: 1; min-width: 200px; background: var(--cream); border: 1px solid var(--rule); padding: 0.7rem 1.2rem; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--ink); outline: none; transition: border-color 0.3s; }
-  .search-input:focus { border-color: var(--gold); }
-  .search-input::placeholder { color: var(--muted); }
-  .filter-select { background: var(--cream); border: 1px solid var(--rule); padding: 0.7rem 1rem; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); outline: none; cursor: pointer; transition: border-color 0.3s; }
-  .filter-select:focus { border-color: var(--gold); }
+  .category-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; }
+  .cat-tab { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; background:none; border:1px solid var(--rule); color:var(--muted); padding:0.45rem 1rem; cursor:pointer; transition:all 0.2s; }
+  .cat-tab:hover { border-color:var(--gold); color:var(--ink); }
+  .cat-tab.active { border-color:var(--gold); color:var(--ink); background:var(--gold); color:var(--paper); }
+  .featured-block { margin-bottom:2.5rem; }
+  .featured-card { background:var(--ink); color:var(--paper); padding:2.5rem; position:relative; cursor:default; }
+  .featured-label { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-light); margin-bottom:1rem; display:flex; align-items:center; gap:0.8rem; }
+  .featured-label::before { content:''; width:30px; height:1px; background:var(--gold-light); }
+  .featured-card h3 { font-size:1.6rem; font-weight:300; line-height:1.25; color:var(--paper); margin-bottom:1.5rem; }
+  .featured-card .featured-desc { font-size:0.95rem; color:rgba(245,242,236,0.7); margin-bottom:1.5rem; }
+  .featured-card .featured-meta { font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; color:var(--gold-light); margin-bottom:1.5rem; }
+  .featured-card .article-open-btn { font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-light); cursor:pointer; border:1px solid rgba(212,170,114,0.4); padding:0.5rem 1.2rem; transition:all 0.2s; background:none; }
+  .featured-card .article-open-btn:hover { border-color:var(--gold-light); color:var(--paper); }
+  .featured-card-admin { position:absolute; top:1rem; right:1rem; display:none; gap:0.5rem; }
+  .admin-mode .featured-card-admin { display:flex; }
+  .article-open-btn { font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); cursor:pointer; background:none; border:none; padding:0; transition:color 0.2s; }
+  .article-open-btn:hover { color:var(--ink); }
 
   /* Article grid */
   .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2px; }
@@ -123,9 +126,6 @@
   .article-meta { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
   .article-desc { font-size: 0.9rem; font-weight: 300; color: #3a3830; line-height: 1.55; }
   .article-card-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
-  .article-reviews-count { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; }
-  .article-open-btn { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 0.4rem; transition: gap 0.3s; }
-  .article-card:hover .article-open-btn { gap: 0.7rem; }
 
   /* Admin controls on card */
   .article-card-admin { display: none; position: absolute; top: 1rem; right: 1rem; gap: 0.5rem; }
@@ -203,66 +203,10 @@
   .btn-submit { width: 100%; background: var(--ink); color: var(--paper); border: none; padding: 1rem; font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 0.5rem; }
   .btn-submit:hover { background: var(--gold); }
 
-  /* VIEWER */
-  .viewer-overlay { position: fixed; inset: 0; z-index: 600; background: var(--ink); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-  .viewer-overlay.open { opacity: 1; pointer-events: all; }
-  .viewer-topbar { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; border-bottom: 1px solid rgba(184,147,90,0.2); flex-shrink: 0; gap: 1rem; flex-wrap: wrap; }
-  .viewer-title-wrap { display: flex; flex-direction: column; }
-  .viewer-article-tag { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
-  .viewer-article-name { color: var(--paper); font-size: 1.1rem; font-weight: 300; }
-  .viewer-topbar-actions { display: flex; gap: 0.8rem; align-items: center; }
-  .viewer-btn { background: none; border: 1px solid rgba(184,147,90,0.3); color: var(--gold-light); padding: 0.5rem 1rem; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; }
-  .viewer-btn:hover { background: rgba(184,147,90,0.15); border-color: var(--gold-light); }
-  .viewer-btn.close-btn { border-color: rgba(245,242,236,0.2); color: rgba(245,242,236,0.5); }
-  .viewer-btn.close-btn:hover { background: rgba(245,242,236,0.08); border-color: rgba(245,242,236,0.4); }
-  .viewer-body { display: flex; flex: 1; overflow: hidden; }
-  .viewer-iframe-wrap { flex: 1; position: relative; background: #1a1a1a; }
-  .viewer-iframe { width: 100%; height: 100%; border: none; background: white; }
-  .iframe-fallback { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; color: rgba(245,242,236,0.5); text-align: center; padding: 2rem; font-size: 1rem; font-weight: 300; }
-  .iframe-fallback.show { display: flex; }
-  .iframe-fallback svg { opacity: 0.2; }
-  .iframe-fallback a { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); text-decoration: none; border: 1px solid rgba(184,147,90,0.3); padding: 0.7rem 1.5rem; transition: all 0.2s; }
-  .iframe-fallback a:hover { background: rgba(184,147,90,0.15); }
-
-  /* Reviews panel */
-  .reviews-panel { width: 360px; background: #141414; border-left: 1px solid rgba(184,147,90,0.15); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
-  .reviews-panel-header { padding: 1.5rem; border-bottom: 1px solid rgba(184,147,90,0.1); flex-shrink: 0; }
-  .reviews-panel-header h3 { font-size: 1rem; font-weight: 300; color: var(--paper); margin-bottom: 0.3rem; }
-  .reviews-panel-header span { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-  .reviews-list { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
-  .reviews-list::-webkit-scrollbar { width: 3px; }
-  .reviews-list::-webkit-scrollbar-thumb { background: rgba(184,147,90,0.3); }
-  .review-item { background: rgba(245,242,236,0.04); border: 1px solid rgba(184,147,90,0.1); padding: 1.2rem; position: relative; }
-  .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.6rem; gap: 0.5rem; }
-  .review-author { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--gold-light); }
-  .review-date { font-family: 'DM Mono', monospace; font-size: 0.55rem; color: rgba(245,242,236,0.25); letter-spacing: 0.05em; }
-  .review-stars { color: var(--gold); font-size: 0.75rem; margin-bottom: 0.5rem; letter-spacing: 0.1em; }
-  .review-text { font-size: 0.9rem; font-weight: 300; color: rgba(245,242,236,0.7); line-height: 1.6; }
-  .review-del-btn { position: absolute; top: 0.7rem; right: 0.7rem; background: none; border: none; color: rgba(245,242,236,0.2); cursor: pointer; font-size: 0.7rem; line-height: 1; transition: color 0.2s; display: none; }
-  .admin-mode .review-del-btn { display: block; }
-  .review-del-btn:hover { color: #e06060; }
-  .no-reviews { text-align: center; color: rgba(245,242,236,0.25); font-style: italic; font-size: 0.95rem; padding: 2rem 1rem; }
-
-  /* Add review form */
-  .add-review-form { padding: 1.2rem; border-top: 1px solid rgba(184,147,90,0.1); flex-shrink: 0; background: #0e0e0e; }
-  .add-review-form-title { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
-  .review-input { width: 100%; background: rgba(245,242,236,0.05); border: 1px solid rgba(184,147,90,0.15); padding: 0.7rem 0.9rem; font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--paper); outline: none; transition: border-color 0.3s; margin-bottom: 0.7rem; resize: none; }
-  .review-input:focus { border-color: rgba(184,147,90,0.4); }
-  .review-input::placeholder { color: rgba(245,242,236,0.25); }
-  .review-form-row { display: flex; gap: 0.5rem; margin-bottom: 0.7rem; }
-  .review-name-input { flex: 1; }
-  .star-rating { display: flex; gap: 4px; margin-bottom: 0.7rem; }
-  .star-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: rgba(245,242,236,0.2); transition: color 0.15s, transform 0.15s; line-height: 1; }
-  .star-btn.lit { color: var(--gold); }
-  .star-btn:hover { transform: scale(1.2); }
-  .btn-post-review { width: 100%; background: rgba(184,147,90,0.15); border: 1px solid rgba(184,147,90,0.3); color: var(--gold-light); padding: 0.7rem; font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
-  .btn-post-review:hover { background: rgba(184,147,90,0.25); }
-
   /* HAMBURGER */
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
   .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--muted); transition: all 0.3s; }
 
-  @media (max-width: 900px) { .reviews-panel { width: 300px; } }
   @media (max-width: 768px) {
     nav { padding: 1.2rem 2rem; }
     .nav-hamburger { display: flex; }
@@ -273,8 +217,6 @@
     .home-title { font-size: 2.8rem; }
     #home::after { display: none; }
     .about-left h2, .contact-left h2 { font-size: 2.5rem; }
-    .viewer-body { flex-direction: column; }
-    .reviews-panel { width: 100%; height: 50vh; border-left: none; border-top: 1px solid rgba(184,147,90,0.15); }
     .articles-header { flex-direction: column; align-items: flex-start; }
     .form-row { grid-template-columns: 1fr; }
   }
@@ -343,29 +285,20 @@
         <h2 class="section-title" style="margin-bottom:0">Economic<br><em>Articles</em></h2>
       </div>
       <div style="display:flex;flex-direction:column;gap:1rem;align-items:flex-end;">
-        <div class="admin-toggle-wrap">
-          <span class="admin-toggle-label">Admin mode</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="adminToggle" onchange="toggleAdmin(this)">
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
+        <button class="btn-add-article" id="btnLogout" onclick="deactivateAdmin()">Logout</button>
         <button class="btn-add-article" id="btnAddArticle" onclick="openAddModal()">+ Add Article</button>
       </div>
     </div>
     <div class="articles-toolbar fade-in fade-in-delay-2">
-      <input type="text" class="search-input" id="articleSearch" placeholder="Search articles…" oninput="renderArticles()">
-      <select class="filter-select" id="tagFilter" onchange="renderArticles()">
-        <option value="">All categories</option>
-        <option value="Audit">Audit</option>
-        <option value="Risk">Risk</option>
-        <option value="Compliance">Compliance</option>
-        <option value="Governance">Governance</option>
-        <option value="IFRS">IFRS</option>
-        <option value="Research">Research</option>
-        <option value="Other">Other</option>
-      </select>
+      <div class="category-tabs" id="categoryTabs">
+        <button class="cat-tab active" data-cat="">All</button>
+        <button class="cat-tab" data-cat="U.S. Banking System">U.S. Banking System</button>
+        <button class="cat-tab" data-cat="Financial Stability">Financial Stability</button>
+        <button class="cat-tab" data-cat="Risk &amp; Regulation">Risk &amp; Regulation</button>
+        <button class="cat-tab" data-cat="Research &amp; Methodology">Research &amp; Methodology</button>
+      </div>
     </div>
+    <div id="featuredBlock" class="featured-block fade-in fade-in-delay-3"></div>
     <div class="articles-grid fade-in fade-in-delay-3" id="articlesGrid"></div>
   </div>
 </section>
@@ -422,6 +355,24 @@
 
 <footer>© 2026 Ivan Bakalo · Audit, Risk &amp; Compliance Professional</footer>
 
+<!-- MODAL: AUTH LOGIN -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-box" style="max-width:400px;">
+    <button class="modal-close" onclick="closeAuthModal()">✕ Close</button>
+    <h2 class="modal-title">Admin <em>Login</em></h2>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-input" id="authEmail" placeholder="admin@example.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="authPassword" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <p id="authError" style="color:var(--red);font-family:'DM Mono',monospace;font-size:0.7rem;margin-bottom:1rem;display:none;"></p>
+    <button class="btn-submit" onclick="submitLogin()">Sign In</button>
+  </div>
+</div>
+
 <!-- MODAL: ADD/EDIT -->
 <div class="modal-overlay" id="articleModal">
   <div class="modal-box">
@@ -432,19 +383,16 @@
       <label class="form-label">Article Title *</label>
       <input type="text" class="form-input" id="fTitle" placeholder="e.g. Internal Audit in Modern Financial Institutions">
     </div>
+    <div class="form-group">
+      <label class="form-label">Category</label>
+      <select class="form-input form-sel" id="fCategory">
+        <option value="U.S. Banking System">U.S. Banking System</option>
+        <option value="Financial Stability">Financial Stability</option>
+        <option value="Risk &amp; Regulation">Risk &amp; Regulation</option>
+        <option value="Research &amp; Methodology">Research &amp; Methodology</option>
+      </select>
+    </div>
     <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Category</label>
-        <select class="form-input form-sel" id="fTag">
-          <option value="Audit">Audit</option>
-          <option value="Risk">Risk</option>
-          <option value="Compliance">Compliance</option>
-          <option value="Governance">Governance</option>
-          <option value="IFRS">IFRS</option>
-          <option value="Research">Research</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
       <div class="form-group">
         <label class="form-label">Year</label>
         <input type="number" class="form-input" id="fYear" placeholder="2024" min="2000" max="2099">
@@ -463,204 +411,223 @@
       <label class="form-label">Journal / Publisher</label>
       <input type="text" class="form-input" id="fJournal" placeholder="e.g. Journal of Financial Regulation">
     </div>
+    <div class="form-group">
+      <label class="form-label" style="display:flex;align-items:center;gap:0.8rem;cursor:pointer;">
+        <input type="checkbox" id="fFeatured" style="accent-color:var(--gold);width:16px;height:16px;">
+        Mark as Featured Research
+      </label>
+    </div>
     <button class="btn-submit" onclick="saveArticle()">Publish Article</button>
   </div>
 </div>
 
-<!-- ARTICLE VIEWER -->
-<div class="viewer-overlay" id="articleViewer">
-  <div class="viewer-topbar">
-    <div class="viewer-title-wrap">
-      <span class="viewer-article-tag" id="viewerTag"></span>
-      <span class="viewer-article-name" id="viewerTitle"></span>
-    </div>
-    <div class="viewer-topbar-actions">
-      <a href="#" class="viewer-btn" id="viewerExtLink" target="_blank" rel="noopener">↗ Open Original</a>
-      <button class="viewer-btn close-btn" onclick="closeViewer()">✕ Close</button>
-    </div>
-  </div>
-  <div class="viewer-body">
-    <div class="viewer-iframe-wrap">
-      <iframe class="viewer-iframe" id="viewerIframe" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" loading="lazy"></iframe>
-      <div class="iframe-fallback" id="iframeFallback">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <p>This site cannot be displayed in the embedded frame<br>(cross-origin restriction). Please open it directly.</p>
-        <a href="#" id="fallbackLink" target="_blank" rel="noopener">Open Article in New Tab →</a>
-      </div>
-    </div>
-    <div class="reviews-panel">
-      <div class="reviews-panel-header">
-        <h3>Reader Reviews</h3>
-        <span id="reviewsCountLabel">0 reviews</span>
-      </div>
-      <div class="reviews-list" id="reviewsList"></div>
-      <div class="add-review-form">
-        <div class="add-review-form-title">Write a Review</div>
-        <div class="review-form-row">
-          <input type="text" class="review-input review-name-input" id="reviewName" placeholder="Your name (optional)">
-        </div>
-        <div class="star-rating" id="starRating">
-          <button class="star-btn" data-v="1">★</button>
-          <button class="star-btn" data-v="2">★</button>
-          <button class="star-btn" data-v="3">★</button>
-          <button class="star-btn" data-v="4">★</button>
-          <button class="star-btn" data-v="5">★</button>
-        </div>
-        <textarea class="review-input" id="reviewText" rows="3" placeholder="Share your thoughts on this article…"></textarea>
-        <button class="btn-post-review" onclick="postReview()">Post Review</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
-/* ── DATA ── */
-const SA = 'ib_articles_v2', SR = 'ib_reviews_v2';
-function getArticles(){ try{ return JSON.parse(localStorage.getItem(SA))||[]; }catch{ return []; } }
-function setArticles(a){ localStorage.setItem(SA,JSON.stringify(a)); }
-function getReviews(){ try{ return JSON.parse(localStorage.getItem(SR))||{}; }catch{ return {}; } }
-function setReviews(r){ localStorage.setItem(SR,JSON.stringify(r)); }
+/* ── AUTH ── */
+let adminToken = localStorage.getItem('ib_admin_token') || null;
+let adminMode = false;
+
+function getTokenPayload() {
+  if (!adminToken) return null;
+  try {
+    const payload = JSON.parse(atob(adminToken.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    if (payload.exp && Math.floor(Date.now()/1000) > payload.exp) { localStorage.removeItem('ib_admin_token'); adminToken = null; return null; }
+    return payload;
+  } catch { return null; }
+}
+
+// Check token on load
+if (adminToken && !getTokenPayload()) { adminToken = null; }
 
 /* ── ADMIN ── */
-let adminMode=false;
-function toggleAdmin(cb){
-  adminMode=cb.checked;
-  document.body.classList.toggle('admin-mode',adminMode);
-  document.getElementById('btnAddArticle').classList.toggle('visible',adminMode);
+function activateAdmin() {
+  adminMode = true;
+  document.body.classList.add('admin-mode');
+  document.getElementById('btnAddArticle').classList.add('visible');
+  document.getElementById('btnLogout').classList.add('visible');
+  renderArticles();
+}
+function deactivateAdmin() {
+  adminMode = false;
+  adminToken = null;
+  localStorage.removeItem('ib_admin_token');
+  document.body.classList.remove('admin-mode');
+  document.getElementById('btnAddArticle').classList.remove('visible');
+  document.getElementById('btnLogout').classList.remove('visible');
+  renderArticles();
+}
+
+/* ── AUTH MODAL ── */
+function openAuthModal() {
+  document.getElementById('authEmail').value = '';
+  document.getElementById('authPassword').value = '';
+  document.getElementById('authError').style.display = 'none';
+  document.getElementById('authModal').classList.add('open');
+  setTimeout(() => document.getElementById('authEmail').focus(), 50);
+}
+function closeAuthModal() { document.getElementById('authModal').classList.remove('open'); }
+
+async function submitLogin() {
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const errEl = document.getElementById('authError');
+  errEl.style.display = 'none';
+  if (!email || !password) { errEl.textContent = 'Email and password required.'; errEl.style.display = 'block'; return; }
+  try {
+    const res = await fetch('/api/auth', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, password }) });
+    if (!res.ok) { errEl.textContent = 'Invalid email or password.'; errEl.style.display = 'block'; return; }
+    const { token } = await res.json();
+    adminToken = token;
+    localStorage.setItem('ib_admin_token', token);
+    closeAuthModal();
+    activateAdmin();
+  } catch { errEl.textContent = 'Network error. Try again.'; errEl.style.display = 'block'; }
 }
 
 /* ── RENDER CARDS ── */
-function renderArticles(){
-  const grid=document.getElementById('articlesGrid');
-  const q=document.getElementById('articleSearch').value.toLowerCase();
-  const tag=document.getElementById('tagFilter').value;
-  const all=getArticles(), rev=getReviews();
-  const list=all.filter(a=>(!tag||a.tag===tag)&&(!q||a.title.toLowerCase().includes(q)||(a.desc||'').toLowerCase().includes(q)));
-  if(!list.length){
-    grid.innerHTML=`<div class="articles-empty">${all.length?'No articles match your search.':'No articles yet.'+(adminMode?' Enable Admin mode and click <strong>Add Article</strong>.':'')}</div>`;
+let activeCategory = '';
+
+async function renderArticles() {
+  const grid = document.getElementById('articlesGrid');
+  const featuredBlock = document.getElementById('featuredBlock');
+  grid.innerHTML = '<div class="articles-empty">Loading…</div>';
+  featuredBlock.innerHTML = '';
+
+  let all;
+  try {
+    const res = await fetch('/api/articles');
+    all = await res.json();
+  } catch {
+    grid.innerHTML = '<div class="articles-empty">Could not load articles.</div>';
     return;
   }
-  grid.innerHTML=list.map(a=>{
-    const rs=rev[a.id]||[], cnt=rs.length;
-    const avg=cnt?(rs.reduce((s,r)=>s+(r.stars||0),0)/cnt).toFixed(1):null;
-    return `<div class="article-card" onclick="openViewer('${a.id}')">
+
+  // Featured block (always shown when All tab active, or when category matches)
+  const featured = all.find(a => a.is_featured === 1);
+  if (featured && (!activeCategory || featured.category === activeCategory)) {
+    featuredBlock.innerHTML = `
+      <div class="featured-card">
+        <div class="featured-card-admin">
+          <button class="card-btn" title="Edit" onclick="openEdit('${featured.id}')">&#x270f;</button>
+          <button class="card-btn del" title="Delete" onclick="delArticle('${featured.id}')">&#x2715;</button>
+        </div>
+        <div class="featured-label">Featured Research</div>
+        <h3>${featured.title}</h3>
+        ${featured.description ? `<p class="featured-desc">${featured.description}</p>` : ''}
+        <div class="featured-meta">${featured.category}${featured.year ? ' · ' + featured.year : ''}</div>
+        <button class="article-open-btn" onclick="window.open('${featured.url}','_blank')">View Article →</button>
+      </div>`;
+  }
+
+  // Grid: exclude featured, filter by active category
+  const list = all.filter(a => a.is_featured !== 1 && (!activeCategory || a.category === activeCategory));
+
+  if (!list.length && !featured) {
+    grid.innerHTML = `<div class="articles-empty">${all.length ? 'No articles in this category.' : 'No articles yet.'}</div>`;
+    return;
+  }
+  if (!list.length) { grid.innerHTML = ''; return; }
+
+  grid.innerHTML = list.map((a, i, arr) => {
+    const isFirst = i === 0;
+    const isLast = i === arr.length - 1;
+    return `<div class="article-card">
       <div class="article-card-admin">
-        <button class="card-btn" title="Edit" onclick="event.stopPropagation();openEdit('${a.id}')">✏</button>
-        <button class="card-btn del" title="Delete" onclick="event.stopPropagation();delArticle('${a.id}')">✕</button>
+        <button class="card-btn" title="Edit" onclick="openEdit('${a.id}')">&#x270f;</button>
+        <button class="card-btn del" title="Delete" onclick="delArticle('${a.id}')">&#x2715;</button>
+        <button class="card-btn" title="Move up" onclick="moveArticle('${a.id}',-1)" ${isFirst?'disabled':''}>&#x2191;</button>
+        <button class="card-btn" title="Move down" onclick="moveArticle('${a.id}',1)" ${isLast?'disabled':''}>&#x2193;</button>
       </div>
-      <div class="article-card-tag">${a.tag||'Research'}${a.year?' · '+a.year:''}</div>
+      <div class="article-card-tag">${a.category}${a.year ? ' · ' + a.year : ''}</div>
       <h3>${a.title}</h3>
-      ${a.journal?`<div class="article-meta">${a.journal}</div>`:''}
-      ${a.desc?`<p class="article-desc">${a.desc}</p>`:''}
+      ${a.description ? `<p class="article-desc">${a.description}</p>` : ''}
       <div class="article-card-footer">
-        <span class="article-reviews-count">${cnt} review${cnt!==1?'s':''}${avg?' · ★'+avg:''}</span>
-        <span class="article-open-btn">Read →</span>
+        <button class="article-open-btn" onclick="window.open('${a.url}','_blank')">View Article →</button>
       </div>
     </div>`;
   }).join('');
 }
 
-/* ── MODAL ── */
-function openAddModal(){
-  document.getElementById('modalTitle').innerHTML='Add <em>Article</em>';
-  document.getElementById('editingId').value='';
-  ['fTitle','fDesc','fUrl','fJournal'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('fTag').value='Research';
-  document.getElementById('fYear').value=new Date().getFullYear();
-  document.getElementById('articleModal').classList.add('open');
-}
-function openEdit(id){
-  const a=getArticles().find(x=>x.id===id); if(!a) return;
-  document.getElementById('modalTitle').innerHTML='Edit <em>Article</em>';
-  document.getElementById('editingId').value=id;
-  document.getElementById('fTitle').value=a.title;
-  document.getElementById('fTag').value=a.tag||'Research';
-  document.getElementById('fYear').value=a.year||'';
-  document.getElementById('fDesc').value=a.desc||'';
-  document.getElementById('fUrl').value=a.url||'';
-  document.getElementById('fJournal').value=a.journal||'';
-  document.getElementById('articleModal').classList.add('open');
-}
-function closeModal(){ document.getElementById('articleModal').classList.remove('open'); }
-function saveArticle(){
-  const title=document.getElementById('fTitle').value.trim();
-  const url=document.getElementById('fUrl').value.trim();
-  if(!title){alert('Please enter a title.');return;}
-  if(!url){alert('Please enter a URL.');return;}
-  const all=getArticles(), eid=document.getElementById('editingId').value;
-  const data={title,url,tag:document.getElementById('fTag').value,year:document.getElementById('fYear').value,desc:document.getElementById('fDesc').value.trim(),journal:document.getElementById('fJournal').value.trim()};
-  if(eid){ const i=all.findIndex(a=>a.id===eid); if(i>-1)all[i]={...all[i],...data}; }
-  else { data.id='art_'+Date.now(); data.createdAt=new Date().toISOString(); all.unshift(data); }
-  setArticles(all); closeModal(); renderArticles();
-}
-function delArticle(id){ if(!confirm('Delete this article?'))return; setArticles(getArticles().filter(a=>a.id!==id)); renderArticles(); }
-
-/* ── VIEWER ── */
-let curId=null;
-function openViewer(id){
-  const a=getArticles().find(x=>x.id===id); if(!a)return;
-  curId=id; selStars=0; updateStars();
-  document.getElementById('viewerTag').textContent=a.tag||'Research';
-  document.getElementById('viewerTitle').textContent=a.title;
-  document.getElementById('viewerExtLink').href=a.url;
-  document.getElementById('fallbackLink').href=a.url;
-  const ifr=document.getElementById('viewerIframe');
-  const fb=document.getElementById('iframeFallback');
-  fb.classList.remove('show'); ifr.src='';
-  setTimeout(()=>{
-    ifr.src=a.url;
-    const t=setTimeout(()=>{ try{ const d=ifr.contentDocument||ifr.contentWindow?.document; if(!d||!d.body||d.body.innerHTML==='')fb.classList.add('show'); }catch(e){fb.classList.add('show');} },5000);
-    ifr.onload=()=>{ clearTimeout(t); try{ const d=ifr.contentDocument||ifr.contentWindow?.document; if(!d||!d.body||d.body.innerHTML==='')fb.classList.add('show'); }catch(e){fb.classList.add('show');} };
-  },60);
-  renderReviews(id);
-  document.getElementById('articleViewer').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeViewer(){ document.getElementById('articleViewer').classList.remove('open'); document.getElementById('viewerIframe').src=''; document.body.style.overflow=''; curId=null; }
-
-/* ── STARS ── */
-let selStars=0;
-function setStars(n){ selStars=n; updateStars(); }
-function updateStars(){ document.querySelectorAll('.star-btn').forEach(b=>b.classList.toggle('lit',+b.dataset.v<=selStars)); }
-document.addEventListener('DOMContentLoaded',()=>{
-  document.querySelectorAll('.star-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>setStars(+btn.dataset.v));
-    btn.addEventListener('mouseenter',()=>document.querySelectorAll('.star-btn').forEach(b=>b.style.color=+b.dataset.v<=+btn.dataset.v?'var(--gold)':''));
-    btn.addEventListener('mouseleave',()=>document.querySelectorAll('.star-btn').forEach(b=>b.style.color=''));
-  });
+/* ── CATEGORY TABS ── */
+document.getElementById('categoryTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.cat-tab');
+  if (!btn) return;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  activeCategory = btn.dataset.cat;
+  renderArticles();
 });
 
-/* ── REVIEWS ── */
-function renderReviews(aid){
-  const rev=getReviews(), list=rev[aid]||[];
-  document.getElementById('reviewsCountLabel').textContent=list.length+' review'+(list.length!==1?'s':'');
-  const el=document.getElementById('reviewsList');
-  if(!list.length){ el.innerHTML='<p class="no-reviews">No reviews yet.<br>Be the first to share your thoughts.</p>'; return; }
-  el.innerHTML=list.map((r,i)=>`
-    <div class="review-item">
-      <button class="review-del-btn" onclick="delReview('${aid}',${i})" title="Delete">✕</button>
-      <div class="review-header">
-        <span class="review-author">${esc(r.name||'Anonymous')}</span>
-        <span class="review-date">${fmtDate(r.date)}</span>
-      </div>
-      ${r.stars?`<div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>`:''}
-      <p class="review-text">${esc(r.text)}</p>
-    </div>`).join('');
+/* ── MODAL ── */
+function openAddModal() {
+  document.getElementById('modalTitle').innerHTML = 'Add <em>Article</em>';
+  document.getElementById('editingId').value = '';
+  ['fTitle','fDesc','fUrl','fJournal'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fCategory').value = 'U.S. Banking System';
+  document.getElementById('fYear').value = new Date().getFullYear();
+  document.getElementById('fFeatured').checked = false;
+  document.getElementById('articleModal').classList.add('open');
 }
-function postReview(){
-  const text=document.getElementById('reviewText').value.trim();
-  if(!text){alert('Please write something.');return;}
-  if(!curId)return;
-  const rev=getReviews();
-  if(!rev[curId])rev[curId]=[];
-  rev[curId].push({name:document.getElementById('reviewName').value.trim(),stars:selStars,text,date:new Date().toISOString()});
-  setReviews(rev);
-  document.getElementById('reviewText').value='';
-  document.getElementById('reviewName').value='';
-  selStars=0; updateStars();
-  renderReviews(curId); renderArticles();
+async function openEdit(id) {
+  const res = await fetch(`/api/articles/${id}`);
+  const a = await res.json();
+  if (!a || a.error) return;
+  document.getElementById('modalTitle').innerHTML = 'Edit <em>Article</em>';
+  document.getElementById('editingId').value = id;
+  document.getElementById('fTitle').value = a.title;
+  document.getElementById('fCategory').value = a.category || 'U.S. Banking System';
+  document.getElementById('fYear').value = a.year || '';
+  document.getElementById('fDesc').value = a.description || '';
+  document.getElementById('fUrl').value = a.url || '';
+  document.getElementById('fJournal').value = a.journal || '';
+  document.getElementById('fFeatured').checked = a.is_featured === 1;
+  document.getElementById('articleModal').classList.add('open');
 }
-function delReview(aid,i){ if(!confirm('Delete review?'))return; const rev=getReviews(); rev[aid].splice(i,1); setReviews(rev); renderReviews(aid); renderArticles(); }
+function closeModal() { document.getElementById('articleModal').classList.remove('open'); }
+async function saveArticle() {
+  const title = document.getElementById('fTitle').value.trim();
+  const url = document.getElementById('fUrl').value.trim();
+  if (!title) { alert('Please enter a title.'); return; }
+  if (!url) { alert('Please enter a URL.'); return; }
+  const data = {
+    title, url,
+    category: document.getElementById('fCategory').value,
+    year: parseInt(document.getElementById('fYear').value) || null,
+    description: document.getElementById('fDesc').value.trim(),
+    journal: document.getElementById('fJournal').value.trim(),
+    is_featured: document.getElementById('fFeatured').checked ? 1 : 0
+  };
+  const eid = document.getElementById('editingId').value;
+  const endpoint = eid ? `/api/articles/${eid}` : '/api/articles';
+  const method = eid ? 'PUT' : 'POST';
+  try {
+    const res = await fetch(endpoint, { method, headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}` }, body: JSON.stringify(data) });
+    if (res.status === 401 || res.status === 403) { alert('Session expired. Please log in again.'); deactivateAdmin(); return; }
+    if (!res.ok) { const err = await res.json(); alert(err.error || 'Save failed.'); return; }
+  } catch { alert('Network error.'); return; }
+  closeModal();
+  renderArticles();
+}
+async function delArticle(id) {
+  if (!confirm('Delete this article?')) return;
+  await fetch(`/api/articles/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${adminToken}` } });
+  renderArticles();
+}
+async function moveArticle(id, direction) {
+  const res = await fetch('/api/articles');
+  const all = await res.json();
+  const nonFeatured = all.filter(a => a.is_featured !== 1 && (!activeCategory || a.category === activeCategory));
+  const idx = nonFeatured.findIndex(a => a.id === id);
+  const swapIdx = idx + direction;
+  if (swapIdx < 0 || swapIdx >= nonFeatured.length) return;
+  const a = nonFeatured[idx], b = nonFeatured[swapIdx];
+  const [newA, newB] = [b.sort_order, a.sort_order];
+  await Promise.all([
+    fetch(`/api/articles/${a.id}`, { method:'PUT', headers:{ 'Content-Type':'application/json', 'Authorization':`Bearer ${adminToken}` }, body: JSON.stringify({ sort_order: newA }) }),
+    fetch(`/api/articles/${b.id}`, { method:'PUT', headers:{ 'Content-Type':'application/json', 'Authorization':`Bearer ${adminToken}` }, body: JSON.stringify({ sort_order: newB }) })
+  ]);
+  renderArticles();
+}
 
 /* ── UTILS ── */
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -673,9 +640,24 @@ const obs=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting)e.tar
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 document.querySelectorAll('#home .fade-in').forEach(el=>setTimeout(()=>el.classList.add('visible'),100));
 document.getElementById('articleModal').addEventListener('click',function(e){ if(e.target===this)closeModal(); });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){closeViewer();closeModal();} });
+document.getElementById('authModal').addEventListener('click', function(e) { if (e.target === this) closeAuthModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){closeModal();closeAuthModal();} });
+document.getElementById('authPassword').addEventListener('keydown', e => { if (e.key === 'Enter') submitLogin(); });
 
-renderArticles();
+// Triple-click logo opens admin login
+let logoClicks = 0, logoTimer;
+const navLogoImg = document.querySelector('nav a img');
+if (navLogoImg) {
+  navLogoImg.addEventListener('click', () => {
+    logoClicks++;
+    clearTimeout(logoTimer);
+    logoTimer = setTimeout(() => { logoClicks = 0; }, 500);
+    if (logoClicks >= 3) { logoClicks = 0; if (!adminMode) openAuthModal(); }
+  });
+}
+
+if (adminToken && getTokenPayload()) activateAdmin();
+else renderArticles();
 </script>
 </body>
 </html>

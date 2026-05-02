@@ -1,0 +1,8 @@
+name = "bakalo-capital"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bakalo-db"
+database_id = "REPLACE_AFTER_RUNNING_wrangler_d1_create_bakalo-db"
