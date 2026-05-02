@@ -1,0 +1,12 @@
+{
+  "name": "bakalo-site",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "hash-password": "node scripts/hash-password.js"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.5"
+  }
+}
