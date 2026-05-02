@@ -28,13 +28,24 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
+          echo "── Listing existing D1 databases..."
+          wrangler d1 list 2>&1 || true
+
           DB_ID=$(wrangler d1 list 2>&1 | grep "bakalo-db" | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' | head -1)
+
           if [ -z "$DB_ID" ]; then
-            echo "Creating D1 database..."
-            CREATE_OUT=$(wrangler d1 create bakalo-db 2>&1)
+            echo "── Creating D1 database..."
+            CREATE_OUT=$(wrangler d1 create bakalo-db 2>&1 || true)
+            echo "$CREATE_OUT"
             DB_ID=$(echo "$CREATE_OUT" | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' | head -1)
           fi
-          echo "database_id = $DB_ID"
+
+          if [ -z "$DB_ID" ]; then
+            echo "❌ Could not get or create database_id. Check token has D1:Edit permission."
+            exit 1
+          fi
+
+          echo "── database_id = $DB_ID"
           sed -i "s|database_id = \".*\"|database_id = \"$DB_ID\"|" wrangler.toml
           wrangler d1 migrations apply bakalo-db --remote
 
