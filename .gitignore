@@ -8,3 +8,8 @@ worker/node_modules/
 # Wrangler
 .wrangler/
 worker/.wrangler/
+
+# Local secrets — never commit
+.env
+.env.local
+.cf.env
