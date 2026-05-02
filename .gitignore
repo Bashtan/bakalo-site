@@ -1,0 +1,10 @@
+# Claude Code internals
+.claude/
+
+# Node
+node_modules/
+worker/node_modules/
+
+# Wrangler
+.wrangler/
+worker/.wrangler/
