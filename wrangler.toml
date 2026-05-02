@@ -5,4 +5,4 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "bakalo-db"
-database_id = "REPLACE_AFTER_RUNNING_wrangler_d1_create_bakalo-db"
+database_id = "0f8b90d7-8e9a-434c-b5fa-baf6a7d267b6"
