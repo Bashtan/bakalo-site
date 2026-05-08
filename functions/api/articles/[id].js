@@ -37,10 +37,13 @@ export async function onRequestPut({ request, env, params }) {
   if (body.year !== undefined) updated.year = body.year;
   if (body.is_featured !== undefined) updated.is_featured = body.is_featured ? 1 : 0;
   if (body.sort_order !== undefined) updated.sort_order = body.sort_order;
+  if (body.ssrn_url !== undefined) updated.ssrn_url = body.ssrn_url;
+  if (body.doi_url !== undefined) updated.doi_url = body.doi_url;
+  if (body.tags !== undefined) updated.tags = body.tags;
 
   await env.DB.prepare(
-    'UPDATE articles SET title=?, url=?, category=?, description=?, year=?, is_featured=?, sort_order=? WHERE id=?'
-  ).bind(updated.title, updated.url, updated.category, updated.description, updated.year, updated.is_featured, updated.sort_order, params.id).run();
+    'UPDATE articles SET title=?, url=?, category=?, description=?, year=?, is_featured=?, sort_order=?, ssrn_url=?, doi_url=?, tags=? WHERE id=?'
+  ).bind(updated.title, updated.url, updated.category, updated.description, updated.year, updated.is_featured, updated.sort_order, updated.ssrn_url ?? '', updated.doi_url ?? '', updated.tags ?? '', params.id).run();
 
   const article = await env.DB.prepare('SELECT * FROM articles WHERE id = ?').bind(params.id).first();
   return json(article);

@@ -3,7 +3,7 @@ set -e
 
 PROJECT="bakalo-capital"
 DB_NAME="bakalo-db"
-BRANCH="feature/stakeholders-requirements"
+BRANCH="${BRANCH:-$(git rev-parse --abbrev-ref HEAD)}"
 DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
 echo "=== Bakalo staging deploy ==="

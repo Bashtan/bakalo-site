@@ -2,8 +2,8 @@ import { describe, test, expect, beforeEach } from 'vitest';
 import { readFileSync } from 'fs';
 import { createD1Mock } from './helpers/d1.js';
 import { sign } from '../functions/lib/jwt.js';
-import { onRequestGet, onRequestPost } from '../functions/api/articles.js';
-import { onRequestGet as onRequestGetOne, onRequestPut, onRequestDelete } from '../functions/api/articles/[id].js';
+import { onRequestGet, onRequestPost } from '../functions/api/evidence.js';
+import { onRequestGet as onRequestGetOne, onRequestPut, onRequestDelete } from '../functions/api/evidence/[id].js';
 
 const SCHEMA = readFileSync('./migrations/0001_init.sql', 'utf8')
              + readFileSync('./migrations/0002_evidence_engagements.sql', 'utf8');
@@ -20,41 +20,30 @@ beforeEach(async () => {
 });
 
 const VALID = {
-  title: 'Test Article',
-  url: 'https://example.com/paper',
-  category: 'U.S. Banking System',
-  description: 'A test paper.',
-  year: 2024,
-  ssrn_url: 'https://ssrn.com/abstract=1234',
-  doi_url: 'https://doi.org/10.1234/test',
-  tags: 'Financial Stability,Governance'
+  title: 'Silesian University of Technology',
+  description: 'International Interdisciplinary Scientific Conference, Poland · 2025',
+  institution: 'Silesian University of Technology',
+  year: 2025,
+  evidence_url: 'https://example.com/evidence.pdf'
 };
 
 const req = (method, body = null, token = null) => {
   const headers = { 'Content-Type': 'application/json' };
   if (token) headers['Authorization'] = `Bearer ${token}`;
-  return new Request('https://example.com/api/articles', {
+  return new Request('https://example.com/api/evidence', {
     method, headers, body: body ? JSON.stringify(body) : null
   });
 };
 
-describe('GET /api/articles', () => {
-  test('returns empty array when no articles', async () => {
+describe('GET /api/evidence', () => {
+  test('returns empty array when no evidence', async () => {
     const res = await onRequestGet({ env });
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual([]);
   });
-
-  test('featured article sorts first', async () => {
-    await onRequestPost({ request: req('POST', VALID, adminToken), env });
-    await onRequestPost({ request: req('POST', { ...VALID, title: 'Featured Paper', is_featured: 1 }, adminToken), env });
-    const articles = await (await onRequestGet({ env })).json();
-    expect(articles[0].title).toBe('Featured Paper');
-    expect(articles[0].is_featured).toBe(1);
-  });
 });
 
-describe('POST /api/articles', () => {
+describe('POST /api/evidence', () => {
   test('no token → 401', async () => {
     const res = await onRequestPost({ request: req('POST', VALID), env });
     expect(res.status).toBe(401);
@@ -65,26 +54,14 @@ describe('POST /api/articles', () => {
     expect(res.status).toBe(403);
   });
 
-  test('valid admin token → 201 with article', async () => {
+  test('valid admin token → 201 with evidence item', async () => {
     const res = await onRequestPost({ request: req('POST', VALID, adminToken), env });
     expect(res.status).toBe(201);
     const body = await res.json();
     expect(body.id).toBeTruthy();
-    expect(body.title).toBe('Test Article');
-    expect(body.category).toBe('U.S. Banking System');
-  });
-
-  test('ssrn_url, doi_url, tags round-trip', async () => {
-    const res = await onRequestPost({ request: req('POST', VALID, adminToken), env });
-    const body = await res.json();
-    expect(body.ssrn_url).toBe('https://ssrn.com/abstract=1234');
-    expect(body.doi_url).toBe('https://doi.org/10.1234/test');
-    expect(body.tags).toBe('Financial Stability,Governance');
-  });
-
-  test('unknown category → 400', async () => {
-    const res = await onRequestPost({ request: req('POST', { ...VALID, category: 'Fake' }, adminToken), env });
-    expect(res.status).toBe(400);
+    expect(body.title).toBe('Silesian University of Technology');
+    expect(body.institution).toBe('Silesian University of Technology');
+    expect(body.year).toBe(2025);
   });
 
   test('missing title → 400', async () => {
@@ -94,17 +71,31 @@ describe('POST /api/articles', () => {
   });
 });
 
-describe('PUT /api/articles/:id', () => {
+describe('GET /api/evidence/:id', () => {
+  test('returns item by id', async () => {
+    const { id } = await (await onRequestPost({ request: req('POST', VALID, adminToken), env })).json();
+    const res = await onRequestGetOne({ env, params: { id } });
+    expect(res.status).toBe(200);
+    expect((await res.json()).title).toBe('Silesian University of Technology');
+  });
+
+  test('unknown id → 404', async () => {
+    const res = await onRequestGetOne({ env, params: { id: 'nope' } });
+    expect(res.status).toBe(404);
+  });
+});
+
+describe('PUT /api/evidence/:id', () => {
   test('updates sort_order', async () => {
     const { id } = await (await onRequestPost({ request: req('POST', VALID, adminToken), env })).json();
-    const res = await onRequestPut({ request: req('PUT', { sort_order: 5 }, adminToken), env, params: { id } });
+    const res = await onRequestPut({ request: req('PUT', { sort_order: 3 }, adminToken), env, params: { id } });
     expect(res.status).toBe(200);
-    expect((await res.json()).sort_order).toBe(5);
+    expect((await res.json()).sort_order).toBe(3);
   });
 
   test('no token → 401', async () => {
     const { id } = await (await onRequestPost({ request: req('POST', VALID, adminToken), env })).json();
-    const res = await onRequestPut({ request: req('PUT', { sort_order: 5 }), env, params: { id } });
+    const res = await onRequestPut({ request: req('PUT', { sort_order: 1 }), env, params: { id } });
     expect(res.status).toBe(401);
   });
 
@@ -114,32 +105,18 @@ describe('PUT /api/articles/:id', () => {
   });
 });
 
-describe('DELETE /api/articles/:id', () => {
-  test('deletes article → 204, absent from GET', async () => {
+describe('DELETE /api/evidence/:id', () => {
+  test('deletes item → 204, absent from GET', async () => {
     const { id } = await (await onRequestPost({ request: req('POST', VALID, adminToken), env })).json();
     const delRes = await onRequestDelete({ request: req('DELETE', null, adminToken), env, params: { id } });
     expect(delRes.status).toBe(204);
-    const articles = await (await onRequestGet({ env })).json();
-    expect(articles.find(a => a.id === id)).toBeUndefined();
+    const items = await (await onRequestGet({ env })).json();
+    expect(items.find(e => e.id === id)).toBeUndefined();
   });
 
   test('no token → 401', async () => {
     const { id } = await (await onRequestPost({ request: req('POST', VALID, adminToken), env })).json();
     const res = await onRequestDelete({ request: req('DELETE'), env, params: { id } });
     expect(res.status).toBe(401);
-  });
-});
-
-describe('GET /api/articles/:id', () => {
-  test('returns article by id', async () => {
-    const { id } = await (await onRequestPost({ request: req('POST', VALID, adminToken), env })).json();
-    const res = await onRequestGetOne({ env, params: { id } });
-    expect(res.status).toBe(200);
-    expect((await res.json()).title).toBe('Test Article');
-  });
-
-  test('unknown id → 404', async () => {
-    const res = await onRequestGetOne({ env, params: { id: 'nope' } });
-    expect(res.status).toBe(404);
   });
 });
