@@ -114,6 +114,33 @@ section { padding: 6rem 3rem 5rem; }
 }
 .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.75); }
 
+/* ── HOME GRID (two-column portrait layout) ── */
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 4rem;
+  align-items: center;
+}
+.home-content { /* left column — all existing text */ }
+.home-portrait {
+  display: flex;
+  justify-content: flex-end;
+}
+.home-portrait img {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: center top;
+  border-left: 3px solid var(--accent-lt);
+  display: block;
+}
+@media (max-width: 768px) {
+  .home-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .home-portrait { order: -1; justify-content: center; }
+  .home-portrait img { max-width: 200px; border-left: none; border-top: 3px solid var(--accent-lt); }
+}
+
 /* ── ABOUT ── */
 #about { background: var(--light); }
 .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: start; }
@@ -404,17 +431,24 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
 <!-- SECTION 1: HOME -->
 <section id="home">
   <div class="section-inner">
-    <div class="home-eyebrow fade-in">Financial Stability &nbsp;·&nbsp; Governance &nbsp;·&nbsp; Systemic Risk</div>
-    <h1 class="home-name fade-in fade-in-delay-1">Ivan Bakalo</h1>
-    <p class="home-subtitle fade-in fade-in-delay-2">Risk-Based Governance, Financial Stability, and Institutional Resilience</p>
-    <div class="home-divider fade-in fade-in-delay-2"></div>
-    <div class="home-body fade-in fade-in-delay-3">
-      <p>My work focuses on strengthening financial stability, governance, and institutional resilience through risk-based methodologies, regulatory compliance frameworks, and systemic risk analysis. My proposed endeavor supports the long-term stability and integrity of the United States financial system — an area of substantial merit and national importance.</p>
-    </div>
-    <div class="home-ctas fade-in fade-in-delay-4">
-      <a href="#research" class="btn-outline-white">View Research</a>
-      <a href="#implementation" class="btn-outline-white">Implementation &amp; Recognition</a>
-      <a href="#profiles" class="btn-outline-white">Research Profiles</a>
+    <div class="home-grid">
+      <div class="home-content">
+        <div class="home-eyebrow fade-in">Financial Stability &nbsp;·&nbsp; Governance &nbsp;·&nbsp; Systemic Risk</div>
+        <h1 class="home-name fade-in fade-in-delay-1">Ivan Bakalo</h1>
+        <p class="home-subtitle fade-in fade-in-delay-2">Risk-Based Governance, Financial Stability, and Institutional Resilience</p>
+        <div class="home-divider fade-in fade-in-delay-2"></div>
+        <div class="home-body fade-in fade-in-delay-3">
+          <p>My work focuses on strengthening financial stability, governance, and institutional resilience through risk-based methodologies, regulatory compliance frameworks, and systemic risk analysis. My proposed endeavor supports the long-term stability and integrity of the United States financial system — an area of substantial merit and national importance.</p>
+        </div>
+        <div class="home-ctas fade-in fade-in-delay-4">
+          <a href="#research" class="btn-outline-white">View Research</a>
+          <a href="#implementation" class="btn-outline-white">Implementation &amp; Recognition</a>
+          <a href="#profiles" class="btn-outline-white">Research Profiles</a>
+        </div>
+      </div>
+      <div class="home-portrait fade-in fade-in-delay-2">
+        <img src="assets/ivan-bakalo.jpg" alt="Ivan Bakalo — professional conference portrait">
+      </div>
     </div>
   </div>
 </section>
