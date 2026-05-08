@@ -11,6 +11,7 @@ worker/node_modules/
 # Wrangler
 .wrangler/
 worker/.wrangler/
+wrangler.toml.bak
 
 # Local secrets — never commit
 .env
