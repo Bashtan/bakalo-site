@@ -1,106 +1,99 @@
-# Session Resume — ivanbakalo.com NIW Platform Rebuild
-**Date:** 2026-05-08  
-**Branch merged:** feature/technical-task → main  
-**Production:** https://ivanbakalo.com (Cloudflare Pages, `bakalo-capital` project)
+# Session Resume — ivanbakalo.com NIW Platform
+**Last updated:** 2026-05-11
+**Production:** https://ivanbakalo.com (Cloudflare Pages, project `bakalo-capital`)
+**Main branch:** `main` @ `0dae624`
 
 ---
 
-## What Was Done This Session
+## What Was Done Across Last Two Sessions
 
-### 1. Full Site Redesign (frontend)
-`index.html` completely rebuilt (~1,200 lines). New design system:
-- **Palette:** navy `#0a1628` / white / light `#f8f9fb` / accent `#1d4ed8` (replaces warm ink/paper/gold)
-- **Typography:** Cormorant Garamond (display) + Inter (UI/body) — replaces DM Mono
-- **Nav (8 items):** Home · About · Research · Implementation & Recognition · Professional Engagement · Proposed Endeavor · Research Profiles · Contact
+### Session 1 (2026-05-08) — Full NIW Platform Rebuild
+`feature/technical-task` → merged to `main`
 
-**New sections:**
-- **Research** (was Articles): Featured Research card, category tabs, article cards with SSRN/DOI/View Publication buttons, impact tag chips. Reviews removed entirely.
-- **Implementation & Recognition**: evidence list from `/api/evidence` — Title / Description / Institution · Year / [View Evidence]
-- **Professional Engagement**: engagements list from `/api/engagements` — same format
-- **Proposed Endeavor**: rebuilt as NIW petition summary (dark navy, 4-pillar grid)
-- **Research Profiles**: SSRN, Google Scholar, ORCID, ResearchGate, LinkedIn cards
-- **Contact**: minimal — email, LinkedIn, location only
-- **About**: systemic risk focus, CAMBA experience block, memberships
-- **Home**: NIW-positioned hero, 3 CTA buttons
+- Full site redesign: new institutional palette (navy/blue/white), 8-section nav, NIW-positioned copy
+- New APIs: `/api/evidence`, `/api/engagements` (full CRUD, JWT-protected writes)
+- Migration `0002_evidence_engagements.sql`: adds `ssrn_url`, `doi_url`, `tags` to articles; new `evidence` and `engagements` tables
+- D1 database seeded: 7 articles, 5 evidence items, 6 engagements
+- DNS fixed: `ivanbakalo.com` + `www` → `bakalo-capital.pages.dev`, SSL active
+- CI: GitHub Actions deploys on push to `main` or `feature/**`
+- 49 tests green (`npm test`)
 
-**Admin panel:** unified modal for articles / evidence / engagements. Article form adds ssrn_url, doi_url, tags, is_featured, sort_order.
+Full PRD in `plans/technical-task-prd.md`.
 
-### 2. Backend — New APIs (TDD, 49 tests green)
-Migration `0002_evidence_engagements.sql`:
-- Adds `ssrn_url`, `doi_url`, `tags` columns to `articles`
-- New `evidence` table (Implementation & Recognition items)
-- New `engagements` table (Professional Engagement items)
+### Session 2 (2026-05-11) — Visual Regression Analysis + Owner Photo
 
-New API modules (Cloudflare Pages Functions):
-- `functions/api/evidence.js` + `functions/api/evidence/[id].js` — full CRUD, admin-only writes
-- `functions/api/engagements.js` + `functions/api/engagements/[id].js` — full CRUD, admin-only writes
-- Articles API updated to handle new fields
+**Color palette investigation:**
+- Confirmed the warm gold/paper → navy/blue/white palette change was intentional, instructed by `raw/ivanbakalo.com.docx` §1 GLOBAL DESIGN/UI: *"dark blue / white / gray palette"*
+- Full analysis saved to `docs/COLOR_PALETTE_CHANGE.md` (branch `chore/visual-regression-analysis`)
 
-### 3. Database — Remote D1 Seeded
-D1 database `bakalo-db` (`0f8b90d7-8e9a-434c-b5fa-baf6a7d267b6`) — fully populated:
-- 7 articles — executive descriptions, impact tags, is_featured set
-- 5 evidence items: Clarivate, Silesian U., Erasmus+, Ostroh Academy, Category B journal
-- 6 engagements: Gartner, IMF, Joint Vienna Institute, Deloitte, Banque de France, IIA
+**Owner photo added to homepage hero:**
+- Photo source: `raw/ivanbakalo.com.docx` → `image4.jpg` (conference shot, nameplate "Mr. Ivan Bakalo")
+- Saved to `assets/ivan-bakalo.jpg`
+- Hero restructured into two-column grid: text left (1fr), portrait right (420px)
+- Portrait has accent-left border (`var(--accent-lt)`), collapses to single column on mobile ≤768px
+- Branch `feature/add-platform-owner-photo` → merged to `main`
 
-### 4. DNS — Fixed
-`ivanbakalo.com` zone (`85bb348b63aba16863397d9c20051520`) in Cloudflare:
-- `ivanbakalo.com` CNAME → `bakalo-capital.pages.dev` (proxied) — was active, confirmed
-- `www.ivanbakalo.com` CNAME → `bakalo-capital.pages.dev` (proxied) — **added this session**
-- Both registered as Pages custom domains, SSL active
-- GitHub Pages: still technically enabled in repo but Cloudflare routing takes precedence. **TODO: disable GitHub Pages in repo Settings → Pages → set source to None.**
+**Deployment cleanup:**
+- All staging/preview deployments deleted — Cloudflare Pages now has one deployment (production only)
+- `wrangler.toml.bak` added to `.gitignore`
+- `main` pushed to origin; GitHub Actions CI triggered production deploy
 
-### 5. Cloudflare Pages Project
-- **Project:** `bakalo-capital`
-- **Account:** `e8eeb644ca96a2d4cb2a9674ea599e79` (Dimabashtan@gmail.com)
-- **Production branch:** `main`
-- **Production URL:** https://ivanbakalo.com (also https://bakalo-capital.pages.dev)
-- **CI:** GitHub Actions on push to `main` or `feature/**` — applies migrations, seeds if empty, deploys
+---
+
+## Current Branch State
+| Branch | Status |
+|--------|--------|
+| `main` | Production — up to date with origin |
+| `chore/visual-regression-analysis` | Pushed — contains `docs/COLOR_PALETTE_CHANGE.md` only; not merged (informational) |
+| `feature/add-platform-owner-photo` | Pushed — merged to main |
+| `feature/technical-task` | Pushed — merged to main |
+| `feature/stakeholders-requirements` | Pushed — merged to main (older) |
 
 ---
 
 ## Pending / Next Steps
 
 ### High Priority
-- [ ] **Disable GitHub Pages** — repo Settings → Pages → Source: None (avoids confusion)
-- [ ] **Set JWT_SECRET** in Cloudflare Pages → bakalo-capital → Settings → Environment Variables → Production. Without this, admin login will fail in production. Value: any long random string.
-- [ ] **Add real article URLs** — all articles currently have `url: '#'`. Update via admin panel once live: SSRN links, DOI links, publication URLs.
-- [ ] **Add real evidence URLs** — evidence_url fields are empty. Upload PDFs/screenshots and add links via admin panel.
+- [ ] **Set JWT_SECRET in production** — Cloudflare Pages → `bakalo-capital` → Settings → Environment Variables → Production. Without this, admin login fails on the live site.
+- [ ] **Disable GitHub Pages** — repo Settings → Pages → Source: None (Cloudflare takes precedence, but cleaner to disable)
+- [ ] **Add real article URLs** — all articles have `url: '#'`. Update via admin panel: SSRN links, DOI links, publication URLs.
+- [ ] **Add real evidence URLs** — `evidence_url` fields are empty. Upload PDFs/screenshots, add links via admin.
 - [ ] **Add real engagement URLs** — same as above.
-- [ ] **Add Research Profile links** — Research Profiles section has placeholder hrefs. Update in index.html or via admin.
+- [ ] **Add Research Profile links** — Research Profiles section has placeholder hrefs in `index.html`.
 
 ### Medium Priority
-- [ ] **Test admin panel end-to-end** on production — triple-click logo → login → add/edit/delete articles, evidence, engagements.
-- [ ] **Mobile QA** — test nav hamburger, article cards, evidence list on mobile.
-- [ ] **SEO** — meta description and OG tags are in `<head>`, but no real canonical URL is confirmed. Check with Lighthouse.
-
-### Token Reference (for future sessions)
-Tokens are stored securely — do not commit them. Retrieve from Cloudflare Dashboard → My Profile → API Tokens.
-- **Cloudflare API Token** (Pages + D1 scope): named token in dashboard, set via `export CLOUDFLARE_API_TOKEN=<token>`
-- **Cloudflare DNS Token** (Zone DNS Edit for ivanbakalo.com): set via `export CLOUDFLARE_DNS_TOKEN=<token>`
+- [ ] **Test admin panel on production** — triple-click logo → login → add/edit/delete articles, evidence, engagements
+- [ ] **Mobile QA** — test nav, article cards, evidence/engagement lists, hero photo collapse on mobile
+- [ ] **SEO** — verify meta description and OG tags in `<head>`, Lighthouse audit
 
 ---
 
-## Key File Locations
+## Cloudflare Account
+- **Account ID:** `e8eeb644ca96a2d4cb2a9674ea599e79` (dimabashtan@gmail.com)
+- **Pages project:** `bakalo-capital`
+- **D1 database:** `bakalo-db` / `0f8b90d7-8e9a-434c-b5fa-baf6a7d267b6`
+- **API Token:** set via `export CLOUDFLARE_API_TOKEN=<token>` (retrieve from Cloudflare Dashboard → My Profile → API Tokens)
+- **Deploy to staging:** `bash scripts/deploy-staging.sh` (requires token exported)
+
+---
+
+## Key Files
 | File | Purpose |
 |------|---------|
-| `index.html` | Entire frontend (single file, ~95KB + logo) |
-| `functions/api/articles.js` | Articles GET/POST |
-| `functions/api/articles/[id].js` | Articles GET/PUT/DELETE by id |
-| `functions/api/evidence.js` | Evidence GET/POST |
-| `functions/api/evidence/[id].js` | Evidence GET/PUT/DELETE by id |
-| `functions/api/engagements.js` | Engagements GET/POST |
-| `functions/api/engagements/[id].js` | Engagements GET/PUT/DELETE by id |
-| `functions/lib/auth.js` | requireAuth (JWT validation) |
-| `migrations/0001_init.sql` | articles + users tables |
-| `migrations/0002_evidence_engagements.sql` | ssrn_url/doi_url/tags + evidence + engagements |
-| `schema.sql` | Reference schema (source of truth) |
-| `seed.sql` | Seed data for all tables |
-| `test/articles-api.test.js` | Articles API tests (Vitest) |
-| `test/evidence-api.test.js` | Evidence API tests |
-| `test/engagements-api.test.js` | Engagements API tests |
+| `index.html` | Entire frontend (~95KB + logo + portrait) |
+| `assets/ivan-bakalo.jpg` | Owner portrait used in hero |
+| `functions/api/articles.js` + `/[id].js` | Articles CRUD |
+| `functions/api/evidence.js` + `/[id].js` | Evidence CRUD |
+| `functions/api/engagements.js` + `/[id].js` | Engagements CRUD |
+| `functions/lib/auth.js` | JWT auth middleware |
+| `migrations/0001_init.sql` | articles + users schema |
+| `migrations/0002_evidence_engagements.sql` | evidence + engagements + new article columns |
+| `seed.sql` | Full seed data |
+| `schema.sql` | Reference schema |
 | `wrangler.toml` | Cloudflare Pages + D1 config |
-| `.github/workflows/*.yml` | CI: migrate + seed + deploy on push |
-| `plans/technical-task-prd.md` | Full PRD for this rebuild |
+| `.github/workflows/deploy.yml` | CI: migrate + seed + deploy on push |
+| `docs/COLOR_PALETTE_CHANGE.md` | Color palette investigation report |
+| `plans/technical-task-prd.md` | Full PRD for NIW platform rebuild |
 
 ## Run Tests
 ```bash
