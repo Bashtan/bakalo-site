@@ -1,14 +1,10 @@
 -- Seed data. Run after migrations:
 --   wrangler d1 execute bakalo-db --file=seed.sql
---
--- BEFORE DEPLOYING: replace admin email + regenerate password hash:
---   node scripts/hash-password.js <your-password>
--- Default password for local dev: changeme123
 
 INSERT OR IGNORE INTO users (id, email, password_hash, role, created_at) VALUES (
   'user_admin_01',
-  'admin@ivanbakalo.com',
-  'pbkdf2:sha256:100000:e02e6d7731273dc1c7dd24d4bf1f5be1:894wbsybn1AqZEPyO9uj8M5PtU6JdneIVny/GyRX2Cc=',
+  'bakalo.science@gmail.com',
+  'pbkdf2:sha256:100000:33a19cd609976674e245930cff21ebe7:KQYy6ORWwriN4BZQJV15Znu7lB2msDBBRQZDNguGsWg=',
   'admin',
   '2026-05-02T00:00:00.000Z'
 );
