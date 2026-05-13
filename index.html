@@ -27,7 +27,7 @@
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { background: var(--paper); color: var(--text); font-family: 'DM Mono', 'Courier New', monospace; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+body { background: var(--paper); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
 
 /* ── NAV ── */
 nav {
@@ -41,8 +41,8 @@ nav {
 .nav-links { display: flex; gap: 0; list-style: none; align-items: center; }
 .nav-links a {
   display: block; padding: 0 0.85rem;
-  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.02em;
-  color: var(--slate); text-decoration: none; transition: color 0.2s; white-space: nowrap;
+  font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--slate); text-decoration: none; transition: color 0.2s; white-space: nowrap; text-transform: uppercase;
 }
 .nav-links a:hover { color: var(--navy); }
 .hamburger {
@@ -68,7 +68,7 @@ nav {
 section { padding: 6rem 3rem 5rem; }
 .section-inner { max-width: 1080px; margin: 0 auto; width: 100%; }
 .section-label {
-  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 1rem;
   display: flex; align-items: center; gap: 0.75rem;
 }
@@ -88,7 +88,7 @@ section { padding: 6rem 3rem 5rem; }
 #home .section-label { color: var(--accent-lt); }
 #home .section-label::before { background: var(--accent-lt); }
 .home-eyebrow {
-  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase;
   color: var(--accent-lt); margin-bottom: 1.5rem;
 }
 .home-name {
@@ -154,7 +154,7 @@ section { padding: 6rem 3rem 5rem; }
 .about-rule { width: 48px; height: 2px; background: var(--border); margin-bottom: 1.5rem; }
 .about-bio p { font-size: 0.95rem; line-height: 1.8; color: var(--text); margin-bottom: 1.1rem; }
 .competencies-label {
-  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 0.75rem; margin-top: 1.8rem;
 }
 .competencies-list { list-style: none; border-top: 1px solid var(--border); }
@@ -249,7 +249,7 @@ section { padding: 6rem 3rem 5rem; }
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .article-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(184,147,90,0.12); }
-.article-cat-tag { font-size: 0.63rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.article-cat-tag { font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
 .article-card h3 {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 1.2rem; font-weight: 400; line-height: 1.35; color: var(--navy);
@@ -290,7 +290,7 @@ section { padding: 6rem 3rem 5rem; }
   font-size: 1.15rem; font-weight: 400; color: var(--navy); margin-bottom: 0.35rem;
 }
 .evidence-desc { font-size: 0.875rem; line-height: 1.65; color: var(--text); margin-bottom: 0.5rem; }
-.evidence-meta { font-size: 0.75rem; color: var(--slate); }
+.evidence-meta { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--slate); }
 .evidence-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; flex-shrink: 0; }
 .evidence-card-admin { display: none; gap: 0.3rem; }
 .admin-mode .evidence-card-admin { display: flex; }
@@ -348,7 +348,7 @@ section { padding: 6rem 3rem 5rem; }
 .contact-items { margin-top: 2.5rem; max-width: 480px; }
 .contact-item { padding: 1.1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .contact-item:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
-.contact-lbl { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-lt); margin-bottom: 0.3rem; }
+.contact-lbl { font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-lt); margin-bottom: 0.3rem; }
 .contact-item a, .contact-item span { font-size: 0.95rem; color: rgba(255,255,255,0.82); text-decoration: none; transition: color 0.2s; }
 .contact-item a:hover { color: var(--white); }
 
