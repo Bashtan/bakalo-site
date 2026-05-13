@@ -10,38 +10,39 @@
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://ivanbakalo.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy:     #0a1628;
-  --navy-mid: #1e3a5f;
+  --navy:     #0e0e0e;
+  --navy-mid: #2a2420;
+  --paper:    #f5f2ec;
   --white:    #ffffff;
-  --light:    #f8f9fb;
-  --text:     #1e293b;
-  --slate:    #64748b;
-  --accent:   #1d4ed8;
-  --accent-lt:#3b82f6;
-  --border:   #e2e8f0;
+  --light:    #ede8df;
+  --text:     #2a2420;
+  --slate:    #7a7468;
+  --accent:   #b8935a;
+  --accent-lt:#d4aa72;
+  --border:   #c8c0b0;
   --red:      #dc2626;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { background: var(--white); color: var(--text); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+body { background: var(--paper); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
 
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   display: flex; justify-content: space-between; align-items: center;
   padding: 0 3rem; height: 64px;
-  background: var(--white); border-bottom: 1px solid var(--border);
+  background: var(--paper); border-bottom: 1px solid var(--border);
 }
 .nav-logo-wrap { display: flex; align-items: center; cursor: pointer; text-decoration: none; }
 .nav-logo-wrap img { height: 36px; width: auto; }
 .nav-links { display: flex; gap: 0; list-style: none; align-items: center; }
 .nav-links a {
   display: block; padding: 0 0.85rem;
-  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.02em;
-  color: var(--slate); text-decoration: none; transition: color 0.2s; white-space: nowrap;
+  font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
+  color: var(--slate); text-decoration: none; transition: color 0.2s; white-space: nowrap; text-transform: uppercase;
 }
 .nav-links a:hover { color: var(--navy); }
 .hamburger {
@@ -54,7 +55,7 @@ nav {
   .hamburger { display: flex; }
   .nav-links {
     display: none; position: absolute; top: 64px; left: 0; right: 0;
-    background: var(--white); border-bottom: 1px solid var(--border);
+    background: var(--paper); border-bottom: 1px solid var(--border);
     flex-direction: column; align-items: flex-start;
     padding: 0.75rem 1.5rem 1.25rem; gap: 0;
   }
@@ -67,7 +68,7 @@ nav {
 section { padding: 6rem 3rem 5rem; }
 .section-inner { max-width: 1080px; margin: 0 auto; width: 100%; }
 .section-label {
-  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 1rem;
   display: flex; align-items: center; gap: 0.75rem;
 }
@@ -87,7 +88,7 @@ section { padding: 6rem 3rem 5rem; }
 #home .section-label { color: var(--accent-lt); }
 #home .section-label::before { background: var(--accent-lt); }
 .home-eyebrow {
-  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase;
   color: var(--accent-lt); margin-bottom: 1.5rem;
 }
 .home-name {
@@ -153,7 +154,7 @@ section { padding: 6rem 3rem 5rem; }
 .about-rule { width: 48px; height: 2px; background: var(--border); margin-bottom: 1.5rem; }
 .about-bio p { font-size: 0.95rem; line-height: 1.8; color: var(--text); margin-bottom: 1.1rem; }
 .competencies-label {
-  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 0.75rem; margin-top: 1.8rem;
 }
 .competencies-list { list-style: none; border-top: 1px solid var(--border); }
@@ -179,7 +180,7 @@ section { padding: 6rem 3rem 5rem; }
 @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
 
 /* ── RESEARCH ── */
-#research { background: var(--white); }
+#research { background: var(--paper); }
 .research-header {
   display: flex; justify-content: space-between; align-items: flex-end;
   margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
@@ -196,7 +197,7 @@ section { padding: 6rem 3rem 5rem; }
 .btn-logout {
   display: none; background: none; border: 1px solid var(--border);
   color: var(--slate); padding: 0.5rem 1rem; font-size: 0.7rem; font-weight: 500;
-  cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif;
+  cursor: pointer; transition: all 0.2s; font-family: 'DM Mono', monospace;
 }
 .btn-logout:hover { border-color: var(--accent); color: var(--accent); }
 .btn-logout.visible { display: block; }
@@ -205,7 +206,7 @@ section { padding: 6rem 3rem 5rem; }
   font-size: 0.7rem; font-weight: 500; letter-spacing: 0.04em;
   background: none; border: 1px solid var(--border); color: var(--slate);
   padding: 0.4rem 0.95rem; cursor: pointer; transition: all 0.2s;
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Mono', monospace;
 }
 .cat-tab:hover { border-color: var(--accent); color: var(--accent); }
 .cat-tab.active { background: var(--accent); border-color: var(--accent); color: var(--white); }
@@ -247,8 +248,8 @@ section { padding: 6rem 3rem 5rem; }
   position: relative; display: flex; flex-direction: column; gap: 0.6rem;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.article-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(29,78,216,0.07); }
-.article-cat-tag { font-size: 0.63rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.article-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(184,147,90,0.12); }
+.article-cat-tag { font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
 .article-card h3 {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 1.2rem; font-weight: 400; line-height: 1.35; color: var(--navy);
@@ -274,7 +275,7 @@ section { padding: 6rem 3rem 5rem; }
 
 /* ── EVIDENCE & ENGAGEMENT (shared list layout) ── */
 #implementation { background: var(--light); }
-#engagement { background: var(--white); }
+#engagement { background: var(--paper); }
 .evidence-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); margin-top: 1.5rem; }
 .evidence-card {
   background: inherit; padding: 1.8rem 0; border-bottom: 1px solid var(--border);
@@ -289,7 +290,7 @@ section { padding: 6rem 3rem 5rem; }
   font-size: 1.15rem; font-weight: 400; color: var(--navy); margin-bottom: 0.35rem;
 }
 .evidence-desc { font-size: 0.875rem; line-height: 1.65; color: var(--text); margin-bottom: 0.5rem; }
-.evidence-meta { font-size: 0.75rem; color: var(--slate); }
+.evidence-meta { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--slate); }
 .evidence-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; flex-shrink: 0; }
 .evidence-card-admin { display: none; gap: 0.3rem; }
 .admin-mode .evidence-card-admin { display: flex; }
@@ -319,7 +320,7 @@ section { padding: 6rem 3rem 5rem; }
   background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
   padding: 1.6rem; transition: background 0.25s;
 }
-.pillar:hover { background: rgba(59,130,246,0.08); }
+.pillar:hover { background: rgba(184,147,90,0.08); }
 .pillar-num { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.2em; color: var(--accent-lt); margin-bottom: 0.6rem; }
 .pillar p { font-size: 0.875rem; color: rgba(255,255,255,0.68); line-height: 1.6; }
 .endeavor-closing { font-size: 0.9rem; font-style: italic; color: rgba(255,255,255,0.48); max-width: 700px; line-height: 1.85; }
@@ -333,8 +334,8 @@ section { padding: 6rem 3rem 5rem; }
   display: flex; flex-direction: column; gap: 0.75rem;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.profile-card:hover { border-color: var(--accent); box-shadow: 0 4px 14px rgba(29,78,216,0.07); }
-.profile-icon { font-size: 1.7rem; line-height: 1; }
+.profile-card:hover { border-color: var(--accent); box-shadow: 0 4px 14px rgba(184,147,90,0.12); }
+.profile-icon { width: 36px; height: 36px; display: flex; align-items: center; }
 .profile-name { font-size: 0.875rem; font-weight: 600; color: var(--navy); }
 .profile-desc { font-size: 0.8rem; color: var(--slate); line-height: 1.55; flex: 1; }
 
@@ -347,7 +348,7 @@ section { padding: 6rem 3rem 5rem; }
 .contact-items { margin-top: 2.5rem; max-width: 480px; }
 .contact-item { padding: 1.1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .contact-item:first-child { border-top: 1px solid rgba(255,255,255,0.1); }
-.contact-lbl { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-lt); margin-bottom: 0.3rem; }
+.contact-lbl { font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-lt); margin-bottom: 0.3rem; }
 .contact-item a, .contact-item span { font-size: 0.95rem; color: rgba(255,255,255,0.82); text-decoration: none; transition: color 0.2s; }
 .contact-item a:hover { color: var(--white); }
 
@@ -364,7 +365,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
 /* ── MODAL ── */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 500;
-  background: rgba(10,22,40,0.75); backdrop-filter: blur(4px);
+  background: rgba(14,14,14,0.78); backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center; padding: 2rem;
   opacity: 0; pointer-events: none; transition: opacity 0.3s;
 }
@@ -380,7 +381,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
   position: absolute; top: 1.2rem; right: 1.2rem; background: none;
   border: 1px solid var(--border); font-size: 0.68rem; font-weight: 500;
   letter-spacing: 0.1em; color: var(--slate); cursor: pointer;
-  padding: 0.3rem 0.65rem; transition: all 0.2s; font-family: 'Inter', sans-serif;
+  padding: 0.3rem 0.65rem; transition: all 0.2s; font-family: 'DM Mono', monospace;
 }
 .modal-close:hover { border-color: var(--text); color: var(--text); }
 .modal-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.8rem; font-weight: 300; margin-bottom: 1.8rem; color: var(--navy); }
@@ -389,7 +390,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
 .form-label { display: block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
 .form-input, .form-textarea, .form-sel {
   width: 100%; background: var(--light); border: 1px solid var(--border);
-  padding: 0.65rem 0.85rem; font-family: 'Inter', sans-serif; font-size: 0.875rem;
+  padding: 0.65rem 0.85rem; font-family: 'DM Mono', monospace; font-size: 0.875rem;
   color: var(--text); outline: none; transition: border-color 0.2s; resize: vertical;
 }
 .form-input:focus, .form-textarea:focus, .form-sel:focus { border-color: var(--accent); }
@@ -400,7 +401,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
   background: var(--accent); color: var(--white); border: none;
   padding: 0.72rem 1.8rem; font-size: 0.75rem; font-weight: 600;
   letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
-  transition: background 0.2s; margin-top: 0.5rem; font-family: 'Inter', sans-serif;
+  transition: background 0.2s; margin-top: 0.5rem; font-family: 'DM Mono', monospace;
 }
 .btn-submit:hover { background: var(--navy); }
 .auth-error { color: var(--red); font-size: 0.78rem; margin-bottom: 1rem; display: none; }
@@ -462,10 +463,11 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <h2 class="about-name">Ivan<br><em>Bakalo</em></h2>
         <div class="about-rule"></div>
         <div class="memberships-block">
-          <p>Memberships</p>
+          <p>Professional Memberships</p>
           <ul>
-            <li>All-Ukrainian Association of International Economics</li>
-            <li>Ukrainian Association of Teachers and Researchers of European Integration</li>
+            <li><a href="https://www.theiia.org/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">The Institute of Internal Auditors</a> — New York, NY, US</li>
+            <li><a href="https://aprei.com.ua" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">Ukrainian Association of Teachers and Researchers of European Integration (APREI)</a> — Kyiv, UA</li>
+            <li><a href="http://www.ugouaem.com" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">Ukrainian Association of International Economists</a> — Kyiv, UA</li>
           </ul>
         </div>
       </div>
@@ -581,34 +583,34 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
     <h2 class="section-title fade-in fade-in-delay-1">Academic &amp; Professional <em>Presence</em></h2>
     <div class="profiles-grid fade-in fade-in-delay-2">
       <div class="profile-card">
-        <div class="profile-icon">&#128196;</div>
+        <div class="profile-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" fill="#1C2B4B"/><text x="4" y="25" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="0.5">SSRN</text></svg></div>
         <div class="profile-name">SSRN</div>
         <div class="profile-desc">Financial research papers and working papers in economics, finance, and governance.</div>
-        <a href="#" target="_blank" class="btn-sm-accent">View Profile</a>
+        <a href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
       </div>
       <div class="profile-card">
-        <div class="profile-icon">&#127891;</div>
+        <div class="profile-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" fill="#4285F4"/><text x="5" y="25" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#ffffff">GS</text></svg></div>
         <div class="profile-name">Google Scholar</div>
         <div class="profile-desc">Citation metrics, academic impact, and indexed publications.</div>
-        <a href="#" target="_blank" class="btn-sm-accent">View Profile</a>
+        <a href="https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
       </div>
       <div class="profile-card">
-        <div class="profile-icon">&#128300;</div>
+        <div class="profile-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="18" r="18" fill="#A6CE39"/><text x="7" y="23" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#ffffff">iD</text></svg></div>
         <div class="profile-name">ORCID</div>
         <div class="profile-desc">Verified research identity and persistent digital identifier for academic work.</div>
-        <a href="#" target="_blank" class="btn-sm-accent">View Profile</a>
+        <a href="https://orcid.org/0009-0007-5773-1436" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
       </div>
       <div class="profile-card">
-        <div class="profile-icon">&#128279;</div>
+        <div class="profile-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="5" fill="#00CCBB"/><text x="4" y="25" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#ffffff">RG</text></svg></div>
         <div class="profile-name">ResearchGate</div>
         <div class="profile-desc">Academic network, publications, and research collaboration platform.</div>
-        <a href="#" target="_blank" class="btn-sm-accent">View Profile</a>
+        <a href="https://www.researchgate.net/profile/Ivan-Bakalo-2" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
       </div>
       <div class="profile-card">
-        <div class="profile-icon">&#128188;</div>
+        <div class="profile-icon"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="5" fill="#0077B5"/><text x="8" y="26" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#ffffff">in</text></svg></div>
         <div class="profile-name">LinkedIn</div>
         <div class="profile-desc">Professional network, career profile, and industry engagement.</div>
-        <a href="https://linkedin.com/in/ivan-bakalo" target="_blank" class="btn-sm-accent">View Profile</a>
+        <a href="https://www.linkedin.com/in/ivanbakalo" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
       </div>
     </div>
   </div>
@@ -622,11 +624,11 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
     <div class="contact-items fade-in fade-in-delay-2">
       <div class="contact-item">
         <div class="contact-lbl">Email</div>
-        <a href="mailto:ivan.bakalo@ivanbakalo.com">ivan.bakalo@ivanbakalo.com</a>
+        <a href="mailto:bakalo.science@gmail.com">bakalo.science@gmail.com</a>
       </div>
       <div class="contact-item">
         <div class="contact-lbl">LinkedIn</div>
-        <a href="https://linkedin.com/in/ivan-bakalo" target="_blank">linkedin.com/in/ivan-bakalo</a>
+        <a href="https://www.linkedin.com/in/ivanbakalo" target="_blank" rel="noopener">linkedin.com/in/ivanbakalo</a>
       </div>
       <div class="contact-item">
         <div class="contact-lbl">Location</div>
