@@ -119,7 +119,7 @@ INSERT OR IGNORE INTO articles (id, title, url, category, description, year, is_
 );
 
 -- Implementation & Recognition evidence
-INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, category, created_at) VALUES (
   'ev_clarivate_01',
   'Clarivate / Web of Science Peer Review Recognition',
   'Recognized as a peer reviewer within the Web of Science ecosystem, covering governance, economics, and financial systems research.',
@@ -127,10 +127,11 @@ INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evide
   2025,
   '',
   1,
+  'Recognition',
   '2026-05-02T00:00:00.000Z'
 );
 
-INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, category, created_at) VALUES (
   'ev_silesian_01',
   'Silesian University of Technology — International Conference',
   'Participation and contribution at the International Interdisciplinary Scientific Conference on governance and financial systems.',
@@ -138,10 +139,11 @@ INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evide
   2025,
   '',
   2,
+  'Academic Participation',
   '2026-05-02T00:00:01.000Z'
 );
 
-INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, category, created_at) VALUES (
   'ev_erasmus_01',
   'Erasmus+ Academic Mobility Activity',
   'Academic engagement under the Erasmus+ program, contributing to international research collaboration and institutional knowledge exchange.',
@@ -149,10 +151,11 @@ INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evide
   2024,
   '',
   3,
+  'Academic Participation',
   '2026-05-02T00:00:02.000Z'
 );
 
-INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, category, created_at) VALUES (
   'ev_ostroh_01',
   'Ostroh Academy International Conference',
   'Presented research findings at the Ostroh Academy international scientific conference focused on financial governance.',
@@ -160,10 +163,11 @@ INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evide
   2024,
   '',
   4,
+  'Academic Participation',
   '2026-05-02T00:00:03.000Z'
 );
 
-INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evidence_url, sort_order, category, created_at) VALUES (
   'ev_catb_01',
   'Publication in Category B Peer-Reviewed Journal',
   'Research published in a Category B scientific journal recognized by the Ukrainian Ministry of Education and Science.',
@@ -171,11 +175,19 @@ INSERT OR IGNORE INTO evidence (id, title, description, institution, year, evide
   2024,
   '',
   5,
+  'Recognition',
   '2026-05-02T00:00:04.000Z'
 );
 
+-- Backfill categories for any existing evidence rows that predate the migration
+UPDATE evidence SET category = 'Recognition'          WHERE id = 'ev_clarivate_01' AND (category IS NULL OR category = '');
+UPDATE evidence SET category = 'Academic Participation' WHERE id = 'ev_silesian_01' AND (category IS NULL OR category = '');
+UPDATE evidence SET category = 'Academic Participation' WHERE id = 'ev_erasmus_01'  AND (category IS NULL OR category = '');
+UPDATE evidence SET category = 'Academic Participation' WHERE id = 'ev_ostroh_01'   AND (category IS NULL OR category = '');
+UPDATE evidence SET category = 'Recognition'          WHERE id = 'ev_catb_01'      AND (category IS NULL OR category = '');
+
 -- Professional Engagement
-INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, category, created_at) VALUES (
   'eng_gartner_01',
   'Gartner Security & Risk Management Summit',
   'Attended webinar on AI governance frameworks, enterprise risk management, and systemic risk in digital financial infrastructure.',
@@ -183,10 +195,11 @@ INSERT OR IGNORE INTO engagements (id, title, description, organization, year, e
   2025,
   '',
   1,
+  'AI Governance',
   '2026-05-02T00:00:00.000Z'
 );
 
-INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, category, created_at) VALUES (
   'eng_imf_01',
   'IMF Financial Stability Training',
   'Professional development program covering macroprudential policy, systemic risk assessment frameworks, and financial stability governance.',
@@ -194,10 +207,11 @@ INSERT OR IGNORE INTO engagements (id, title, description, organization, year, e
   2024,
   '',
   2,
+  'Continuing Education',
   '2026-05-02T00:00:01.000Z'
 );
 
-INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, category, created_at) VALUES (
   'eng_jvi_01',
   'Joint Vienna Institute — Financial Regulation Program',
   'Completed professional training in financial regulation, supervisory frameworks, and institutional risk governance.',
@@ -205,10 +219,11 @@ INSERT OR IGNORE INTO engagements (id, title, description, organization, year, e
   2024,
   '',
   3,
+  'Continuing Education',
   '2026-05-02T00:00:02.000Z'
 );
 
-INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, category, created_at) VALUES (
   'eng_deloitte_01',
   'Deloitte Professional Development — Risk & Governance',
   'Advanced training in enterprise risk management, regulatory compliance frameworks, and governance best practices.',
@@ -216,10 +231,11 @@ INSERT OR IGNORE INTO engagements (id, title, description, organization, year, e
   2024,
   '',
   4,
+  'Continuing Education',
   '2026-05-02T00:00:03.000Z'
 );
 
-INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, category, created_at) VALUES (
   'eng_bdf_01',
   'Banque de France — Central Banking & Stability',
   'Training program in central banking operations, financial stability oversight, and macroprudential regulatory design.',
@@ -227,10 +243,11 @@ INSERT OR IGNORE INTO engagements (id, title, description, organization, year, e
   2024,
   '',
   5,
+  'Continuing Education',
   '2026-05-02T00:00:04.000Z'
 );
 
-INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, created_at) VALUES (
+INSERT OR IGNORE INTO engagements (id, title, description, organization, year, evidence_url, sort_order, category, created_at) VALUES (
   'eng_iia_01',
   'IIA — Institute of Internal Auditors Professional Engagement',
   'Active participation in IIA webinars and programs covering AI governance, internal audit standards, and risk-based audit methodology.',
@@ -238,5 +255,14 @@ INSERT OR IGNORE INTO engagements (id, title, description, organization, year, e
   2025,
   '',
   6,
+  'Audit & Cybersecurity',
   '2026-05-02T00:00:05.000Z'
 );
+
+-- Backfill categories for any existing engagement rows that predate the migration
+UPDATE engagements SET category = 'AI Governance'      WHERE id = 'eng_gartner_01' AND (category IS NULL OR category = '');
+UPDATE engagements SET category = 'Continuing Education' WHERE id = 'eng_imf_01'    AND (category IS NULL OR category = '');
+UPDATE engagements SET category = 'Continuing Education' WHERE id = 'eng_jvi_01'    AND (category IS NULL OR category = '');
+UPDATE engagements SET category = 'Continuing Education' WHERE id = 'eng_deloitte_01' AND (category IS NULL OR category = '');
+UPDATE engagements SET category = 'Continuing Education' WHERE id = 'eng_bdf_01'    AND (category IS NULL OR category = '');
+UPDATE engagements SET category = 'Audit & Cybersecurity' WHERE id = 'eng_iia_01'  AND (category IS NULL OR category = '');

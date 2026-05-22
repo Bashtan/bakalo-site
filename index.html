@@ -535,7 +535,15 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       </div>
       <button class="btn-accent" id="btnAddEvidence" onclick="openFormModal('evidence', null)">+ Add Evidence</button>
     </div>
-    <div class="evidence-list fade-in fade-in-delay-2" id="evidenceList">
+    <div class="category-tabs fade-in fade-in-delay-2" id="evidenceTabs">
+      <button class="cat-tab active" data-cat="">All</button>
+      <button class="cat-tab" data-cat="Recognition">Recognition</button>
+      <button class="cat-tab" data-cat="Professional Development">Professional Development</button>
+      <button class="cat-tab" data-cat="Certifications">Certifications</button>
+      <button class="cat-tab" data-cat="Implementation">Implementation</button>
+      <button class="cat-tab" data-cat="Academic Participation">Academic Participation</button>
+    </div>
+    <div class="evidence-list fade-in fade-in-delay-3" id="evidenceList">
       <div class="articles-empty">Loading&hellip;</div>
     </div>
   </div>
@@ -552,7 +560,15 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       </div>
       <button class="btn-accent" id="btnAddEngagement" onclick="openFormModal('engagement', null)">+ Add Engagement</button>
     </div>
-    <div class="evidence-list fade-in fade-in-delay-2" id="engagementList">
+    <div class="category-tabs fade-in fade-in-delay-2" id="engagementTabs">
+      <button class="cat-tab active" data-cat="">All</button>
+      <button class="cat-tab" data-cat="AI Governance">AI Governance</button>
+      <button class="cat-tab" data-cat="Audit &amp; Cybersecurity">Audit &amp; Cybersecurity</button>
+      <button class="cat-tab" data-cat="Governance Discussions">Governance Discussions</button>
+      <button class="cat-tab" data-cat="Continuing Education">Continuing Education</button>
+      <button class="cat-tab" data-cat="Memberships">Memberships</button>
+    </div>
+    <div class="evidence-list fade-in fade-in-delay-3" id="engagementList">
       <div class="articles-empty">Loading&hellip;</div>
     </div>
   </div>
@@ -727,6 +743,16 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <input type="text" class="form-input" id="eTitle" placeholder="Evidence title">
       </div>
       <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-input form-sel" id="eCategory">
+          <option value="Recognition">Recognition</option>
+          <option value="Professional Development">Professional Development</option>
+          <option value="Certifications">Certifications</option>
+          <option value="Implementation">Implementation</option>
+          <option value="Academic Participation">Academic Participation</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label class="form-label">Description</label>
         <textarea class="form-textarea" id="eDesc" placeholder="Description of the evidence&hellip;" rows="3"></textarea>
       </div>
@@ -755,6 +781,16 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       <div class="form-group">
         <label class="form-label">Title *</label>
         <input type="text" class="form-input" id="gTitle" placeholder="Engagement title">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-input form-sel" id="gCategory">
+          <option value="AI Governance">AI Governance</option>
+          <option value="Audit &amp; Cybersecurity">Audit &amp; Cybersecurity</option>
+          <option value="Governance Discussions">Governance Discussions</option>
+          <option value="Continuing Education">Continuing Education</option>
+          <option value="Memberships">Memberships</option>
+        </select>
       </div>
       <div class="form-group">
         <label class="form-label">Description</label>
@@ -896,6 +932,7 @@ function openFormModal(type, data) {
     document.getElementById('contentModalTitle').innerHTML = data ? 'Edit <em>Evidence</em>' : 'Add <em>Evidence</em>';
     document.getElementById('evidenceFields').style.display = 'block';
     document.getElementById('eTitle').value       = data ? (data.title || '') : '';
+    document.getElementById('eCategory').value    = data ? (data.category || 'Recognition') : 'Recognition';
     document.getElementById('eDesc').value        = data ? (data.description || '') : '';
     document.getElementById('eInstitution').value = data ? (data.institution || '') : '';
     document.getElementById('eYear').value        = data ? (data.year || '') : new Date().getFullYear();
@@ -906,6 +943,7 @@ function openFormModal(type, data) {
     document.getElementById('contentModalTitle').innerHTML = data ? 'Edit <em>Engagement</em>' : 'Add <em>Engagement</em>';
     document.getElementById('engagementFields').style.display = 'block';
     document.getElementById('gTitle').value       = data ? (data.title || '') : '';
+    document.getElementById('gCategory').value    = data ? (data.category || 'Continuing Education') : 'Continuing Education';
     document.getElementById('gDesc').value        = data ? (data.description || '') : '';
     document.getElementById('gOrg').value         = data ? (data.organization || '') : '';
     document.getElementById('gYear').value        = data ? (data.year || '') : new Date().getFullYear();
@@ -947,6 +985,7 @@ async function saveContent() {
     if (!title) { alert('Please enter a title.'); return; }
     data = {
       title,
+      category:     document.getElementById('eCategory').value,
       description:  document.getElementById('eDesc').value.trim() || null,
       institution:  document.getElementById('eInstitution').value.trim() || null,
       year:         parseInt(document.getElementById('eYear').value) || null,
@@ -961,6 +1000,7 @@ async function saveContent() {
     if (!title) { alert('Please enter a title.'); return; }
     data = {
       title,
+      category:     document.getElementById('gCategory').value,
       description:  document.getElementById('gDesc').value.trim() || null,
       organization: document.getElementById('gOrg').value.trim() || null,
       year:         parseInt(document.getElementById('gYear').value) || null,
@@ -992,6 +1032,8 @@ async function saveContent() {
    ARTICLES
 ================================================================ */
 let activeCategory = '';
+let activeEvidenceCategory = '';
+let activeEngagementCategory = '';
 
 async function renderArticles() {
   const grid          = document.getElementById('articlesGrid');
@@ -1064,10 +1106,28 @@ async function renderArticles() {
 document.getElementById('categoryTabs').addEventListener('click', e => {
   const btn = e.target.closest('.cat-tab');
   if (!btn) return;
-  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#categoryTabs .cat-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   activeCategory = btn.dataset.cat;
   renderArticles();
+});
+
+document.getElementById('evidenceTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.cat-tab');
+  if (!btn) return;
+  document.querySelectorAll('#evidenceTabs .cat-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  activeEvidenceCategory = btn.dataset.cat;
+  renderEvidence();
+});
+
+document.getElementById('engagementTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.cat-tab');
+  if (!btn) return;
+  document.querySelectorAll('#engagementTabs .cat-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  activeEngagementCategory = btn.dataset.cat;
+  renderEngagements();
 });
 
 /* ================================================================
@@ -1085,6 +1145,7 @@ async function renderEvidence() {
     container.innerHTML = '<div class="articles-empty">Could not load evidence.</div>';
     return;
   }
+  if (activeEvidenceCategory) items = items.filter(i => i.category === activeEvidenceCategory);
   if (!items.length) {
     container.innerHTML = '<div class="articles-empty">No evidence entries yet.</div>';
     return;
@@ -1121,6 +1182,7 @@ async function renderEngagements() {
     container.innerHTML = '<div class="articles-empty">Could not load engagements.</div>';
     return;
   }
+  if (activeEngagementCategory) items = items.filter(i => i.category === activeEngagementCategory);
   if (!items.length) {
     container.innerHTML = '<div class="articles-empty">No engagement entries yet.</div>';
     return;
