@@ -26,10 +26,11 @@ export async function onRequestPut({ request, env, params }) {
   if (body.year !== undefined) updated.year = body.year;
   if (body.evidence_url !== undefined) updated.evidence_url = body.evidence_url;
   if (body.sort_order !== undefined) updated.sort_order = body.sort_order;
+  if (body.category !== undefined) updated.category = body.category;
 
   await env.DB.prepare(
-    'UPDATE evidence SET title=?, description=?, institution=?, year=?, evidence_url=?, sort_order=? WHERE id=?'
-  ).bind(updated.title, updated.description, updated.institution, updated.year, updated.evidence_url, updated.sort_order, params.id).run();
+    'UPDATE evidence SET title=?, description=?, institution=?, year=?, evidence_url=?, sort_order=?, category=? WHERE id=?'
+  ).bind(updated.title, updated.description, updated.institution, updated.year, updated.evidence_url, updated.sort_order, updated.category ?? '', params.id).run();
 
   const item = await env.DB.prepare('SELECT * FROM evidence WHERE id = ?').bind(params.id).first();
   return json(item);

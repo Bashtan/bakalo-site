@@ -17,15 +17,15 @@ export async function onRequestPost({ request, env }) {
   let body;
   try { body = await request.json(); } catch { return json({ error: 'Invalid JSON' }, 400); }
 
-  const { title, description = '', organization = '', year = null, evidence_url = '', sort_order = 0 } = body || {};
+  const { title, description = '', organization = '', year = null, evidence_url = '', sort_order = 0, category = '' } = body || {};
   if (!title) return json({ error: 'title required' }, 400);
 
   const id = 'eng_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
   const created_at = new Date().toISOString();
 
   await env.DB.prepare(
-    'INSERT INTO engagements (id, title, description, organization, year, evidence_url, sort_order, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-  ).bind(id, title, description, organization, year, evidence_url, sort_order, created_at).run();
+    'INSERT INTO engagements (id, title, description, organization, year, evidence_url, sort_order, category, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+  ).bind(id, title, description, organization, year, evidence_url, sort_order, category, created_at).run();
 
   const item = await env.DB.prepare('SELECT * FROM engagements WHERE id = ?').bind(id).first();
   return json(item, 201);
