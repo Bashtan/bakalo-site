@@ -117,7 +117,7 @@ Push to `main`, `feature/**`, or `fix/**` triggers `.github/workflows/deploy.yml
 
 Merging to `main` → production deployment at `bakalo-capital.pages.dev`.
 
-> **Staging-first rule (enforced):** A `PreToolUse` hook in `.claude/settings.json` blocks `git push … main` when the last commit is `feat:*`. Always push feature work to `fix/<name>` first, get stakeholder sign-off on the preview, then push to `main`. See CLAUDE.md §4.
+> **Staging-first rule (enforced):** A `PreToolUse` hook in `.claude/settings.json` blocks **all** `git push … main` attempts unconditionally. Always push to `fix/<name>` first. Deploy to production (`main`) only after the user says so explicitly in chat. See CLAUDE.md §4.
 
 ---
 
@@ -294,3 +294,4 @@ Always diff against the previous version before starting new work to identify up
 | 2026-07-04 | Stat chip contrast redesign — inverted dark navy chip (`background: var(--navy)`) with `--accent-lt` gold value text and 50%-white label text, replacing near-invisible 8% tint; pushed to both `main` and `fix/profile-stats` |
 | 2026-07-04 | Stat chip readability fix (WCAG AAA) — warm dark bg `#2d2922` (chip-vs-card 17:1→13:1), label opacity 0.5→0.72 (5.3:1→8.2:1 AAA), value gold brightened to `#e8c47e` (8.7:1 AAA), font 0.67→0.7rem |
 | 2026-07-04 | Stat chip redesign → outlined style — transparent bg, `#9a7845` gold border (4.08:1 WCAG 1.4.11 ✓), label `#6d6660` warm gray (5.65:1 AA ✓), value `--navy` bold (19.3:1 AAA ✓) |
+| 2026-07-04 | Deploy rule tightened — PreToolUse hook now blocks ALL `git push … main` (previously only `feat:` commits); production deploy requires explicit user confirmation in chat |

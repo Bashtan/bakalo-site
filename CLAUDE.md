@@ -90,33 +90,35 @@ The project is currently a **fully functional single HTML file** with no build s
 
 ## 4. Deploy Protocol (ENFORCED)
 
-**Never push feature work (`feat:` commits) directly to `main`.** A PreToolUse hook in `.claude/settings.json` will block the attempt.
+**Always deploy to staging first. Never push to `main` without explicit user confirmation in chat.**  
+A PreToolUse hook in `.claude/settings.json` blocks ALL `git push … main` attempts — regardless of commit prefix.
 
-### Correct flow for every feature
+### Correct flow for every change
 
 ```
-1. Do work on main locally (commit as usual)
-2. Create a fix/<feature-name> branch from the feature commit
-3. Push the fix/ branch → CI deploys staging preview
-4. Share preview URL with stakeholder for sign-off
-5. After approval: merge fix/ branch to main (or push main)
+1. Commit work locally on any branch
+2. Push to fix/<name> → CI deploys staging preview
+3. Share preview URL with user for sign-off
+4. User says "deploy to prod" (explicit confirmation) → push main
 ```
 
 ### Staging deploy
 ```bash
-git checkout -b fix/<feature-name>
+git checkout -b fix/<feature-name>   # or reuse existing fix/ branch
 git push origin fix/<feature-name>
 # CI creates: https://fix-<feature-name>.bakalo-capital.pages.dev
 ```
 
-### Production deploy (after stakeholder sign-off)
+### Production deploy (only after explicit user confirmation)
 ```bash
+# User must say "deploy to prod" or "ship it" in chat before this runs
 git checkout main
-git merge fix/<feature-name>   # already merged — just push
-git push origin main
+git merge fix/<feature-name> --ff-only
+git push origin main   # hook will block this unless user confirmed
 ```
 
-The hook allows `chore:` / `docs:` / `fix:` commits to main directly (HANDOFF.md updates, hotfixes). It only blocks `feat:` prefix commits from going straight to main.
+> The PreToolUse hook blocks every `git push … main` unconditionally.  
+> To deploy to production, the user must explicitly confirm in the conversation first.
 
 ---
 

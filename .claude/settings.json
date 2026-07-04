@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "CMD=$(jq -r '.tool_input.command // empty' 2>/dev/null); if echo \"$CMD\" | grep -qE 'git push[^|;&]*\\bmain\\b'; then LAST=$(git -C /Users/bashtan/Projects/bakalo-site log -1 --format='%s' 2>/dev/null); if echo \"$LAST\" | grep -qE '^feat[:(]'; then printf '{\"decision\":\"block\",\"reason\":\"Staging-first rule: push to a fix/<name> branch — CI creates a preview URL at fix-<name>.bakalo-capital.pages.dev. Merge to main only after stakeholder sign-off.\"}'; fi; fi"
+            "command": "CMD=$(jq -r '.tool_input.command // empty' 2>/dev/null); if echo \"$CMD\" | grep -qE 'git push[^|;&]*\\b(origin|upstream)\\b[^|;&]*\\bmain\\b'; then printf '{\"decision\":\"block\",\"reason\":\"Staging-first rule: always push to fix/<name> branch for staging preview. Deploy to production (main) ONLY after explicit user confirmation in chat.\"}'; fi"
           }
         ]
       }
