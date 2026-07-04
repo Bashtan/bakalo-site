@@ -6,7 +6,8 @@ import { onRequestGet, onRequestPost } from '../functions/api/engagements.js';
 import { onRequestGet as onRequestGetOne, onRequestPut, onRequestDelete } from '../functions/api/engagements/[id].js';
 
 const SCHEMA = readFileSync('./migrations/0001_init.sql', 'utf8')
-             + readFileSync('./migrations/0002_evidence_engagements.sql', 'utf8');
+             + readFileSync('./migrations/0002_evidence_engagements.sql', 'utf8')
+             + readFileSync('./migrations/0003_category_tabs.sql', 'utf8');
 const SECRET = 'test-jwt-secret-at-least-32-chars!';
 
 let db, env, adminToken, reviewerToken;

@@ -338,6 +338,10 @@ section { padding: 6rem 3rem 5rem; }
 .profile-icon { width: 36px; height: 36px; display: flex; align-items: center; }
 .profile-name { font-size: 0.875rem; font-weight: 600; color: var(--navy); }
 .profile-desc { font-size: 0.8rem; color: var(--slate); line-height: 1.55; flex: 1; }
+.profile-stats { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.1rem; }
+.stat-chip { display: inline-flex; align-items: baseline; gap: 0.3rem; background: rgba(184,147,90,0.08); border: 1px solid rgba(184,147,90,0.22); padding: 0.2rem 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.67rem; line-height: 1.4; }
+.stat-label { color: var(--accent); text-transform: uppercase; letter-spacing: 0.03em; }
+.stat-val { color: var(--navy); font-weight: 600; }
 
 /* ── CONTACT ── */
 #contact { background: var(--navy); color: var(--white); }
@@ -596,9 +600,12 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
 <section id="profiles">
   <div class="section-inner">
     <div class="section-label fade-in">Research Profiles</div>
-    <h2 class="section-title fade-in fade-in-delay-1">Academic &amp; Professional <em>Presence</em></h2>
+    <div class="research-header fade-in fade-in-delay-1">
+      <h2 class="section-title" style="margin-bottom:0">Academic &amp; Professional <em>Presence</em></h2>
+      <button class="btn-accent" id="btnEditProfileStats" style="display:none" onclick="openProfileStatsModal()">Edit Stats</button>
+    </div>
     <div class="profiles-grid fade-in fade-in-delay-2">
-      <div class="profile-card">
+      <div class="profile-card" data-platform="ssrn">
         <div class="profile-icon">
           <!-- SSRN — official Simple Icons path, navy bg, white mark -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -610,7 +617,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="profile-desc">Financial research papers and working papers in economics, finance, and governance.</div>
         <a href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
       </div>
-      <div class="profile-card">
+      <div class="profile-card" data-platform="google_scholar">
         <div class="profile-icon">
           <!-- Google Scholar — official Simple Icons path (cap + circle), Google blue bg -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -622,7 +629,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="profile-desc">Citation metrics, academic impact, and indexed publications.</div>
         <a href="https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
       </div>
-      <div class="profile-card">
+      <div class="profile-card" data-platform="orcid">
         <div class="profile-icon">
           <!-- ORCID — official Simple Icons path; evenodd knocks out iD letterforms to show white card bg -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -633,7 +640,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="profile-desc">Verified research identity and persistent digital identifier for academic work.</div>
         <a href="https://orcid.org/0009-0007-5773-1436" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
       </div>
-      <div class="profile-card">
+      <div class="profile-card" data-platform="researchgate">
         <div class="profile-icon">
           <!-- ResearchGate — official Simple Icons path, teal bg, white mark -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -645,7 +652,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="profile-desc">Academic network, publications, and research collaboration platform.</div>
         <a href="https://www.researchgate.net/profile/Ivan-Bakalo-2" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
       </div>
-      <div class="profile-card">
+      <div class="profile-card" data-platform="linkedin">
         <div class="profile-icon">
           <!-- LinkedIn — official Simple Icons path; includes rounded-rect bg, evenodd knocks out letterforms -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -845,6 +852,32 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
     </div>
 
     <button class="btn-submit" onclick="saveContent()">Save</button>
+
+    <!-- PROFILE STATS FIELDS -->
+    <div id="profileStatsFields" style="display:none;">
+      <p style="font-size:0.8rem;color:var(--slate);margin-bottom:1.25rem;">ORCID works count is refreshed automatically. All other stats are updated here.</p>
+      <div style="font-size:0.75rem;font-family:'DM Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Google Scholar</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Citations (all)</label><input type="text" class="form-input" id="ps_gs_citations_all" placeholder="37"></div>
+        <div class="form-group"><label class="form-label">Citations (since 2021)</label><input type="text" class="form-input" id="ps_gs_citations_since_2021" placeholder="26"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">h-index</label><input type="text" class="form-input" id="ps_gs_h_index" placeholder="3"></div>
+        <div class="form-group"><label class="form-label">i10-index</label><input type="text" class="form-input" id="ps_gs_i10_index" placeholder="3"></div>
+      </div>
+      <div style="font-size:0.75rem;font-family:'DM Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin:1rem 0 0.6rem;">SSRN</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Total Downloads</label><input type="text" class="form-input" id="ps_ssrn_total_downloads" placeholder="1234"></div>
+        <div class="form-group"><label class="form-label">Papers Count</label><input type="text" class="form-input" id="ps_ssrn_papers_count" placeholder="7"></div>
+      </div>
+      <div style="font-size:0.75rem;font-family:'DM Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin:1rem 0 0.6rem;">ResearchGate</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Publications</label><input type="text" class="form-input" id="ps_rg_publications" placeholder="12"></div>
+        <div class="form-group"><label class="form-label">Reads</label><input type="text" class="form-input" id="ps_rg_reads" placeholder="500"></div>
+      </div>
+      <div class="form-group"><label class="form-label">Citations</label><input type="text" class="form-input" id="ps_rg_citations" placeholder="37"></div>
+      <button class="btn-submit" onclick="saveProfileStats()" style="margin-top:1.25rem;">Save Stats</button>
+    </div>
   </div>
 </div>
 
@@ -877,6 +910,8 @@ function activateAdmin() {
     const el = document.getElementById(id);
     if (el) el.classList.add('visible');
   });
+  const statsBtn = document.getElementById('btnEditProfileStats');
+  if (statsBtn) statsBtn.style.display = '';
   renderArticles();
   renderEvidence();
   renderEngagements();
@@ -891,6 +926,8 @@ function deactivateAdmin() {
     const el = document.getElementById(id);
     if (el) el.classList.remove('visible');
   });
+  const statsBtn = document.getElementById('btnEditProfileStats');
+  if (statsBtn) statsBtn.style.display = 'none';
   renderArticles();
   renderEvidence();
   renderEngagements();
@@ -982,7 +1019,11 @@ function openFormModal(type, data) {
   document.getElementById('contentModal').classList.add('open');
 }
 
-function closeContentModal() { document.getElementById('contentModal').classList.remove('open'); }
+function closeContentModal() {
+  document.getElementById('contentModal').classList.remove('open');
+  document.getElementById('profileStatsFields').style.display = 'none';
+  document.querySelector('#contentModal .btn-submit').style.display = '';
+}
 
 async function saveContent() {
   const type = document.getElementById('currentFormType').value;
@@ -1268,6 +1309,118 @@ async function delItem(type, id) {
 }
 
 /* ================================================================
+   PROFILE STATS
+================================================================ */
+const STAT_LABELS = {
+  google_scholar: { citations_all: 'Citations', citations_since_2021: 'Since 2021', h_index: 'h-index', i10_index: 'i10-index' },
+  ssrn:           { total_downloads: 'Downloads', papers_count: 'Papers' },
+  orcid:          { works_count: 'Works' },
+  researchgate:   { publications: 'Publications', reads: 'Reads', citations: 'Citations' }
+};
+
+async function fetchProfileStats() {
+  try {
+    const res = await fetch('/api/profile-stats');
+    if (!res.ok) return;
+    const { stats } = await res.json();
+    renderProfileStats(stats);
+  } catch { /* graceful — cards show without stats */ }
+}
+
+function renderProfileStats(stats) {
+  document.querySelectorAll('.profile-card[data-platform]').forEach(card => {
+    const platform = card.dataset.platform;
+    const platformStats = stats[platform];
+    const labels = STAT_LABELS[platform];
+    if (!platformStats || !labels) return;
+
+    const chips = Object.entries(labels)
+      .filter(([key]) => platformStats[key])
+      .map(([key, label]) =>
+        `<span class="stat-chip"><span class="stat-label">${label}</span><span class="stat-val">${esc(platformStats[key].value)}</span></span>`
+      ).join('');
+
+    if (!chips) return;
+
+    let statsEl = card.querySelector('.profile-stats');
+    if (!statsEl) {
+      statsEl = document.createElement('div');
+      statsEl.className = 'profile-stats';
+      const desc = card.querySelector('.profile-desc');
+      if (desc) desc.after(statsEl);
+    }
+    statsEl.innerHTML = chips;
+  });
+}
+
+async function openProfileStatsModal() {
+  try {
+    const res = await fetch('/api/profile-stats');
+    if (res.ok) {
+      const { stats } = await res.json();
+      const gs = stats.google_scholar || {};
+      const ssrn = stats.ssrn || {};
+      const rg = stats.researchgate || {};
+      document.getElementById('ps_gs_citations_all').value        = gs.citations_all?.value || '';
+      document.getElementById('ps_gs_citations_since_2021').value = gs.citations_since_2021?.value || '';
+      document.getElementById('ps_gs_h_index').value              = gs.h_index?.value || '';
+      document.getElementById('ps_gs_i10_index').value            = gs.i10_index?.value || '';
+      document.getElementById('ps_ssrn_total_downloads').value    = ssrn.total_downloads?.value || '';
+      document.getElementById('ps_ssrn_papers_count').value       = ssrn.papers_count?.value || '';
+      document.getElementById('ps_rg_publications').value         = rg.publications?.value || '';
+      document.getElementById('ps_rg_reads').value                = rg.reads?.value || '';
+      document.getElementById('ps_rg_citations').value            = rg.citations?.value || '';
+    }
+  } catch { /* pre-fill best-effort */ }
+
+  document.getElementById('contentModalTitle').innerHTML = 'Edit Profile <em>Stats</em>';
+  ['articleFields','evidenceFields','engagementFields'].forEach(id =>
+    document.getElementById(id).style.display = 'none'
+  );
+  document.getElementById('profileStatsFields').style.display = '';
+  document.querySelector('#contentModal .btn-submit').style.display = 'none';
+  document.getElementById('contentModal').classList.add('open');
+}
+
+async function saveProfileStats() {
+  const platforms = [
+    { platform: 'google_scholar', stats: {
+        citations_all:        document.getElementById('ps_gs_citations_all').value.trim(),
+        citations_since_2021: document.getElementById('ps_gs_citations_since_2021').value.trim(),
+        h_index:              document.getElementById('ps_gs_h_index').value.trim(),
+        i10_index:            document.getElementById('ps_gs_i10_index').value.trim()
+      }
+    },
+    { platform: 'ssrn', stats: {
+        total_downloads: document.getElementById('ps_ssrn_total_downloads').value.trim(),
+        papers_count:    document.getElementById('ps_ssrn_papers_count').value.trim()
+      }
+    },
+    { platform: 'researchgate', stats: {
+        publications: document.getElementById('ps_rg_publications').value.trim(),
+        reads:        document.getElementById('ps_rg_reads').value.trim(),
+        citations:    document.getElementById('ps_rg_citations').value.trim()
+      }
+    }
+  ];
+
+  try {
+    for (const { platform, stats } of platforms) {
+      const filtered = Object.fromEntries(Object.entries(stats).filter(([, v]) => v !== ''));
+      if (!Object.keys(filtered).length) continue;
+      const res = await fetch('/api/profile-stats', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` },
+        body: JSON.stringify({ platform, stats: filtered })
+      });
+      if (res.status === 401 || res.status === 403) { alert('Session expired.'); deactivateAdmin(); return; }
+    }
+    closeContentModal();
+    fetchProfileStats();
+  } catch (e) { alert('Save failed: ' + e.message); }
+}
+
+/* ================================================================
    UTILS
 ================================================================ */
 function esc(s) {
@@ -1320,6 +1473,7 @@ if (navLogoImg) {
 renderArticles();
 renderEvidence();
 renderEngagements();
+fetchProfileStats();
 if (adminToken && getTokenPayload()) activateAdmin();
 </script>
 </body>
