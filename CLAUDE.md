@@ -88,7 +88,39 @@ The project is currently a **fully functional single HTML file** with no build s
 
 ---
 
-## 4. Build & Run Commands
+## 4. Deploy Protocol (ENFORCED)
+
+**Never push feature work (`feat:` commits) directly to `main`.** A PreToolUse hook in `.claude/settings.json` will block the attempt.
+
+### Correct flow for every feature
+
+```
+1. Do work on main locally (commit as usual)
+2. Create a fix/<feature-name> branch from the feature commit
+3. Push the fix/ branch → CI deploys staging preview
+4. Share preview URL with stakeholder for sign-off
+5. After approval: merge fix/ branch to main (or push main)
+```
+
+### Staging deploy
+```bash
+git checkout -b fix/<feature-name>
+git push origin fix/<feature-name>
+# CI creates: https://fix-<feature-name>.bakalo-capital.pages.dev
+```
+
+### Production deploy (after stakeholder sign-off)
+```bash
+git checkout main
+git merge fix/<feature-name>   # already merged — just push
+git push origin main
+```
+
+The hook allows `chore:` / `docs:` / `fix:` commits to main directly (HANDOFF.md updates, hotfixes). It only blocks `feat:` prefix commits from going straight to main.
+
+---
+
+## 5. Build & Run Commands
 
 This is a **zero-build project**. There is no `package.json`, no compiler, no bundler.
 
