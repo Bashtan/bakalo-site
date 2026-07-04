@@ -1,6 +1,6 @@
 # Bakalo Site — Handoff & Context Document
 
-_Last updated: 2026-07-04 (session 3)_
+_Last updated: 2026-07-04 (session 4)_
 
 ---
 
@@ -62,7 +62,8 @@ CI secrets are stored in GitHub → Settings → Secrets as `CLOUDFLARE_API_TOKE
 
 ```
 ./
-├── index.html                    # ← entire frontend (CSS + JS + HTML, ~1 326 lines)
+├── index.html                    # ← entire frontend (CSS + JS + HTML, ~1 480 lines)
+├── llms.txt                      # AI discoverability — llmstxt.org standard
 ├── CLAUDE.md                     # AI coding instructions & architecture decisions
 ├── HANDOFF.md                    # this file
 ├── schema.sql                    # reference schema (not applied directly)
@@ -295,3 +296,4 @@ Always diff against the previous version before starting new work to identify up
 | 2026-07-04 | Stat chip readability fix (WCAG AAA) — warm dark bg `#2d2922` (chip-vs-card 17:1→13:1), label opacity 0.5→0.72 (5.3:1→8.2:1 AAA), value gold brightened to `#e8c47e` (8.7:1 AAA), font 0.67→0.7rem |
 | 2026-07-04 | Stat chip redesign → outlined style — transparent bg, `#9a7845` gold border (4.08:1 WCAG 1.4.11 ✓), label `#6d6660` warm gray (5.65:1 AA ✓), value `--navy` bold (19.3:1 AAA ✓) |
 | 2026-07-04 | Deploy rule tightened — PreToolUse hook now blocks ALL `git push … main` (previously only `feat:` commits); production deploy requires explicit user confirmation in chat |
+| 2026-07-04 | `llms.txt` added at repo root — llmstxt.org standard; covers all 8 site sections (canonical `ivanbakalo.com` URLs), 5 research profile links, 4 public API endpoints with field descriptions; staged on `fix/llms-txt` |
