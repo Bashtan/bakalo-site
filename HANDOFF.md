@@ -1,6 +1,6 @@
 # Bakalo Site — Handoff & Context Document
 
-_Last updated: 2026-07-04_
+_Last updated: 2026-07-04 (session 2)_
 
 ---
 
@@ -189,6 +189,7 @@ npx wrangler pages deploy . \
 | `0001_init.sql` | `articles` + `users` tables |
 | `0002_evidence_engagements.sql` | `evidence` + `engagements` tables |
 | `0003_category_tabs.sql` | `category` column on `evidence` + `engagements` |
+| `0004_profile_stats.sql` | `profile_stats` table — citation/impact metrics per platform |
 
 ### Common DB commands
 
@@ -206,6 +207,15 @@ npx wrangler d1 execute bakalo-db --remote --command="SELECT * FROM articles LIM
 ---
 
 ## Content Data Model
+
+### Profile Stats (Research Profiles section)
+Platforms: `google_scholar` · `ssrn` · `orcid` · `researchgate` · `linkedin`  
+Fields: `platform` (PK), `stat_key` (PK), `stat_value`, `updated_at`  
+Stat keys — Google Scholar: `citations_all`, `citations_since_2021`, `h_index`, `i10_index` | SSRN: `total_downloads`, `papers_count` | ORCID: `works_count` (auto-refreshed) | ResearchGate: `publications`, `reads`, `citations`
+
+API: `GET /api/profile-stats` (public) · `PUT /api/profile-stats` (JWT-protected)  
+ORCID auto-refresh: `functions/api/scheduled-orcid.js` — Cloudflare Scheduled Worker, daily, fetches `pub.orcid.org/v3.0/0009-0007-5773-1436/works`  
+Admin: triple-click logo → login → "Edit Stats" button appears in the Research Profiles section header
 
 ### Articles (Research section)
 Categories: `U.S. Banking System` · `Financial Stability` · `Risk & Regulation` · `Research & Methodology`  
@@ -277,3 +287,4 @@ Always diff against the previous version before starting new work to identify up
 | 2026-05-08 | NIW platform rebuild: evidence/engagements APIs, TDD, portrait photo, hero layout |
 | 2026-05-11 | Stakeholder feedback: restore warm gold/paper palette, fix portrait border, update memberships |
 | 2026-05-22 | Category filter tabs on Implementation & Recognition + Professional Engagement; DB migration `0003_category_tabs.sql`; Research Profiles icons replaced with official Simple Icons SVG paths |
+| 2026-07-04 | Citation & impact stats on Research Profile cards — `profile_stats` D1 table + API endpoints + stat chips in frontend + admin Edit Stats modal + scheduled ORCID worker; 61 tests all green; PRD at GitHub issue #2 |
