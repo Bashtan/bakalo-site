@@ -291,3 +291,4 @@ Always diff against the previous version before starting new work to identify up
 | 2026-05-22 | Category filter tabs on Implementation & Recognition + Professional Engagement; DB migration `0003_category_tabs.sql`; Research Profiles icons replaced with official Simple Icons SVG paths |
 | 2026-07-04 | Citation & impact stats on Research Profile cards — `profile_stats` D1 table + API endpoints + stat chips in frontend + admin Edit Stats modal + scheduled ORCID worker; 61 tests all green; PRD at GitHub issue #2 |
 | 2026-07-04 | Staging-first deploy rule — PreToolUse Bash hook blocks `feat:` commits from going directly to main; CLAUDE.md §4 documents `fix/<name>` → staging → main flow; `fix/profile-stats` staging preview live |
+| 2026-07-04 | Stat chip contrast redesign — inverted dark navy chip (`background: var(--navy)`) with `--accent-lt` gold value text and 50%-white label text, replacing near-invisible 8% tint; pushed to both `main` and `fix/profile-stats` |
