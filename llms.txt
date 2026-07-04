@@ -1,0 +1,31 @@
+# Ivan Bakalo — Financial Stability & Governance Expert
+
+> Professional portfolio and National Interest Waiver (NIW) supporting platform for Ivan Bakalo, a financial governance and systemic risk professional based in New York, NY. The site presents research, professional engagement, and evidence of contributions to U.S. financial stability and institutional resilience.
+
+Ivan Bakalo specializes in systemic risk analysis, financial stability frameworks, risk-based audit methodology, and regulatory compliance. His proposed endeavor supports the long-term stability and integrity of the U.S. financial system — an area of substantial merit and national importance under the NIW framework.
+
+## Site Sections
+
+- [Home](https://ivanbakalo.com/#home): Introduction, professional positioning (Financial Stability · Governance · Systemic Risk), and primary calls to action.
+- [About](https://ivanbakalo.com/#about): Professional background, expertise in risk-based audit methodology, financial stability frameworks, systemic risk analysis, and regulatory compliance. Member of The Institute of Internal Auditors, New York, NY.
+- [Research](https://ivanbakalo.com/#research): Academic and professional articles across four categories — U.S. Banking System, Financial Stability, Risk & Regulation, Research & Methodology — with a featured article block and category filter tabs.
+- [Implementation & Recognition](https://ivanbakalo.com/#implementation): Evidence of professional impact across five categories — Recognition, Professional Development, Certifications, Implementation, Academic Participation.
+- [Professional Engagement](https://ivanbakalo.com/#engagement): Active participation in governance, AI risk, and financial stability ecosystems across five categories — AI Governance, Audit & Cybersecurity, Governance Discussions, Continuing Education, Memberships.
+- [Proposed Endeavor](https://ivanbakalo.com/#endeavor): NIW petition summary. Four pillars: (1) Risk-based governance frameworks for financial institutions; (2) Systemic risk analysis and financial stability research; (3) Regulatory compliance architecture and U.S. standards alignment; (4) Institutional resilience and internal control enhancement.
+- [Research Profiles](https://ivanbakalo.com/#profiles): Academic and professional presence on SSRN, Google Scholar, ORCID, ResearchGate, and LinkedIn with live citation and impact metrics.
+- [Contact](https://ivanbakalo.com/#contact): Email bakalo.science@gmail.com · LinkedIn linkedin.com/in/ivanbakalo · Location New York, NY.
+
+## Research Profiles
+
+- [SSRN](https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776): Financial research papers and working papers in economics, finance, and governance.
+- [Google Scholar](https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en): Citation metrics, academic impact, and indexed publications.
+- [ORCID](https://orcid.org/0009-0007-5773-1436): Verified research identity (iD: 0009-0007-5773-1436) and persistent digital identifier.
+- [ResearchGate](https://www.researchgate.net/profile/Ivan-Bakalo-2): Academic network, publications, and research collaboration.
+- [LinkedIn](https://www.linkedin.com/in/ivanbakalo): Professional network and career profile.
+
+## API Endpoints (JSON, public)
+
+- [Profile Stats](https://ivanbakalo.com/api/profile-stats): Citation and impact metrics — Google Scholar (citations all-time, since 2021, h-index, i10-index), SSRN (total downloads, papers count), ORCID (works count, auto-refreshed daily), ResearchGate (publications, reads, citations).
+- [Articles](https://ivanbakalo.com/api/articles): Research articles with title, category, description, year, tags, SSRN URL, DOI URL, and featured flag.
+- [Evidence](https://ivanbakalo.com/api/evidence): Implementation and recognition entries with title, category, institution, year, and evidence URL.
+- [Engagements](https://ivanbakalo.com/api/engagements): Professional engagement entries with title, category, organization, year, and evidence URL.
