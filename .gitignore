@@ -1,8 +1,9 @@
 # macOS
 .DS_Store
 
-# Claude Code internals
-.claude/
+# Claude Code internals (transcripts, state) — commit project settings only
+.claude/*
+!.claude/settings.json
 
 # Node
 node_modules/

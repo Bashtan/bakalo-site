@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "HANDOFF=$(git -C /Users/bashtan/Projects/bakalo-site log -1 --format='%H' -- HANDOFF.md 2>/dev/null); HEAD=$(git -C /Users/bashtan/Projects/bakalo-site rev-parse HEAD 2>/dev/null); if [ -n \"$HEAD\" ] && [ \"$HANDOFF\" != \"$HEAD\" ]; then echo \"HANDOFF.md is behind HEAD. Update it to reflect recent work, then commit it.\"; exit 2; fi",
+            "asyncRewake": true,
+            "rewakeSummary": "HANDOFF.md needs updating"
+          }
+        ]
+      }
+    ]
+  }
+}
