@@ -1,0 +1,137 @@
+{
+  "_comment": "Single source of truth for ResearchImpact.jsx. Update values manually from each platform profile. Dates are ISO strings (YYYY-MM-DD) or '—' when unknown.",
+
+  "meta": {
+    "lastUpdated": "—"
+  },
+
+  "visibility": {
+    "googleScholar": {
+      "citations":          "—",
+      "citationsSince2021": "—",
+      "hIndex":             "—",
+      "i10Index":           "—"
+    },
+    "ssrn": {
+      "totalDownloads": "—",
+      "papers":         "—",
+      "abstractViews":  "—"
+    },
+    "researchgate": {
+      "reads":           "—",
+      "citations":       "—",
+      "recommendations": "—"
+    },
+    "orcid": {
+      "id":      "0009-0007-5773-1436",
+      "verified": true,
+      "linked":   true
+    }
+  },
+
+  "chartHistory": {
+    "_comment": "Each series is [{year: number, value: string}] sorted ascending. Add a year entry via the admin panel 'Add Historical Year Data'. Charts render automatically once ≥ 2 data points exist.",
+    "googleScholar": { "citations":      [] },
+    "ssrn":          { "totalDownloads": [] },
+    "researchgate":  { "reads":          [] }
+  },
+
+  "recognition": [
+    {
+      "id":          "clarivate",
+      "institution": "Clarivate · Web of Science",
+      "badge":       "Indexed Research",
+      "description": "Research indexed in the Web of Science Core Collection — the global standard for measuring scholarly impact, citation quality, and research relevance across 12,000+ peer-reviewed journals.",
+      "evidenceUrl": "/#implementation"
+    },
+    {
+      "id":          "taylor_francis",
+      "institution": "Taylor & Francis Group",
+      "badge":       "Publisher Recognition",
+      "description": "Published in Taylor & Francis peer-reviewed journals — a globally recognised academic publisher across finance, economics, governance, and regulatory compliance.",
+      "evidenceUrl": "/#implementation"
+    },
+    {
+      "id":          "conference",
+      "institution": "International Conferences",
+      "badge":       "Conference Presenter",
+      "description": "Invited presenter at international academic and professional conferences on financial stability, banking system resilience, and systemic risk — demonstrating recognised expertise beyond publication.",
+      "evidenceUrl": "/#implementation"
+    },
+    {
+      "id":          "peer_reviewed",
+      "institution": "Peer-Reviewed Journals",
+      "badge":       "Academic Publishing",
+      "description": "Research accepted through double-blind peer review by domain experts in finance and banking regulation, confirming the quality and rigour of the scholarly contribution.",
+      "evidenceUrl": "/#research"
+    },
+    {
+      "id":          "doi",
+      "institution": "DOI Publications",
+      "badge":       "Citable Research",
+      "description": "Works assigned permanent Digital Object Identifiers, ensuring perpetual, citable access across all major academic databases and citation tracking systems.",
+      "evidenceUrl": "/#research"
+    }
+  ],
+
+  "researchOutput": [
+    {
+      "label": "Peer-Reviewed Publications",
+      "value": "—",
+      "note":  "Accepted in indexed journals"
+    },
+    {
+      "label": "Conference Presentations",
+      "value": "—",
+      "note":  "International academic venues"
+    },
+    {
+      "label": "DOI Publications",
+      "value": "—",
+      "note":  "Permanently citable works"
+    },
+    {
+      "label": "SSRN Working Papers",
+      "value": "—",
+      "note":  "Pre-publication research"
+    },
+    {
+      "label": "Reviewer Activity",
+      "value": "—",
+      "note":  "Peer review contributions"
+    }
+  ],
+
+  "academicPresence": [
+    {
+      "id":     "google_scholar",
+      "name":   "Google Scholar",
+      "url":    "https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en",
+      "handle": null
+    },
+    {
+      "id":     "ssrn",
+      "name":   "SSRN",
+      "url":    "https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776",
+      "handle": null
+    },
+    {
+      "id":     "researchgate",
+      "name":   "ResearchGate",
+      "url":    "https://www.researchgate.net/profile/Ivan-Bakalo-2",
+      "handle": null
+    },
+    {
+      "id":     "orcid",
+      "name":   "ORCID",
+      "url":    "https://orcid.org/0009-0007-5773-1436",
+      "handle": "0009-0007-5773-1436"
+    },
+    {
+      "id":     "linkedin",
+      "name":   "LinkedIn",
+      "url":    "https://www.linkedin.com/in/ivanbakalo",
+      "handle": "ivanbakalo"
+    }
+  ]
+}

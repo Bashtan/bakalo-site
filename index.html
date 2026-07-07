@@ -344,7 +344,7 @@ section { padding: 6rem 3rem 5rem; }
 .stat-label { color: #6d6660; text-transform: uppercase; letter-spacing: 0.04em; }
 .stat-val { color: var(--navy); font-weight: 700; }
 
-/* ── RESEARCH IMPACT ── */
+/* ── RESEARCH IMPACT (v2 — NIW narrative) ── */
 #impact { background: var(--light); }
 .impact-header-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
 .impact-last-updated {
@@ -353,6 +353,12 @@ section { padding: 6rem 3rem 5rem; }
   border: 1px solid var(--border); padding: 0.3rem 0.75rem; white-space: nowrap; align-self: flex-end;
 }
 .impact-last-updated span { color: var(--accent); }
+
+.impact-overline { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+.impact-overline .num { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; color: var(--accent); opacity: 0.6; }
+.impact-overline .rule { width: 1px; height: 12px; background: var(--border); }
+.impact-overline .title { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+
 .impact-cards-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
 .impact-card {
   background: var(--white); border: 1px solid var(--border); padding: 1.5rem;
@@ -375,9 +381,16 @@ section { padding: 6rem 3rem 5rem; }
   text-transform: uppercase; color: var(--accent); margin-top: 0.1rem;
 }
 .impact-card-secondary {
-  display: flex; flex-wrap: wrap; gap: 0.3rem;
-  margin-top: 0.5rem; border-top: 1px solid var(--border); padding-top: 0.65rem;
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  margin-top: auto; border-top: 1px solid var(--border); padding-top: 0.85rem;
 }
+.impact-chip {
+  display: inline-flex; align-items: baseline; gap: 0.3rem;
+  background: var(--paper); border-radius: 999px; padding: 0.22rem 0.65rem;
+  font-family: 'DM Mono', monospace; font-size: 0.6rem; line-height: 1.4;
+}
+.impact-chip .chip-label { color: var(--slate); text-transform: uppercase; letter-spacing: 0.04em; }
+.impact-chip .chip-val { color: var(--navy); font-weight: 700; }
 .orcid-id-display {
   font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--navy);
   letter-spacing: 0.04em; margin-top: 0.15rem; line-height: 1.4;
@@ -386,7 +399,7 @@ section { padding: 6rem 3rem 5rem; }
   font-family: 'DM Mono', monospace; font-size: 0.6rem; color: #4a7c4e;
   letter-spacing: 0.06em;
 }
-.impact-charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2.5rem; }
+.impact-charts-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
 .impact-chart-card { background: var(--white); border: 1px solid var(--border); padding: 1.5rem; }
 .impact-chart-title {
   font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 500;
@@ -394,60 +407,50 @@ section { padding: 6rem 3rem 5rem; }
   margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
 }
 .impact-chart-title::before { content: ''; width: 18px; height: 1px; background: var(--accent); flex-shrink: 0; }
-.impact-chart-canvas-wrap { position: relative; height: 180px; }
-.impact-bottom-grid { display: grid; grid-template-columns: 1fr 0.5fr; gap: 2rem; align-items: start; }
-.impact-table-wrap { overflow-x: auto; }
-.impact-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-.impact-table th {
-  font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--slate); font-weight: 400;
-  padding: 0.4rem 0.75rem; border-bottom: 2px solid var(--border);
-  text-align: left; white-space: nowrap;
+.impact-chart-canvas-wrap { position: relative; height: 160px; }
+
+/* Academic Recognition — full-bleed dark section */
+.impact-recognition-fullbleed {
+  background: var(--navy);
+  width: 100vw; position: relative; left: 50%; right: 50%;
+  margin: 3rem -50vw 3rem;
+  padding: 5rem 3rem;
 }
-.impact-table td { padding: 0.7rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
-.impact-table td.platform-cell {
-  font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--accent); white-space: nowrap;
+.impact-recognition-fullbleed .impact-overline .num,
+.impact-recognition-fullbleed .impact-overline .title { color: var(--accent-lt); opacity: 0.8; }
+.impact-recognition-fullbleed .impact-overline .rule { background: rgba(184,147,90,0.3); }
+.impact-recognition-fullbleed h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.2rem; font-weight: 300; color: var(--white); margin: 0 0 0.5rem; }
+.impact-recognition-fullbleed h3 em { color: var(--accent-lt); font-style: italic; }
+.impact-recognition-fullbleed > p { font-size: 0.85rem; color: rgba(255,255,255,0.55); max-width: 540px; line-height: 1.75; margin: 0 0 2.5rem; }
+.impact-recognition-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.impact-recog-card { border: 1px solid rgba(184,147,90,0.25); padding: 1.75rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; transition: border-color 0.2s; }
+.impact-recog-card:hover { border-color: rgba(184,147,90,0.7); }
+.impact-recog-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+.impact-recog-badge {
+  font-family: 'DM Mono', monospace; font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent-lt); border: 1px solid rgba(184,147,90,0.4); padding: 0.15rem 0.5rem; white-space: nowrap;
 }
-.impact-table td.metric-cell { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--slate); }
-.impact-table td.value-cell {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.05rem; font-weight: 400; color: var(--navy);
+.impact-recog-institution { font-family: 'DM Mono', monospace; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-lt); margin: 0 0 0.5rem; }
+.impact-recog-desc { font-size: 0.8rem; line-height: 1.65; color: rgba(255,255,255,0.6); margin: 0; }
+.impact-recog-link {
+  font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent-lt); text-decoration: none; margin-top: auto; opacity: 0.8; transition: opacity 0.15s;
 }
-.trend-up   { color: #2e7d32; font-family: 'DM Mono', monospace; font-size: 0.7rem; }
-.trend-down { color: #c62828; font-family: 'DM Mono', monospace; font-size: 0.7rem; }
-.trend-none { color: var(--slate); font-family: 'DM Mono', monospace; font-size: 0.7rem; }
-.impact-table td.date-cell { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--slate); white-space: nowrap; }
-.impact-table td.link-cell a {
-  font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.04em;
-  color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;
-}
-.impact-table td.link-cell a:hover { border-color: var(--accent); }
-.impact-sidebar-section {
-  background: var(--white); border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.25rem;
-}
-.impact-sidebar-label {
-  font-family: 'DM Mono', monospace; font-size: 0.6rem; font-weight: 400;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
-  margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
-}
-.impact-sidebar-label::before { content: ''; width: 16px; height: 1px; background: var(--accent); }
-.impact-profile-links { list-style: none; display: flex; flex-direction: column; }
-.impact-profile-links li a {
-  display: flex; align-items: center; gap: 0.6rem;
-  font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.04em;
-  color: var(--text); text-decoration: none; padding: 0.55rem 0;
-  border-bottom: 1px solid var(--border); transition: color 0.2s;
-}
-.impact-profile-links li:last-child a { border-bottom: none; }
-.impact-profile-links li a:hover { color: var(--accent); }
-.impact-profile-links .plink-icon { width: 20px; height: 20px; flex-shrink: 0; border-radius: 3px; }
+.impact-recog-link:hover { opacity: 1; }
+
+/* Research Output — connected boxes */
+.impact-output-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 1px; background: var(--border); margin-bottom: 0.75rem; }
+.impact-output-box { background: var(--white); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; gap: 0.75rem; }
+.impact-output-value { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2.2rem; font-weight: 300; line-height: 1; color: var(--navy); }
+.impact-output-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); font-weight: 500; }
+.impact-output-note { font-size: 0.7rem; color: var(--slate); margin-top: 0.2rem; }
+
 .impact-quote-block {
   padding: 1.25rem 1.25rem 1.25rem 1.5rem;
   border-left: 3px solid var(--accent);
   background: var(--paper);
   font-style: italic; font-size: 0.88rem; line-height: 1.75; color: var(--text);
-  margin: 0;
+  margin: 2rem 0 0;
 }
 .impact-quote-block cite {
   display: block; margin-top: 0.75rem;
@@ -456,10 +459,15 @@ section { padding: 6rem 3rem 5rem; }
 }
 @media (max-width: 1024px) {
   .impact-cards-row { grid-template-columns: repeat(2,1fr); }
-  .impact-charts-grid { grid-template-columns: 1fr; }
-  .impact-bottom-grid { grid-template-columns: 1fr; }
+  .impact-charts-grid { grid-template-columns: 1fr !important; }
+  .impact-recognition-grid { grid-template-columns: 1fr; }
+  .impact-output-grid { grid-template-columns: repeat(2,1fr); }
+  .impact-recognition-fullbleed { padding: 4rem 1.5rem; }
 }
-@media (max-width: 600px) { .impact-cards-row { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  .impact-cards-row { grid-template-columns: 1fr; }
+  .impact-output-grid { grid-template-columns: 1fr; }
+}
 
 /* ── CONTACT ── */
 #contact { background: var(--navy); color: var(--white); }
@@ -786,7 +794,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
   </div>
 </section>
 
-<!-- SECTION 8: RESEARCH IMPACT -->
+<!-- SECTION 8: RESEARCH IMPACT (v2 — NIW narrative) -->
 <section id="impact">
   <div class="section-inner">
 
@@ -795,12 +803,13 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       <div>
         <div class="section-label">Research Impact</div>
         <h2 class="section-title" style="margin-bottom:0.5rem">Scholarly <em>Metrics</em></h2>
-        <p style="font-size:0.875rem;color:var(--slate);max-width:560px;line-height:1.75;">Reach and impact demonstrated through citations, downloads, reads, and professional visibility across reputable academic and professional platforms.</p>
+        <p style="font-size:0.875rem;color:var(--slate);max-width:560px;line-height:1.75;">Reach and impact demonstrated through citations, downloads, reads, and institutional recognition across leading academic platforms and peer-reviewed publishers.</p>
       </div>
       <div class="impact-last-updated">Metrics last updated: <span id="impactLastUpdatedDate">—</span></div>
     </div>
 
-    <!-- Platform Summary Cards -->
+    <!-- 01 Research Visibility -->
+    <div class="impact-overline fade-in"><span class="num">01</span><span class="rule"></span><span class="title">Research Visibility</span></div>
     <div class="impact-cards-row fade-in fade-in-delay-1">
 
       <div class="impact-card">
@@ -811,10 +820,9 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="impact-primary-value" id="ic_gs_citations_all">—</div>
         <div class="impact-primary-label">Total Citations</div>
         <div class="impact-card-secondary">
-          <span class="stat-chip"><span class="stat-label">h-index</span><span class="stat-val" id="ic_gs_h_index">—</span></span>
-          <span class="stat-chip"><span class="stat-label">i10</span><span class="stat-val" id="ic_gs_i10_index">—</span></span>
+          <span class="impact-chip"><span class="chip-label">h-index</span><span class="chip-val" id="ic_gs_h_index">—</span></span>
+          <span class="impact-chip"><span class="chip-label">i10</span><span class="chip-val" id="ic_gs_i10_index">—</span></span>
         </div>
-        <a href="https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en" target="_blank" rel="noopener" class="btn-sm-accent" style="align-self:flex-start;margin-top:auto;">View profile ↗</a>
       </div>
 
       <div class="impact-card">
@@ -825,10 +833,9 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="impact-primary-value" id="ic_ssrn_total_downloads">—</div>
         <div class="impact-primary-label">Total Downloads</div>
         <div class="impact-card-secondary">
-          <span class="stat-chip"><span class="stat-label">Papers</span><span class="stat-val" id="ic_ssrn_papers_count">—</span></span>
-          <span class="stat-chip"><span class="stat-label">Abst. Views</span><span class="stat-val" id="ic_ssrn_abstract_views">—</span></span>
+          <span class="impact-chip"><span class="chip-label">Papers</span><span class="chip-val" id="ic_ssrn_papers_count">—</span></span>
+          <span class="impact-chip"><span class="chip-label">Abst. Views</span><span class="chip-val" id="ic_ssrn_abstract_views">—</span></span>
         </div>
-        <a href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener" class="btn-sm-accent" style="align-self:flex-start;margin-top:auto;">View profile ↗</a>
       </div>
 
       <div class="impact-card">
@@ -839,10 +846,9 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="impact-primary-value" id="ic_rg_reads">—</div>
         <div class="impact-primary-label">Total Reads</div>
         <div class="impact-card-secondary">
-          <span class="stat-chip"><span class="stat-label">Recommend.</span><span class="stat-val" id="ic_rg_recommendations">—</span></span>
-          <span class="stat-chip"><span class="stat-label">Citations</span><span class="stat-val" id="ic_rg_citations">—</span></span>
+          <span class="impact-chip"><span class="chip-label">Recommend.</span><span class="chip-val" id="ic_rg_recommendations">—</span></span>
+          <span class="impact-chip"><span class="chip-label">Citations</span><span class="chip-val" id="ic_rg_citations">—</span></span>
         </div>
-        <a href="https://www.researchgate.net/profile/Ivan-Bakalo-2" target="_blank" rel="noopener" class="btn-sm-accent" style="align-self:flex-start;margin-top:auto;">View profile ↗</a>
       </div>
 
       <div class="impact-card">
@@ -852,16 +858,15 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         </div>
         <div class="orcid-id-display">0009-0007-5773-1436</div>
         <div class="impact-primary-label">ORCID iD</div>
-        <div class="impact-card-secondary" style="flex-direction:column;gap:0.2rem;">
+        <div class="impact-card-secondary" style="flex-direction:column;gap:0.2rem;align-items:flex-start;">
           <span class="orcid-verified">✓ Verified identity</span>
           <span class="orcid-verified">✓ Linked researcher</span>
         </div>
-        <a href="https://orcid.org/0009-0007-5773-1436" target="_blank" rel="noopener" class="btn-sm-accent" style="align-self:flex-start;margin-top:auto;">View profile ↗</a>
       </div>
     </div>
 
-    <!-- Charts -->
-    <div class="impact-charts-grid fade-in fade-in-delay-2">
+    <!-- Charts (max 3 — auto-hide when no history data) -->
+    <div class="impact-charts-grid fade-in fade-in-delay-2" id="impactChartsGrid">
       <div class="impact-chart-card" id="chartCardGS">
         <div class="impact-chart-title">Google Scholar Citations by Year</div>
         <div class="impact-chart-canvas-wrap"><canvas id="chartGS"></canvas></div>
@@ -874,65 +879,27 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="impact-chart-title">ResearchGate Reads by Year</div>
         <div class="impact-chart-canvas-wrap"><canvas id="chartRG"></canvas></div>
       </div>
-      <div class="impact-chart-card" id="chartCardCombined">
-        <div class="impact-chart-title">Overall Research Visibility Growth</div>
-        <div class="impact-chart-canvas-wrap"><canvas id="chartCombined"></canvas></div>
-      </div>
     </div>
+  </div>
 
-    <!-- Bottom: table + sidebar -->
-    <div class="impact-bottom-grid fade-in fade-in-delay-3">
-      <div>
-        <div style="font-family:'DM Mono',monospace;font-size:0.65rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--navy);margin-bottom:1rem;">Research Metrics Overview</div>
-        <div class="impact-table-wrap">
-          <table class="impact-table">
-            <thead>
-              <tr>
-                <th>Platform</th><th>Metric</th><th>Value</th>
-                <th>Trend (vs. last year)</th><th>Date Checked</th><th>Profile Link</th>
-              </tr>
-            </thead>
-            <tbody id="impactTableBody">
-              <tr><td colspan="6" style="color:var(--slate);font-family:'DM Mono',monospace;font-size:0.72rem;padding:1.25rem 0.75rem;">Loading…</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="font-size:0.7rem;color:var(--slate);margin-top:0.75rem;font-family:'DM Mono',monospace;letter-spacing:0.02em;">All metrics are publicly available and verifiable on the respective platforms.</p>
-      </div>
+  <!-- 02 Academic Recognition — full-bleed dark, injected from research-impact.json -->
+  <div class="impact-recognition-fullbleed fade-in fade-in-delay-3">
+    <div class="impact-overline"><span class="num">02</span><span class="rule"></span><span class="title">Academic Recognition</span></div>
+    <h3>Institutional <em>Validation</em></h3>
+    <p>Recognition by leading academic publishers, citation databases, and professional bodies confirms the quality and relevance of this research.</p>
+    <div class="impact-recognition-grid" id="impactRecognitionGrid"></div>
+  </div>
 
-      <div class="impact-sidebar">
-        <div class="impact-sidebar-section">
-          <div class="impact-sidebar-label">External Profiles</div>
-          <ul class="impact-profile-links">
-            <li><a href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener">
-              <svg class="plink-icon" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#1C2B4B"/><text x="4" y="17" font-family="Arial" font-size="9" fill="white" font-weight="bold">SSRN</text></svg>
-              SSRN <span style="margin-left:auto;color:var(--accent);font-size:0.6rem;">View profile ↗</span>
-            </a></li>
-            <li><a href="https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en" target="_blank" rel="noopener">
-              <svg class="plink-icon" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#4285F4"/><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" fill="white"/></svg>
-              Google Scholar <span style="margin-left:auto;color:var(--accent);font-size:0.6rem;">View profile ↗</span>
-            </a></li>
-            <li><a href="https://www.researchgate.net/profile/Ivan-Bakalo-2" target="_blank" rel="noopener">
-              <svg class="plink-icon" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#00CCBB"/><text x="3" y="16" font-family="Arial" font-size="11" fill="white" font-weight="bold">RG</text></svg>
-              ResearchGate <span style="margin-left:auto;color:var(--accent);font-size:0.6rem;">View profile ↗</span>
-            </a></li>
-            <li><a href="https://orcid.org/0009-0007-5773-1436" target="_blank" rel="noopener">
-              <svg class="plink-icon" viewBox="0 0 24 24"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z" fill="#A6CE39" fill-rule="evenodd"/></svg>
-              ORCID <span style="margin-left:auto;color:var(--accent);font-size:0.6rem;">View profile ↗</span>
-            </a></li>
-            <li><a href="https://www.linkedin.com/in/ivanbakalo" target="_blank" rel="noopener">
-              <svg class="plink-icon" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#0A66C2" fill-rule="evenodd"/></svg>
-              LinkedIn <span style="margin-left:auto;color:var(--accent);font-size:0.6rem;">View profile ↗</span>
-            </a></li>
-          </ul>
-        </div>
-        <blockquote class="impact-quote-block">
-          Research is not only about creating knowledge, but also about making an impact and advancing practice.
-          <cite>— Ivan Bakalo</cite>
-        </blockquote>
-      </div>
-    </div>
+  <div class="section-inner">
+    <!-- 03 Research Output — injected from research-impact.json -->
+    <div class="impact-overline fade-in"><span class="num">03</span><span class="rule"></span><span class="title">Research Output</span></div>
+    <div class="impact-output-grid fade-in fade-in-delay-1" id="impactOutputGrid"></div>
+    <p style="font-size:0.7rem;color:var(--slate);font-family:'DM Mono',monospace;letter-spacing:0.02em;">All output is publicly verifiable. Figures reflect works published, presented, or submitted as of the date above.</p>
 
+    <blockquote class="impact-quote-block fade-in fade-in-delay-2">
+      Research is not only about creating knowledge, but also about making an impact and advancing practice.
+      <cite>— Ivan Bakalo</cite>
+    </blockquote>
   </div>
 </section>
 
@@ -1849,31 +1816,21 @@ async function saveHistoricalData() {
 ================================================================ */
 const IMPACT_CHARTS = {}; // keyed by canvas id — holds Chart instances for cleanup
 
-const IMPACT_ROWS = [
-  { platform: 'google_scholar', key: 'citations_all',        label: 'Citations',        profileUrl: 'https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en' },
-  { platform: 'google_scholar', key: 'h_index',              label: 'h-index',          profileUrl: 'https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en' },
-  { platform: 'ssrn',           key: 'total_downloads',      label: 'Total Downloads',  profileUrl: 'https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776' },
-  { platform: 'ssrn',           key: 'abstract_views',       label: 'Abstract Views',   profileUrl: 'https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776' },
-  { platform: 'researchgate',   key: 'reads',                label: 'Reads',            profileUrl: 'https://www.researchgate.net/profile/Ivan-Bakalo-2' },
-  { platform: 'researchgate',   key: 'recommendations',      label: 'Recommendations',  profileUrl: 'https://www.researchgate.net/profile/Ivan-Bakalo-2' },
-  { platform: 'orcid',          key: 'works_count',          label: 'Works',            profileUrl: 'https://orcid.org/0009-0007-5773-1436' }
-];
-
-const PLATFORM_DISPLAY = {
-  google_scholar: 'Google Scholar',
-  ssrn:           'SSRN',
-  researchgate:   'ResearchGate',
-  orcid:          'ORCID'
+// Recognition icon SVGs (translated from ResearchImpact.jsx recognitionIcons)
+const IMPACT_RECOG_ICONS = {
+  clarivate: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 2L26 8.5v11L14 26 2 19.5v-11z" stroke="#d4aa72" stroke-width="1.5" fill="none"/><path d="M14 7L22 11.5v9L14 21l-8-4.5v-9z" fill="#d4aa72" opacity="0.2"/><circle cx="14" cy="14" r="2.5" fill="#d4aa72"/></svg>`,
+  taylor_francis: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="5" width="14" height="18" rx="1" stroke="#d4aa72" stroke-width="1.5" fill="none"/><rect x="8" y="5" width="14" height="18" rx="1" stroke="#d4aa72" stroke-width="1.5" fill="none" opacity="0.5"/><line x1="7" y1="10" x2="15" y2="10" stroke="#d4aa72" stroke-width="1"/><line x1="7" y1="13" x2="15" y2="13" stroke="#d4aa72" stroke-width="1"/><line x1="7" y1="16" x2="13" y2="16" stroke="#d4aa72" stroke-width="1"/></svg>`,
+  conference: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="11" y="4" width="6" height="10" rx="3" stroke="#d4aa72" stroke-width="1.5" fill="none"/><path d="M7 13c0 3.9 3.1 7 7 7s7-3.1 7-7" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="14" y1="20" x2="14" y2="24" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round"/><line x1="10" y1="24" x2="18" y2="24" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  peer_reviewed: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="#d4aa72" stroke-width="1.5" fill="none"/><path d="M9 14l3.5 3.5L19 10" stroke="#d4aa72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  doi: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M10 17a5 5 0 0 1 0-6" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M18 11a5 5 0 0 1 0 6" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="10" y1="14" x2="18" y2="14" stroke="#d4aa72" stroke-width="1.5"/></svg>`
 };
 
-function formatTrend(t) {
-  if (!t) return '<span class="trend-none">—</span>';
-  const n = parseFloat(t);
-  if (isNaN(n)) return '<span class="trend-none">—</span>';
-  return n >= 0
-    ? `<span class="trend-up">↑ ${Math.abs(n)}%</span>`
-    : `<span class="trend-down">↓ ${Math.abs(n)}%</span>`;
-}
+// Platform/key pairs used to compute the "last updated" badge from live stats
+const IMPACT_STAT_KEYS = [
+  ['google_scholar', 'citations_all'], ['google_scholar', 'h_index'], ['google_scholar', 'i10_index'],
+  ['ssrn', 'total_downloads'], ['ssrn', 'papers_count'], ['ssrn', 'abstract_views'],
+  ['researchgate', 'reads'], ['researchgate', 'recommendations'], ['researchgate', 'citations']
+];
 
 function formatUpdatedAt(iso) {
   if (!iso) return '—';
@@ -1884,17 +1841,19 @@ function formatUpdatedAt(iso) {
 
 async function fetchImpactData() {
   try {
-    const [statsRes, histRes] = await Promise.all([
+    const [statsRes, histRes, impactRes] = await Promise.all([
       fetch('/api/profile-stats'),
-      fetch('/api/profile-stats-history')
+      fetch('/api/profile-stats-history'),
+      fetch('/research-impact.json')
     ]);
-    const stats   = statsRes.ok   ? (await statsRes.json()).stats   : {};
-    const history = histRes.ok    ? (await histRes.json()).history  : {};
-    renderImpactSection(stats, history);
+    const stats   = statsRes.ok  ? (await statsRes.json()).stats  : {};
+    const history  = histRes.ok  ? (await histRes.json()).history : {};
+    const impact   = impactRes.ok ? await impactRes.json()        : {};
+    renderImpactSection(stats, history, impact);
   } catch { /* graceful — section stays with — placeholders */ }
 }
 
-function renderImpactSection(stats, history) {
+function renderImpactSection(stats, history, impact) {
   const gs   = stats.google_scholar || {};
   const ssrn = stats.ssrn           || {};
   const rg   = stats.researchgate   || {};
@@ -1912,35 +1871,52 @@ function renderImpactSection(stats, history) {
   setEl('ic_rg_citations',        rg.citations?.value);
 
   // Last updated badge — most recent updated_at across all tracked stats
-  const allUpdates = IMPACT_ROWS
-    .map(r => stats[r.platform]?.[r.key]?.updated_at)
+  const allUpdates = IMPACT_STAT_KEYS
+    .map(([platform, key]) => stats[platform]?.[key]?.updated_at)
     .filter(Boolean)
     .sort();
-  const lastUpdated = allUpdates[allUpdates.length - 1];
+  const lastUpdated = allUpdates[allUpdates.length - 1] || impact?.meta?.lastUpdated;
   const badge = document.getElementById('impactLastUpdatedDate');
   if (badge) badge.textContent = formatUpdatedAt(lastUpdated);
 
-  // Metrics table
-  const tbody = document.getElementById('impactTableBody');
-  if (tbody) {
-    tbody.innerHTML = IMPACT_ROWS.map(row => {
-      const stat = stats[row.platform]?.[row.key];
-      const value = stat?.value || '—';
-      const trend = stat?.trend_pct || '';
-      const date  = stat?.updated_at ? formatUpdatedAt(stat.updated_at) : '—';
-      return `<tr>
-        <td class="platform-cell">${esc(PLATFORM_DISPLAY[row.platform] || row.platform)}</td>
-        <td class="metric-cell">${esc(row.label)}</td>
-        <td class="value-cell">${esc(value)}</td>
-        <td>${formatTrend(trend)}</td>
-        <td class="date-cell">${esc(date)}</td>
-        <td class="link-cell"><a href="${row.profileUrl}" target="_blank" rel="noopener">View profile ↗</a></td>
-      </tr>`;
-    }).join('');
-  }
+  // Academic Recognition + Research Output (static NIW narrative content)
+  renderImpactRecognition(impact?.recognition || []);
+  renderImpactOutput(impact?.researchOutput || []);
 
   // Charts
   initImpactCharts(history);
+}
+
+function renderImpactRecognition(list) {
+  const grid = document.getElementById('impactRecognitionGrid');
+  if (!grid) return;
+  grid.innerHTML = list.map(item => `
+    <div class="impact-recog-card">
+      <div class="impact-recog-top">
+        ${IMPACT_RECOG_ICONS[item.id] || ''}
+        <span class="impact-recog-badge">${esc(item.badge || '')}</span>
+      </div>
+      <div>
+        <p class="impact-recog-institution">${esc(item.institution || '')}</p>
+        <p class="impact-recog-desc">${esc(item.description || '')}</p>
+      </div>
+      <a class="impact-recog-link" href="${esc(item.evidenceUrl || '#')}">View Evidence ↗</a>
+    </div>
+  `).join('');
+}
+
+function renderImpactOutput(list) {
+  const grid = document.getElementById('impactOutputGrid');
+  if (!grid) return;
+  grid.innerHTML = list.map(item => `
+    <div class="impact-output-box">
+      <div class="impact-output-value">${esc(item.value || '—')}</div>
+      <div>
+        <div class="impact-output-label">${esc(item.label || '')}</div>
+        <div class="impact-output-note">${esc(item.note || '')}</div>
+      </div>
+    </div>
+  `).join('');
 }
 
 function makeChartData(points, color) {
@@ -1977,21 +1953,12 @@ function initImpactCharts(history) {
   const rg   = history.researchgate   || {};
 
   const configs = [
-    { cardId: 'chartCardGS',       canvasId: 'chartGS',       points: gs.citations_all    || [], color: '#b8935a' },
-    { cardId: 'chartCardSSRN',     canvasId: 'chartSSRN',     points: ssrn.total_downloads || [], color: '#0e0e0e' },
-    { cardId: 'chartCardRG',       canvasId: 'chartRG',       points: rg.reads             || [], color: '#7a7468' },
-    { cardId: 'chartCardCombined', canvasId: 'chartCombined', points: null,                       color: '#d4aa72' }
+    { cardId: 'chartCardGS',   canvasId: 'chartGS',   points: gs.citations_all     || [], color: '#b8935a' },
+    { cardId: 'chartCardSSRN', canvasId: 'chartSSRN', points: ssrn.total_downloads || [], color: '#0e0e0e' },
+    { cardId: 'chartCardRG',   canvasId: 'chartRG',   points: rg.reads             || [], color: '#7a7468' }
   ];
 
-  // Build combined points: sum gs.citations_all + ssrn.total_downloads + rg.reads per year
-  const combined = {};
-  [gs.citations_all, ssrn.total_downloads, rg.reads].forEach(series => {
-    (series || []).forEach(({ year, value }) => {
-      combined[year] = (combined[year] || 0) + (parseFloat(value) || 0);
-    });
-  });
-  configs[3].points = Object.keys(combined).sort().map(y => ({ year: +y, value: combined[y] }));
-
+  let visibleCount = 0;
   configs.forEach(({ cardId, canvasId, points, color }) => {
     const card   = document.getElementById(cardId);
     const canvas = document.getElementById(canvasId);
@@ -1999,6 +1966,7 @@ function initImpactCharts(history) {
 
     if (!points.length) { card.style.display = 'none'; return; }
     card.style.display = '';
+    visibleCount++;
 
     // Destroy existing chart if re-rendering
     if (IMPACT_CHARTS[canvasId]) { IMPACT_CHARTS[canvasId].destroy(); }
@@ -2008,6 +1976,17 @@ function initImpactCharts(history) {
       options: CHART_OPTIONS
     });
   });
+
+  // Dynamically size the charts grid based on how many charts have data
+  const wrap = document.getElementById('impactChartsGrid');
+  if (wrap) {
+    if (visibleCount === 0) {
+      wrap.style.display = 'none';
+    } else {
+      wrap.style.display = '';
+      wrap.style.gridTemplateColumns = `repeat(${visibleCount}, 1fr)`;
+    }
+  }
 }
 
 /* ================================================================
