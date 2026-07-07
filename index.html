@@ -1168,6 +1168,65 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       </div>
 
       <button class="btn-submit" onclick="saveProfileStats()" style="margin-top:1.25rem;">Save Stats</button>
+
+      <!-- HISTORICAL YEAR DATA ─────────────────────────────────────── -->
+      <div style="margin-top:1.5rem;border-top:1px solid var(--border);padding-top:1.25rem;">
+        <button onclick="toggleHistoricalForm(this)"
+          style="background:none;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);padding:0;display:flex;align-items:center;gap:0.5rem;">
+          <span id="histToggleIcon">▶</span> Add Historical Year Data
+        </button>
+
+        <div id="historicalDataFields" style="display:none;margin-top:1.25rem;">
+          <p style="font-size:0.78rem;color:var(--slate);margin-bottom:1.1rem;">
+            Enter past-year values to build chart history. Blank fields are skipped. Each year is saved independently — saving again overwrites that year.
+          </p>
+
+          <!-- Year selector -->
+          <div class="form-row" style="margin-bottom:0.6rem;">
+            <div class="form-group">
+              <label class="form-label">Year</label>
+              <select class="form-input" id="hist_year">
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="font-size:0.72rem;font-family:'DM Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem;">Google Scholar</div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Citations (all)</label><input type="text" class="form-input" id="hist_gs_citations_all" placeholder="—"></div>
+            <div class="form-group"><label class="form-label">h-index</label><input type="text" class="form-input" id="hist_gs_h_index" placeholder="—"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">i10-index</label><input type="text" class="form-input" id="hist_gs_i10_index" placeholder="—"></div>
+          </div>
+
+          <div style="font-size:0.72rem;font-family:'DM Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin:1rem 0 0.6rem;">SSRN</div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Total Downloads</label><input type="text" class="form-input" id="hist_ssrn_total_downloads" placeholder="—"></div>
+            <div class="form-group"><label class="form-label">Abstract Views</label><input type="text" class="form-input" id="hist_ssrn_abstract_views" placeholder="—"></div>
+          </div>
+
+          <div style="font-size:0.72rem;font-family:'DM Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin:1rem 0 0.6rem;">ResearchGate</div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Reads</label><input type="text" class="form-input" id="hist_rg_reads" placeholder="—"></div>
+            <div class="form-group"><label class="form-label">Citations</label><input type="text" class="form-input" id="hist_rg_citations" placeholder="—"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Recommendations</label><input type="text" class="form-input" id="hist_rg_recommendations" placeholder="—"></div>
+          </div>
+
+          <button class="btn-submit" onclick="saveHistoricalData()" style="margin-top:1.25rem;background:var(--ink);">Save Year Data</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1726,6 +1785,62 @@ async function saveProfileStats() {
     closeContentModal();
     fetchProfileStats();
     fetchImpactData();
+  } catch (e) { alert('Save failed: ' + e.message); }
+}
+
+function toggleHistoricalForm(btn) {
+  const panel = document.getElementById('historicalDataFields');
+  const icon  = document.getElementById('histToggleIcon');
+  const open  = panel.style.display === 'none';
+  panel.style.display = open ? '' : 'none';
+  icon.textContent    = open ? '▼' : '▶';
+}
+
+async function saveHistoricalData() {
+  const g    = id => document.getElementById(id).value.trim();
+  const year = Number(document.getElementById('hist_year').value);
+
+  const platforms = [
+    { platform: 'google_scholar', stats: {
+        citations_all: g('hist_gs_citations_all'),
+        h_index:       g('hist_gs_h_index'),
+        i10_index:     g('hist_gs_i10_index'),
+      }
+    },
+    { platform: 'ssrn', stats: {
+        total_downloads: g('hist_ssrn_total_downloads'),
+        abstract_views:  g('hist_ssrn_abstract_views'),
+      }
+    },
+    { platform: 'researchgate', stats: {
+        reads:           g('hist_rg_reads'),
+        citations:       g('hist_rg_citations'),
+        recommendations: g('hist_rg_recommendations'),
+      }
+    },
+  ];
+
+  try {
+    for (const { platform, stats } of platforms) {
+      const filtered = Object.fromEntries(
+        Object.entries(stats).filter(([, v]) => v !== '')
+      );
+      if (!Object.keys(filtered).length) continue;
+      const res = await fetch('/api/profile-stats-history', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` },
+        body: JSON.stringify({ platform, stats: filtered, year }),
+      });
+      if (res.status === 401 || res.status === 403) { alert('Session expired.'); deactivateAdmin(); return; }
+      if (!res.ok) { const err = await res.json(); alert('Error: ' + (err.error || res.status)); return; }
+    }
+    // Clear fields after successful save
+    ['hist_gs_citations_all','hist_gs_h_index','hist_gs_i10_index',
+     'hist_ssrn_total_downloads','hist_ssrn_abstract_views',
+     'hist_rg_reads','hist_rg_citations','hist_rg_recommendations'
+    ].forEach(id => document.getElementById(id).value = '');
+    fetchImpactData();
+    alert(`Year ${year} saved. Charts will update.`);
   } catch (e) { alert('Save failed: ' + e.message); }
 }
 

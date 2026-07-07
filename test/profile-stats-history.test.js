@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 import { createD1Mock } from './helpers/d1.js';
 import { sign } from '../functions/lib/jwt.js';
 import { onRequestPut } from '../functions/api/profile-stats.js';
-import { onRequestGet as onRequestGetHistory } from '../functions/api/profile-stats-history.js';
+import { onRequestGet as onRequestGetHistory, onRequestPost as onRequestPostHistory } from '../functions/api/profile-stats-history.js';
 
 const SCHEMA = readFileSync('./migrations/0001_init.sql', 'utf8')
              + readFileSync('./migrations/0002_evidence_engagements.sql', 'utf8')
@@ -24,6 +24,12 @@ beforeEach(async () => {
 const req = (body, token) => new Request('https://example.com/api/profile-stats', {
   method: 'PUT',
   headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+  body: JSON.stringify(body)
+});
+
+const histReq = (body, token) => new Request('https://example.com/api/profile-stats-history', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
   body: JSON.stringify(body)
 });
 
@@ -67,5 +73,86 @@ describe('GET /api/profile-stats-history', () => {
     });
     const body = await (await onRequestGetHistory({ env })).json();
     expect(body.history.ssrn.total_downloads[0].value).toBe('888');
+  });
+});
+
+describe('POST /api/profile-stats-history', () => {
+  test('no token → 401', async () => {
+    const res = await onRequestPostHistory({
+      request: histReq({ platform: 'google_scholar', stats: { citations_all: '37' }, year: 2022 }),
+      env
+    });
+    expect(res.status).toBe(401);
+  });
+
+  test('invalid platform → 400', async () => {
+    const res = await onRequestPostHistory({
+      request: histReq({ platform: 'fake', stats: { foo: '1' }, year: 2022 }, adminToken),
+      env
+    });
+    expect(res.status).toBe(400);
+  });
+
+  test('missing year → 400', async () => {
+    const res = await onRequestPostHistory({
+      request: histReq({ platform: 'google_scholar', stats: { citations_all: '37' } }, adminToken),
+      env
+    });
+    expect(res.status).toBe(400);
+  });
+
+  test('future year → 400', async () => {
+    const futureYear = new Date().getFullYear() + 1;
+    const res = await onRequestPostHistory({
+      request: histReq({ platform: 'google_scholar', stats: { citations_all: '37' }, year: futureYear }, adminToken),
+      env
+    });
+    expect(res.status).toBe(400);
+  });
+
+  test('writes historical row for specified past year', async () => {
+    const res = await onRequestPostHistory({
+      request: histReq({ platform: 'google_scholar', stats: { citations_all: '120', h_index: '8' }, year: 2022 }, adminToken),
+      env
+    });
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ ok: true });
+
+    const body = await (await onRequestGetHistory({ env })).json();
+    const series = body.history.google_scholar.citations_all;
+    expect(series).toHaveLength(1);
+    expect(series[0].year).toBe(2022);
+    expect(series[0].value).toBe('120');
+  });
+
+  test('multiple years produce a sorted series', async () => {
+    await onRequestPostHistory({ request: histReq({ platform: 'ssrn', stats: { total_downloads: '500' }, year: 2023 }, adminToken), env });
+    await onRequestPostHistory({ request: histReq({ platform: 'ssrn', stats: { total_downloads: '900' }, year: 2024 }, adminToken), env });
+    await onRequestPostHistory({ request: histReq({ platform: 'ssrn', stats: { total_downloads: '300' }, year: 2022 }, adminToken), env });
+
+    const body = await (await onRequestGetHistory({ env })).json();
+    const series = body.history.ssrn.total_downloads;
+    expect(series).toHaveLength(3);
+    expect(series.map(r => r.year)).toEqual([2022, 2023, 2024]);
+  });
+
+  test('re-posting same year replaces the value', async () => {
+    await onRequestPostHistory({ request: histReq({ platform: 'researchgate', stats: { reads: '1000' }, year: 2023 }, adminToken), env });
+    await onRequestPostHistory({ request: histReq({ platform: 'researchgate', stats: { reads: '1500' }, year: 2023 }, adminToken), env });
+
+    const body = await (await onRequestGetHistory({ env })).json();
+    const series = body.history.researchgate.reads;
+    expect(series).toHaveLength(1);
+    expect(series[0].value).toBe('1500');
+  });
+
+  test('blank stat values are skipped', async () => {
+    await onRequestPostHistory({
+      request: histReq({ platform: 'google_scholar', stats: { citations_all: '50', h_index: '' }, year: 2021 }, adminToken),
+      env
+    });
+    const body = await (await onRequestGetHistory({ env })).json();
+    expect(body.history.google_scholar.citations_all).toHaveLength(1);
+    expect(body.history.google_scholar.h_index).toBeUndefined();
   });
 });
