@@ -81,7 +81,8 @@ CI secrets are stored in GitHub → Settings → Secrets as `CLOUDFLARE_API_TOKE
 │       ├── evidence/[id].js      # GET/PUT/DELETE /api/evidence/:id
 │       ├── engagements.js        # GET/POST /api/engagements
 │       ├── engagements/[id].js   # GET/PUT/DELETE /api/engagements/:id
-│       ├── profile-stats-history.js  # GET /api/profile-stats-history (public)
+│       ├── profile-stats.js          # GET /api/profile-stats (public) · PUT (JWT)
+│       ├── profile-stats-history.js  # GET /api/profile-stats-history (public) · POST (JWT) historical entry
 │       └── lib/auth.js           # requireAuth() JWT middleware
 ├── migrations/
 │   ├── 0001_init.sql             # articles + users tables
@@ -97,6 +98,7 @@ CI secrets are stored in GitHub → Settings → Secrets as `CLOUDFLARE_API_TOKE
 ├── plans/                        # implementation plans from past sessions
 ├── docs/
 │   └── PRD.md                    # product requirements doc
+├── ResearchImpact.jsx            # standalone React component — pixel-perfect #impact section (Tailwind + inline SVG icons)
 └── raw/
     └── ivanbakalo.com.docx       # client's running brief/feedback (Ukrainian + English)
 ```
@@ -223,9 +225,13 @@ Stat keys — Google Scholar: `citations_all`, `citations_since_2021`, `h_index`
 
 History snapshot table: `profile_stats_history (platform, stat_key, stat_year, stat_value, saved_at)` — auto-populated on every admin stats save; powers the year-over-year charts in `#impact`.
 
-API: `GET /api/profile-stats` (public, now includes `trend_pct`) · `PUT /api/profile-stats` (JWT-protected, accepts `{ value, trend_pct }` per stat key) · `GET /api/profile-stats-history` (public, returns chart data grouped by platform+stat_key)
+API endpoints:
+- `GET /api/profile-stats` — public; returns current stats with `trend_pct`
+- `PUT /api/profile-stats` — JWT; accepts `{ value, trend_pct }` per stat; auto-snapshots current year into history
+- `GET /api/profile-stats-history` — public; returns chart data grouped by `platform → stat_key → [{year, value}]`
+- `POST /api/profile-stats-history` — JWT; body `{ platform, stats: { stat_key: value }, year }`; writes any past year directly into history (INSERT OR REPLACE); used by "Add Historical Year Data" admin panel
 
-API: `GET /api/profile-stats` (public) · `PUT /api/profile-stats` (JWT-protected)  
+
 ORCID auto-refresh: `functions/api/scheduled-orcid.js` — Cloudflare Scheduled Worker, daily, fetches `pub.orcid.org/v3.0/0009-0007-5773-1436/works`  
 Admin: triple-click logo → login → "Edit Stats" button appears in the Research Profiles section header
 
@@ -307,3 +313,4 @@ Always diff against the previous version before starting new work to identify up
 | 2026-07-04 | Deploy rule tightened — PreToolUse hook now blocks ALL `git push … main` (previously only `feat:` commits); production deploy requires explicit user confirmation in chat |
 | 2026-07-07 | `llms.txt` added — llmstxt.org standard; covers 8 site sections, 5 research profiles, 4 public API endpoints; staged on `fix/llms-txt` |
 | 2026-07-07 | Research Impact section (`#impact`) — new section after Research Profiles; 4 platform summary cards (GS/SSRN/RG/ORCID), 4 Chart.js line charts (year-over-year, auto-snapshotted on admin save), metrics table with trend indicators, external profiles sidebar, quote block; DB migration `0005_research_impact.sql` adds `trend_pct` + `profile_stats_history`; new stat_keys `ssrn.abstract_views` + `researchgate.recommendations`; 69 tests all green; staged on `feature/research-impact` |
+| 2026-07-07 | Historical data entry — `POST /api/profile-stats-history` (JWT, writes any past year directly); admin modal "Add Historical Year Data" collapsible section (year 2016–2025 + GS/SSRN/RG fields); blank values skipped; charts refresh on save; `ResearchImpact.jsx` standalone React component (Tailwind + inline SVG, no external deps); 77 tests all green |
