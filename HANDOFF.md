@@ -1,6 +1,6 @@
 # Bakalo Site — Handoff & Context Document
 
-_Last updated: 2026-07-07 (session 5)_
+_Last updated: 2026-07-07 (session 6)_
 
 ---
 
@@ -98,7 +98,8 @@ CI secrets are stored in GitHub → Settings → Secrets as `CLOUDFLARE_API_TOKE
 ├── plans/                        # implementation plans from past sessions
 ├── docs/
 │   └── PRD.md                    # product requirements doc
-├── ResearchImpact.jsx            # standalone React component — pixel-perfect #impact section (Tailwind + inline SVG icons)
+├── ResearchImpact.jsx             # reference React component (Tailwind + inline SVG) — not served; #impact logic lives in index.html
+├── research-impact.json          # static data source for Academic Recognition + Research Output (fetched at runtime by index.html)
 └── raw/
     └── ivanbakalo.com.docx       # client's running brief/feedback (Ukrainian + English)
 ```
@@ -162,7 +163,7 @@ npx wrangler pages deploy . \
 | Professional Engagement | `#engagement` | Engagement cards with 6 category filter tabs |
 | Proposed Endeavor | `#endeavor` | NIW petition summary, 4 pillars (dark section) |
 | Research Profiles | `#profiles` | 5 platform cards with official Simple Icons SVGs (SSRN, Scholar, ORCID, ResearchGate, LinkedIn) |
-| Research Impact | `#impact` | 4 platform summary cards, 4 Chart.js line charts (year-over-year), metrics table with trends, external profiles sidebar, quote block |
+| Research Impact | `#impact` | v2 NIW-narrative design (vanilla JS, no framework): 01 Research Visibility (4 platform cards, pill-shaped stat chips, no profile links), max 3 auto-hiding Chart.js line charts (combined chart removed), 02 Academic Recognition (full-bleed dark breakout div, 5 institutional markers from `research-impact.json`), 03 Research Output (5 connected white boxes), quote block. Academic Presence (external profile links) intentionally omitted here — already covered by `#profiles` immediately above, per "no duplicate links" rule |
 | Contact | `#contact` | Email + LinkedIn + location |
 
 ---
@@ -314,3 +315,4 @@ Always diff against the previous version before starting new work to identify up
 | 2026-07-07 | `llms.txt` added — llmstxt.org standard; covers 8 site sections, 5 research profiles, 4 public API endpoints; staged on `fix/llms-txt` |
 | 2026-07-07 | Research Impact section (`#impact`) — new section after Research Profiles; 4 platform summary cards (GS/SSRN/RG/ORCID), 4 Chart.js line charts (year-over-year, auto-snapshotted on admin save), metrics table with trend indicators, external profiles sidebar, quote block; DB migration `0005_research_impact.sql` adds `trend_pct` + `profile_stats_history`; new stat_keys `ssrn.abstract_views` + `researchgate.recommendations`; 69 tests all green; staged on `feature/research-impact` |
 | 2026-07-07 | Historical data entry — `POST /api/profile-stats-history` (JWT, writes any past year directly); admin modal "Add Historical Year Data" collapsible section (year 2016–2025 + GS/SSRN/RG fields); blank values skipped; charts refresh on save; `ResearchImpact.jsx` standalone React component (Tailwind + inline SVG, no external deps); 77 tests all green |
+| 2026-07-07 | Research Impact v2 integration — translated `ResearchImpact.jsx` React logic into vanilla JS directly in `index.html`: pill-shaped `.impact-chip` stat chips (replacing bordered `.stat-chip` inside cards only), removed "View profile" buttons from visibility cards, dropped the Combined chart (max 3, dynamic grid sizing, auto-hide when empty), added full-bleed dark `.impact-recognition-fullbleed` breakout div (5 institutional markers) and 5-box connected `.impact-output-grid` (Research Output) — both rendered client-side from new `research-impact.json` static fetch; removed old metrics table + sidebar (dead CSS/HTML/JS cleaned up); 77 tests still green; pushed to `feature/research-impact` |
