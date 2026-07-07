@@ -1,6 +1,6 @@
 # Bakalo Site — Handoff & Context Document
 
-_Last updated: 2026-07-04 (session 3)_
+_Last updated: 2026-07-07 (session 5)_
 
 ---
 
@@ -62,7 +62,8 @@ CI secrets are stored in GitHub → Settings → Secrets as `CLOUDFLARE_API_TOKE
 
 ```
 ./
-├── index.html                    # ← entire frontend (CSS + JS + HTML, ~1 326 lines)
+├── index.html                    # ← entire frontend (CSS + JS + HTML, ~1 700 lines)
+├── llms.txt                      # AI discoverability — llmstxt.org standard
 ├── CLAUDE.md                     # AI coding instructions & architecture decisions
 ├── HANDOFF.md                    # this file
 ├── schema.sql                    # reference schema (not applied directly)
@@ -80,11 +81,14 @@ CI secrets are stored in GitHub → Settings → Secrets as `CLOUDFLARE_API_TOKE
 │       ├── evidence/[id].js      # GET/PUT/DELETE /api/evidence/:id
 │       ├── engagements.js        # GET/POST /api/engagements
 │       ├── engagements/[id].js   # GET/PUT/DELETE /api/engagements/:id
+│       ├── profile-stats-history.js  # GET /api/profile-stats-history (public)
 │       └── lib/auth.js           # requireAuth() JWT middleware
 ├── migrations/
 │   ├── 0001_init.sql             # articles + users tables
 │   ├── 0002_evidence_engagements.sql
-│   └── 0003_category_tabs.sql    # category column on evidence + engagements
+│   ├── 0003_category_tabs.sql    # category column on evidence + engagements
+│   ├── 0004_profile_stats.sql    # profile_stats table
+│   └── 0005_research_impact.sql  # trend_pct column + profile_stats_history table
 ├── scripts/
 │   ├── deploy-staging.sh         # full staging deploy (D1 migrate + seed + Pages)
 │   ├── setup-d1-staging.sh       # standalone D1 staging setup
@@ -156,6 +160,7 @@ npx wrangler pages deploy . \
 | Professional Engagement | `#engagement` | Engagement cards with 6 category filter tabs |
 | Proposed Endeavor | `#endeavor` | NIW petition summary, 4 pillars (dark section) |
 | Research Profiles | `#profiles` | 5 platform cards with official Simple Icons SVGs (SSRN, Scholar, ORCID, ResearchGate, LinkedIn) |
+| Research Impact | `#impact` | 4 platform summary cards, 4 Chart.js line charts (year-over-year), metrics table with trends, external profiles sidebar, quote block |
 | Contact | `#contact` | Email + LinkedIn + location |
 
 ---
@@ -192,6 +197,7 @@ npx wrangler pages deploy . \
 | `0002_evidence_engagements.sql` | `evidence` + `engagements` tables |
 | `0003_category_tabs.sql` | `category` column on `evidence` + `engagements` |
 | `0004_profile_stats.sql` | `profile_stats` table — citation/impact metrics per platform |
+| `0005_research_impact.sql` | `trend_pct` column on `profile_stats`; `profile_stats_history` table for chart snapshots |
 
 ### Common DB commands
 
@@ -211,9 +217,13 @@ npx wrangler d1 execute bakalo-db --remote --command="SELECT * FROM articles LIM
 ## Content Data Model
 
 ### Profile Stats (Research Profiles section)
-Platforms: `google_scholar` · `ssrn` · `orcid` · `researchgate` · `linkedin`  
-Fields: `platform` (PK), `stat_key` (PK), `stat_value`, `updated_at`  
-Stat keys — Google Scholar: `citations_all`, `citations_since_2021`, `h_index`, `i10_index` | SSRN: `total_downloads`, `papers_count` | ORCID: `works_count` (auto-refreshed) | ResearchGate: `publications`, `reads`, `citations`
+Platforms: `google_scholar` · `ssrn` · `orcid` · `researchgate` · `linkedin`
+Fields: `platform` (PK), `stat_key` (PK), `stat_value`, `trend_pct`, `updated_at`
+Stat keys — Google Scholar: `citations_all`, `citations_since_2021`, `h_index`, `i10_index` | SSRN: `total_downloads`, `papers_count`, `abstract_views` | ORCID: `works_count` (auto-refreshed) | ResearchGate: `publications`, `reads`, `citations`, `recommendations`
+
+History snapshot table: `profile_stats_history (platform, stat_key, stat_year, stat_value, saved_at)` — auto-populated on every admin stats save; powers the year-over-year charts in `#impact`.
+
+API: `GET /api/profile-stats` (public, now includes `trend_pct`) · `PUT /api/profile-stats` (JWT-protected, accepts `{ value, trend_pct }` per stat key) · `GET /api/profile-stats-history` (public, returns chart data grouped by platform+stat_key)
 
 API: `GET /api/profile-stats` (public) · `PUT /api/profile-stats` (JWT-protected)  
 ORCID auto-refresh: `functions/api/scheduled-orcid.js` — Cloudflare Scheduled Worker, daily, fetches `pub.orcid.org/v3.0/0009-0007-5773-1436/works`  
@@ -295,3 +305,5 @@ Always diff against the previous version before starting new work to identify up
 | 2026-07-04 | Stat chip readability fix (WCAG AAA) — warm dark bg `#2d2922` (chip-vs-card 17:1→13:1), label opacity 0.5→0.72 (5.3:1→8.2:1 AAA), value gold brightened to `#e8c47e` (8.7:1 AAA), font 0.67→0.7rem |
 | 2026-07-04 | Stat chip redesign → outlined style — transparent bg, `#9a7845` gold border (4.08:1 WCAG 1.4.11 ✓), label `#6d6660` warm gray (5.65:1 AA ✓), value `--navy` bold (19.3:1 AAA ✓) |
 | 2026-07-04 | Deploy rule tightened — PreToolUse hook now blocks ALL `git push … main` (previously only `feat:` commits); production deploy requires explicit user confirmation in chat |
+| 2026-07-07 | `llms.txt` added — llmstxt.org standard; covers 8 site sections, 5 research profiles, 4 public API endpoints; staged on `fix/llms-txt` |
+| 2026-07-07 | Research Impact section (`#impact`) — new section after Research Profiles; 4 platform summary cards (GS/SSRN/RG/ORCID), 4 Chart.js line charts (year-over-year, auto-snapshotted on admin save), metrics table with trend indicators, external profiles sidebar, quote block; DB migration `0005_research_impact.sql` adds `trend_pct` + `profile_stats_history`; new stat_keys `ssrn.abstract_views` + `researchgate.recommendations`; 69 tests all green; staged on `feature/research-impact` |

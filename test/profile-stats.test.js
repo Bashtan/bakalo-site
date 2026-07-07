@@ -7,7 +7,8 @@ import { onRequestGet, onRequestPut } from '../functions/api/profile-stats.js';
 const SCHEMA = readFileSync('./migrations/0001_init.sql', 'utf8')
              + readFileSync('./migrations/0002_evidence_engagements.sql', 'utf8')
              + readFileSync('./migrations/0003_category_tabs.sql', 'utf8')
-             + readFileSync('./migrations/0004_profile_stats.sql', 'utf8');
+             + readFileSync('./migrations/0004_profile_stats.sql', 'utf8')
+             + readFileSync('./migrations/0005_research_impact.sql', 'utf8');
 const SECRET = 'test-jwt-secret-at-least-32-chars!';
 
 let db, env, adminToken;
@@ -85,5 +86,41 @@ describe('PUT /api/profile-stats', () => {
     await onRequestPut({ request: req('PUT', { platform: 'orcid', stats: { works_count: '15' } }, adminToken), env });
     const body = await (await onRequestGet({ env })).json();
     expect(body.stats.orcid.works_count.value).toBe('15');
+  });
+
+  test('object stat value with trend_pct round-trips correctly', async () => {
+    await onRequestPut({
+      request: req('PUT', {
+        platform: 'google_scholar',
+        stats: { citations_all: { value: '37', trend_pct: '18' } }
+      }, adminToken),
+      env
+    });
+    const body = await (await onRequestGet({ env })).json();
+    expect(body.stats.google_scholar.citations_all.value).toBe('37');
+    expect(body.stats.google_scholar.citations_all.trend_pct).toBe('18');
+  });
+
+  test('plain string stat value is still accepted (backward compat)', async () => {
+    await onRequestPut({
+      request: req('PUT', { platform: 'orcid', stats: { works_count: '5' } }, adminToken),
+      env
+    });
+    const body = await (await onRequestGet({ env })).json();
+    expect(body.stats.orcid.works_count.value).toBe('5');
+    expect(body.stats.orcid.works_count.trend_pct).toBe('');
+  });
+
+  test('PUT auto-snapshots current year into profile_stats_history', async () => {
+    await onRequestPut({
+      request: req('PUT', { platform: 'ssrn', stats: { total_downloads: '999' } }, adminToken),
+      env
+    });
+    const row = env.DB._db.prepare(
+      'SELECT * FROM profile_stats_history WHERE platform=? AND stat_key=?'
+    ).get('ssrn', 'total_downloads');
+    expect(row).toBeTruthy();
+    expect(row.stat_value).toBe('999');
+    expect(row.stat_year).toBe(new Date().getFullYear());
   });
 });
