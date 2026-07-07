@@ -11,7 +11,7 @@
 <link rel="canonical" href="https://ivanbakalo.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.54.1/dist/apexcharts.min.js"></script>
 <style>
 :root {
   --navy:     #0e0e0e;
@@ -399,7 +399,7 @@ section { padding: 6rem 3rem 5rem; }
   font-family: 'DM Mono', monospace; font-size: 0.6rem; color: #4a7c4e;
   letter-spacing: 0.06em;
 }
-.impact-charts-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
+.impact-charts-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
 .impact-chart-card { background: var(--white); border: 1px solid var(--border); padding: 1.5rem; }
 .impact-chart-title {
   font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 500;
@@ -408,6 +408,7 @@ section { padding: 6rem 3rem 5rem; }
 }
 .impact-chart-title::before { content: ''; width: 18px; height: 1px; background: var(--accent); flex-shrink: 0; }
 .impact-chart-canvas-wrap { position: relative; height: 160px; }
+.impact-chart-note { font-size: 0.68rem; line-height: 1.5; color: var(--slate); margin: 0.85rem 0 0; }
 
 /* Academic Recognition — full-bleed dark section */
 .impact-recognition-fullbleed {
@@ -459,13 +460,14 @@ section { padding: 6rem 3rem 5rem; }
 }
 @media (max-width: 1024px) {
   .impact-cards-row { grid-template-columns: repeat(2,1fr); }
-  .impact-charts-grid { grid-template-columns: 1fr !important; }
+  .impact-charts-grid { grid-template-columns: repeat(2,1fr) !important; }
   .impact-recognition-grid { grid-template-columns: 1fr; }
   .impact-output-grid { grid-template-columns: repeat(2,1fr); }
   .impact-recognition-fullbleed { padding: 4rem 1.5rem; }
 }
 @media (max-width: 600px) {
   .impact-cards-row { grid-template-columns: 1fr; }
+  .impact-charts-grid { grid-template-columns: 1fr !important; }
   .impact-output-grid { grid-template-columns: 1fr; }
 }
 
@@ -865,19 +867,24 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       </div>
     </div>
 
-    <!-- Charts (max 3 — auto-hide when no history data) -->
+    <!-- Charts (max 4 — auto-hide when no history data) -->
     <div class="impact-charts-grid fade-in fade-in-delay-2" id="impactChartsGrid">
       <div class="impact-chart-card" id="chartCardGS">
         <div class="impact-chart-title">Google Scholar Citations by Year</div>
-        <div class="impact-chart-canvas-wrap"><canvas id="chartGS"></canvas></div>
+        <div class="impact-chart-canvas-wrap"><div id="chartGS"></div></div>
       </div>
       <div class="impact-chart-card" id="chartCardSSRN">
         <div class="impact-chart-title">SSRN Downloads by Year</div>
-        <div class="impact-chart-canvas-wrap"><canvas id="chartSSRN"></canvas></div>
+        <div class="impact-chart-canvas-wrap"><div id="chartSSRN"></div></div>
       </div>
       <div class="impact-chart-card" id="chartCardRG">
         <div class="impact-chart-title">ResearchGate Reads by Year</div>
-        <div class="impact-chart-canvas-wrap"><canvas id="chartRG"></canvas></div>
+        <div class="impact-chart-canvas-wrap"><div id="chartRG"></div></div>
+      </div>
+      <div class="impact-chart-card" id="chartCardCombined">
+        <div class="impact-chart-title">Overall Impact Trend</div>
+        <div class="impact-chart-canvas-wrap"><div id="chartCombined"></div></div>
+        <p class="impact-chart-note">The Impact Index is a normalized indicator that reflects overall research visibility across platforms.</p>
       </div>
     </div>
   </div>
@@ -1814,7 +1821,7 @@ async function saveHistoricalData() {
 /* ================================================================
    RESEARCH IMPACT
 ================================================================ */
-const IMPACT_CHARTS = {}; // keyed by canvas id — holds Chart instances for cleanup
+const IMPACT_CHARTS = {}; // keyed by chart div id — holds ApexCharts instances for cleanup
 
 // Recognition icon SVGs (translated from ResearchImpact.jsx recognitionIcons)
 const IMPACT_RECOG_ICONS = {
@@ -1919,74 +1926,100 @@ function renderImpactOutput(list) {
   `).join('');
 }
 
-function makeChartData(points, color) {
+function buildCombinedSeries(gsPoints, ssrnPoints, rgPoints) {
+  const totals = {};
+  [gsPoints, ssrnPoints, rgPoints].forEach(arr => {
+    (arr || []).forEach(p => {
+      totals[p.year] = (totals[p.year] || 0) + (parseFloat(p.value) || 0);
+    });
+  });
+  return Object.keys(totals)
+    .map(Number)
+    .sort((a, b) => a - b)
+    .map(year => ({ year, value: totals[year] }));
+}
+
+function makeApexOptions(points, color) {
   return {
-    labels:   points.map(p => p.year),
-    datasets: [{
-      data:            points.map(p => parseFloat(p.value) || 0),
-      borderColor:     color,
-      backgroundColor: color + '22',
-      borderWidth:     2,
-      pointRadius:     4,
-      pointBackgroundColor: color,
-      tension:         0.35,
-      fill:            true
-    }]
+    chart: {
+      type: 'area',
+      height: 160,
+      toolbar: { show: false },
+      zoom: { enabled: false },
+      fontFamily: "'DM Mono', monospace",
+      animations: { enabled: false }
+    },
+    series: [{ name: '', data: points.map(p => parseFloat(p.value) || 0) }],
+    colors: [color],
+    stroke: { curve: 'smooth', width: 2 },
+    fill: {
+      type: 'gradient',
+      gradient: { shadeIntensity: 1, opacityFrom: 0.35, opacityTo: 0, stops: [0, 90, 100] }
+    },
+    markers: { size: 3, colors: [color], strokeColors: '#fff', strokeWidth: 1 },
+    dataLabels: { enabled: false },
+    legend: { show: false },
+    tooltip: { theme: 'light' },
+    grid: {
+      borderColor: '#c8c0b022',
+      xaxis: { lines: { show: false } },
+      yaxis: { lines: { show: true } }
+    },
+    xaxis: {
+      categories: points.map(p => String(p.year)),
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+      labels: { style: { colors: '#7a7468', fontSize: '10px', fontFamily: "'DM Mono', monospace" } }
+    },
+    yaxis: {
+      labels: { style: { colors: '#7a7468', fontSize: '10px', fontFamily: "'DM Mono', monospace" } }
+    }
   };
 }
 
-const CHART_OPTIONS = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: { legend: { display: false } },
-  scales: {
-    x: { ticks: { font: { family: "'DM Mono', monospace", size: 10 }, color: '#7a7468' }, grid: { color: '#c8c0b022' } },
-    y: { ticks: { font: { family: "'DM Mono', monospace", size: 10 }, color: '#7a7468' }, grid: { color: '#c8c0b022' }, beginAtZero: true }
-  }
-};
-
 function initImpactCharts(history) {
-  if (typeof Chart === 'undefined') return;
+  if (typeof ApexCharts === 'undefined') return;
 
   const gs   = history.google_scholar || {};
   const ssrn = history.ssrn           || {};
   const rg   = history.researchgate   || {};
+  const combinedPoints = buildCombinedSeries(gs.citations_all, ssrn.total_downloads, rg.reads);
 
   const configs = [
-    { cardId: 'chartCardGS',   canvasId: 'chartGS',   points: gs.citations_all     || [], color: '#b8935a' },
-    { cardId: 'chartCardSSRN', canvasId: 'chartSSRN', points: ssrn.total_downloads || [], color: '#0e0e0e' },
-    { cardId: 'chartCardRG',   canvasId: 'chartRG',   points: rg.reads             || [], color: '#7a7468' }
+    { cardId: 'chartCardGS',       elId: 'chartGS',       points: gs.citations_all     || [], color: '#b8935a' },
+    { cardId: 'chartCardSSRN',     elId: 'chartSSRN',     points: ssrn.total_downloads || [], color: '#0e0e0e' },
+    { cardId: 'chartCardRG',       elId: 'chartRG',       points: rg.reads             || [], color: '#7a7468' },
+    { cardId: 'chartCardCombined', elId: 'chartCombined', points: combinedPoints,             color: '#d4aa72' }
   ];
 
-  let visibleCount = 0;
-  configs.forEach(({ cardId, canvasId, points, color }) => {
-    const card   = document.getElementById(cardId);
-    const canvas = document.getElementById(canvasId);
-    if (!card || !canvas) return;
+  const visible = configs.filter(c => c.points.length > 0);
 
-    if (!points.length) { card.style.display = 'none'; return; }
-    card.style.display = '';
-    visibleCount++;
-
-    // Destroy existing chart if re-rendering
-    if (IMPACT_CHARTS[canvasId]) { IMPACT_CHARTS[canvasId].destroy(); }
-    IMPACT_CHARTS[canvasId] = new Chart(canvas, {
-      type: 'line',
-      data: makeChartData(points, color),
-      options: CHART_OPTIONS
-    });
-  });
-
-  // Dynamically size the charts grid based on how many charts have data
+  // Show/size the grid wrapper BEFORE rendering, so ApexCharts measures a
+  // non-zero container width (rendering into a display:none ancestor
+  // results in 0-width charts).
   const wrap = document.getElementById('impactChartsGrid');
   if (wrap) {
-    if (visibleCount === 0) {
+    if (visible.length === 0) {
       wrap.style.display = 'none';
     } else {
       wrap.style.display = '';
-      wrap.style.gridTemplateColumns = `repeat(${visibleCount}, 1fr)`;
+      wrap.style.gridTemplateColumns = `repeat(${Math.min(visible.length, 4)}, 1fr)`;
     }
   }
+
+  configs.forEach(({ cardId, elId, points, color }) => {
+    const card = document.getElementById(cardId);
+    const el   = document.getElementById(elId);
+    if (!card || !el) return;
+
+    if (!points.length) { card.style.display = 'none'; return; }
+    card.style.display = '';
+
+    // Destroy existing chart instance if re-rendering
+    if (IMPACT_CHARTS[elId]) { IMPACT_CHARTS[elId].destroy(); }
+    IMPACT_CHARTS[elId] = new ApexCharts(el, makeApexOptions(points, color));
+    IMPACT_CHARTS[elId].render();
+  });
 }
 
 /* ================================================================
