@@ -742,7 +742,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
     <div class="section-label fade-in">Research Profiles</div>
     <div class="research-header fade-in fade-in-delay-1">
       <h2 class="section-title" style="margin-bottom:0">Academic &amp; Professional <em>Presence</em></h2>
-      <button class="btn-accent" id="btnEditProfileStats" style="display:none" onclick="openProfileStatsModal()">Edit Stats</button>
+      <button class="btn-accent" id="btnEditProfileStats" onclick="openProfileStatsModal()">Edit Stats</button>
     </div>
     <div class="profiles-grid fade-in fade-in-delay-2">
       <a class="profile-card" data-platform="ssrn" href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener">
@@ -1041,12 +1041,10 @@ if (adminToken && !getTokenPayload()) adminToken = null;
 function activateAdmin() {
   adminMode = true;
   document.body.classList.add('admin-mode');
-  ['btnAddArticle','btnAddEvidence','btnAddEngagement','btnLogout'].forEach(id => {
+  ['btnAddArticle','btnAddEvidence','btnAddEngagement','btnLogout','btnEditProfileStats'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add('visible');
   });
-  const statsBtn = document.getElementById('btnEditProfileStats');
-  if (statsBtn) statsBtn.style.display = '';
   renderArticles();
   renderEvidence();
   renderEngagements();
@@ -1057,12 +1055,10 @@ function deactivateAdmin() {
   adminToken = null;
   localStorage.removeItem('ib_jwt');
   document.body.classList.remove('admin-mode');
-  ['btnAddArticle','btnAddEvidence','btnAddEngagement','btnLogout'].forEach(id => {
+  ['btnAddArticle','btnAddEvidence','btnAddEngagement','btnLogout','btnEditProfileStats'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('visible');
   });
-  const statsBtn = document.getElementById('btnEditProfileStats');
-  if (statsBtn) statsBtn.style.display = 'none';
   renderArticles();
   renderEvidence();
   renderEngagements();
