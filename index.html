@@ -399,7 +399,13 @@ section { padding: 6rem 3rem 5rem; }
   font-family: 'DM Mono', monospace; font-size: 0.6rem; color: #4a7c4e;
   letter-spacing: 0.06em;
 }
-.impact-charts-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
+.impact-card-link {
+  display: inline-block; margin-top: 0.6rem; font-family: 'DM Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent); text-decoration: none; opacity: 0.85; transition: opacity 0.15s;
+}
+.impact-card-link:hover { opacity: 1; }
+.impact-charts-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-bottom: 2.5rem; }
 .impact-chart-card { background: var(--white); border: 1px solid var(--border); padding: 1.5rem; }
 .impact-chart-title {
   font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 500;
@@ -408,6 +414,7 @@ section { padding: 6rem 3rem 5rem; }
 }
 .impact-chart-title::before { content: ''; width: 18px; height: 1px; background: var(--accent); flex-shrink: 0; }
 .impact-chart-canvas-wrap { position: relative; height: 160px; }
+.impact-chart-note { font-size: 0.68rem; line-height: 1.5; color: var(--slate); margin: 0.85rem 0 0; }
 
 /* Academic Recognition — full-bleed dark section */
 .impact-recognition-fullbleed {
@@ -473,13 +480,14 @@ section { padding: 6rem 3rem 5rem; }
 }
 @media (max-width: 1024px) {
   .impact-cards-row { grid-template-columns: repeat(2,1fr); }
-  .impact-charts-grid { grid-template-columns: 1fr !important; }
+  .impact-charts-grid { grid-template-columns: repeat(2,1fr) !important; }
   .impact-recognition-grid { grid-template-columns: 1fr; }
   .impact-output-grid { grid-template-columns: repeat(2,1fr); }
   .impact-recognition-fullbleed { padding: 4rem 1.5rem; }
 }
 @media (max-width: 600px) {
   .impact-cards-row { grid-template-columns: 1fr; }
+  .impact-charts-grid { grid-template-columns: 1fr !important; }
   .impact-output-grid { grid-template-columns: 1fr; }
   .impact-presence-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
 }
@@ -838,6 +846,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
           <span class="impact-chip"><span class="chip-label">h-index</span><span class="chip-val" id="ic_gs_h_index">—</span></span>
           <span class="impact-chip"><span class="chip-label">i10</span><span class="chip-val" id="ic_gs_i10_index">—</span></span>
         </div>
+        <a class="impact-card-link" href="https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en" target="_blank" rel="noopener">View profile ↗</a>
       </div>
 
       <div class="impact-card">
@@ -851,6 +860,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
           <span class="impact-chip"><span class="chip-label">Papers</span><span class="chip-val" id="ic_ssrn_papers_count">—</span></span>
           <span class="impact-chip"><span class="chip-label">Abst. Views</span><span class="chip-val" id="ic_ssrn_abstract_views">—</span></span>
         </div>
+        <a class="impact-card-link" href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener">View profile ↗</a>
       </div>
 
       <div class="impact-card">
@@ -864,6 +874,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
           <span class="impact-chip"><span class="chip-label">Recommend.</span><span class="chip-val" id="ic_rg_recommendations">—</span></span>
           <span class="impact-chip"><span class="chip-label">Citations</span><span class="chip-val" id="ic_rg_citations">—</span></span>
         </div>
+        <a class="impact-card-link" href="https://www.researchgate.net/profile/Ivan-Bakalo-2" target="_blank" rel="noopener">View profile ↗</a>
       </div>
 
       <div class="impact-card">
@@ -877,10 +888,11 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
           <span class="orcid-verified">✓ Verified identity</span>
           <span class="orcid-verified">✓ Linked researcher</span>
         </div>
+        <a class="impact-card-link" href="https://orcid.org/0009-0007-5773-1436" target="_blank" rel="noopener">View profile ↗</a>
       </div>
     </div>
 
-    <!-- Charts (max 3 — auto-hide when no history data) -->
+    <!-- Charts (max 4 — auto-hide when no history data) -->
     <div class="impact-charts-grid fade-in fade-in-delay-2" id="impactChartsGrid">
       <div class="impact-chart-card" id="chartCardGS">
         <div class="impact-chart-title">Google Scholar Citations by Year</div>
@@ -893,6 +905,11 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       <div class="impact-chart-card" id="chartCardRG">
         <div class="impact-chart-title">ResearchGate Reads by Year</div>
         <div class="impact-chart-canvas-wrap"><div id="chartRG"></div></div>
+      </div>
+      <div class="impact-chart-card" id="chartCardCombined">
+        <div class="impact-chart-title">Overall Impact Trend</div>
+        <div class="impact-chart-canvas-wrap"><div id="chartCombined"></div></div>
+        <p class="impact-chart-note">The Impact Index is a normalized indicator that reflects overall research visibility across platforms.</p>
       </div>
     </div>
   </div>
@@ -1965,6 +1982,19 @@ function renderImpactPresence(list) {
   `).join('');
 }
 
+function buildCombinedSeries(gsPoints, ssrnPoints, rgPoints) {
+  const totals = {};
+  [gsPoints, ssrnPoints, rgPoints].forEach(arr => {
+    (arr || []).forEach(p => {
+      totals[p.year] = (totals[p.year] || 0) + (parseFloat(p.value) || 0);
+    });
+  });
+  return Object.keys(totals)
+    .map(Number)
+    .sort((a, b) => a - b)
+    .map(year => ({ year, value: totals[year] }));
+}
+
 function makeApexOptions(points, color) {
   return {
     chart: {
@@ -2009,11 +2039,13 @@ function initImpactCharts(history) {
   const gs   = history.google_scholar || {};
   const ssrn = history.ssrn           || {};
   const rg   = history.researchgate   || {};
+  const combinedPoints = buildCombinedSeries(gs.citations_all, ssrn.total_downloads, rg.reads);
 
   const configs = [
-    { cardId: 'chartCardGS',   elId: 'chartGS',   points: gs.citations_all     || [], color: '#b8935a' },
-    { cardId: 'chartCardSSRN', elId: 'chartSSRN', points: ssrn.total_downloads || [], color: '#0e0e0e' },
-    { cardId: 'chartCardRG',   elId: 'chartRG',   points: rg.reads             || [], color: '#7a7468' }
+    { cardId: 'chartCardGS',       elId: 'chartGS',       points: gs.citations_all     || [], color: '#b8935a' },
+    { cardId: 'chartCardSSRN',     elId: 'chartSSRN',     points: ssrn.total_downloads || [], color: '#0e0e0e' },
+    { cardId: 'chartCardRG',       elId: 'chartRG',       points: rg.reads             || [], color: '#7a7468' },
+    { cardId: 'chartCardCombined', elId: 'chartCombined', points: combinedPoints,             color: '#d4aa72' }
   ];
 
   const visible = configs.filter(c => c.points.length > 0);
@@ -2027,7 +2059,7 @@ function initImpactCharts(history) {
       wrap.style.display = 'none';
     } else {
       wrap.style.display = '';
-      wrap.style.gridTemplateColumns = `repeat(${visible.length}, 1fr)`;
+      wrap.style.gridTemplateColumns = `repeat(${Math.min(visible.length, 4)}, 1fr)`;
     }
   }
 
