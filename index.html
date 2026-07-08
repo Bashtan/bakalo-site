@@ -332,16 +332,21 @@ section { padding: 6rem 3rem 5rem; }
 .profile-card {
   background: var(--white); border: 1px solid var(--border); padding: 1.75rem;
   display: flex; flex-direction: column; gap: 0.75rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
-.profile-card:hover { border-color: var(--accent); box-shadow: 0 4px 14px rgba(184,147,90,0.12); }
+.profile-card:hover { border-color: var(--accent); box-shadow: 0 12px 24px rgba(14,14,14,0.1); transform: translateY(-4px); }
 .profile-icon { width: 36px; height: 36px; display: flex; align-items: center; }
 .profile-name { font-size: 0.875rem; font-weight: 600; color: var(--navy); }
 .profile-desc { font-size: 0.8rem; color: var(--slate); line-height: 1.55; flex: 1; }
-.profile-stats { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.1rem; }
-.stat-chip { display: inline-flex; align-items: baseline; gap: 0.3rem; background: transparent; border: 1px solid #9a7845; padding: 0.22rem 0.6rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; line-height: 1.4; border-radius: 2px; }
-.stat-label { color: #6d6660; text-transform: uppercase; letter-spacing: 0.04em; }
-.stat-val { color: var(--navy); font-weight: 700; }
+.profile-stats { display: flex; flex-direction: column; margin-top: 0.1rem; }
+.stat-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.55rem 0; border-bottom: 1px solid var(--border);
+}
+.stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+.stat-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--slate); text-transform: uppercase; letter-spacing: 0.06em; }
+.stat-val { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
 
 /* ── CONTACT ── */
 #contact { background: var(--navy); color: var(--white); }
@@ -605,7 +610,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       <button class="btn-accent" id="btnEditProfileStats" style="display:none" onclick="openProfileStatsModal()">Edit Stats</button>
     </div>
     <div class="profiles-grid fade-in fade-in-delay-2">
-      <div class="profile-card" data-platform="ssrn">
+      <a class="profile-card" data-platform="ssrn" href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- SSRN — official Simple Icons path, navy bg, white mark -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -615,9 +620,8 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         </div>
         <div class="profile-name">SSRN</div>
         <div class="profile-desc">Financial research papers and working papers in economics, finance, and governance.</div>
-        <a href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
-      </div>
-      <div class="profile-card" data-platform="google_scholar">
+      </a>
+      <a class="profile-card" data-platform="google_scholar" href="https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- Google Scholar — official Simple Icons path (cap + circle), Google blue bg -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -627,9 +631,8 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         </div>
         <div class="profile-name">Google Scholar</div>
         <div class="profile-desc">Citation metrics, academic impact, and indexed publications.</div>
-        <a href="https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
-      </div>
-      <div class="profile-card" data-platform="orcid">
+      </a>
+      <a class="profile-card" data-platform="orcid" href="https://orcid.org/0009-0007-5773-1436" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- ORCID — official Simple Icons path; evenodd knocks out iD letterforms to show white card bg -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -638,9 +641,8 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         </div>
         <div class="profile-name">ORCID</div>
         <div class="profile-desc">Verified research identity and persistent digital identifier for academic work.</div>
-        <a href="https://orcid.org/0009-0007-5773-1436" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
-      </div>
-      <div class="profile-card" data-platform="researchgate">
+      </a>
+      <a class="profile-card" data-platform="researchgate" href="https://www.researchgate.net/profile/Ivan-Bakalo-2" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- ResearchGate — official Simple Icons path, teal bg, white mark -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -650,9 +652,8 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         </div>
         <div class="profile-name">ResearchGate</div>
         <div class="profile-desc">Academic network, publications, and research collaboration platform.</div>
-        <a href="https://www.researchgate.net/profile/Ivan-Bakalo-2" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
-      </div>
-      <div class="profile-card" data-platform="linkedin">
+      </a>
+      <a class="profile-card" data-platform="linkedin" href="https://www.linkedin.com/in/ivanbakalo" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- LinkedIn — official Simple Icons path; includes rounded-rect bg, evenodd knocks out letterforms -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -661,8 +662,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         </div>
         <div class="profile-name">LinkedIn</div>
         <div class="profile-desc">Professional network, career profile, and industry engagement.</div>
-        <a href="https://www.linkedin.com/in/ivanbakalo" target="_blank" rel="noopener" class="btn-sm-accent">View Profile</a>
-      </div>
+      </a>
     </div>
   </div>
 </section>
@@ -1337,7 +1337,7 @@ function renderProfileStats(stats) {
     const chips = Object.entries(labels)
       .filter(([key]) => platformStats[key])
       .map(([key, label]) =>
-        `<span class="stat-chip"><span class="stat-label">${label}</span><span class="stat-val">${esc(platformStats[key].value)}</span></span>`
+        `<div class="stat-row"><span class="stat-label">${label}</span><span class="stat-val">${esc(platformStats[key].value)}</span></div>`
       ).join('');
 
     if (!chips) return;
