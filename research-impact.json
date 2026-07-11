@@ -37,41 +37,12 @@
   },
 
   "recognition": [
-    {
-      "id":          "clarivate",
-      "institution": "Clarivate · Web of Science",
-      "badge":       "Indexed Research",
-      "description": "Research indexed in the Web of Science Core Collection — the global standard for measuring scholarly impact, citation quality, and research relevance across 12,000+ peer-reviewed journals.",
-      "evidenceUrl": "/#implementation"
-    },
-    {
-      "id":          "taylor_francis",
-      "institution": "Taylor & Francis Group",
-      "badge":       "Publisher Recognition",
-      "description": "Published in Taylor & Francis peer-reviewed journals — a globally recognised academic publisher across finance, economics, governance, and regulatory compliance.",
-      "evidenceUrl": "/#implementation"
-    },
-    {
-      "id":          "conference",
-      "institution": "International Conferences",
-      "badge":       "Conference Presenter",
-      "description": "Invited presenter at international academic and professional conferences on financial stability, banking system resilience, and systemic risk — demonstrating recognised expertise beyond publication.",
-      "evidenceUrl": "/#implementation"
-    },
-    {
-      "id":          "peer_reviewed",
-      "institution": "Peer-Reviewed Journals",
-      "badge":       "Academic Publishing",
-      "description": "Research accepted through double-blind peer review by domain experts in finance and banking regulation, confirming the quality and rigour of the scholarly contribution.",
-      "evidenceUrl": "/#research"
-    },
-    {
-      "id":          "doi",
-      "institution": "DOI Publications",
-      "badge":       "Citable Research",
-      "description": "Works assigned permanent Digital Object Identifiers, ensuring perpetual, citable access across all major academic databases and citation tracking systems.",
-      "evidenceUrl": "/#research"
-    }
+    { "id": "clarivate",       "title": "Clarivate™",                "subtitle": "Reviewer for peer review",          "url": "/#implementation" },
+    { "id": "taylor_francis",  "title": "Taylor & Francis",           "subtitle": "Reviewer for peer review",          "url": "/#implementation" },
+    { "id": "conference",      "title": "Conference Presenter",       "subtitle": "Research presentations",            "url": "/#implementation" },
+    { "id": "peer_reviewed",   "title": "Peer-Reviewed Publications", "subtitle": "Published in scholarly outlets",    "url": "/#implementation" },
+    { "id": "doi",             "title": "DOI Publications",           "subtitle": "Research with digital identifiers", "url": "/#implementation" },
+    { "id": "ssrn_top_papers", "title": "SSRN Top Papers",            "subtitle": "Among most downloaded",             "url": "/#implementation" }
   ],
 
   "researchOutput": [
