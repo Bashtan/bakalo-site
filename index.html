@@ -24,6 +24,8 @@
   --accent:   #b8935a;
   --accent-lt:#d4aa72;
   --border:   #c8c0b0;
+  --hairline: rgba(200,192,176,0.5);  /* ultra-subtle border for white cards on cream */
+  --meta:     #6d6660;                /* warm gray for metadata labels — 5.65:1 on paper (AA) */
   --red:      #dc2626;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -150,6 +152,7 @@ nav {
 
 /* ── SECTIONS ── */
 section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
+@media (min-width: 1024px) { section { padding-top: 8rem; padding-bottom: 8rem; } }
 .section-inner { max-width: 1080px; margin: 0 auto; width: 100%; }
 .section-label {
   font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
@@ -328,11 +331,9 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 .admin-mode .featured-admin { display: flex; }
 .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
 .article-card {
-  background: var(--white); border: 1px solid var(--border); padding: 1.8rem;
+  background: var(--white); border: 1px solid var(--hairline); padding: 1.8rem;
   position: relative; display: flex; flex-direction: column; gap: 0.6rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.article-card:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(184,147,90,0.12); }
 .article-cat-tag { font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
 .article-card h3 {
   font-family: 'Cormorant Garamond', Georgia, serif;
@@ -366,6 +367,7 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
   display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; position: relative;
 }
 #implementation .evidence-card { background: transparent; }
+.evidence-card { transition: background-color 300ms ease-out; }
 #implementation .evidence-card:hover { background: rgba(255,255,255,0.6); }
 #engagement .evidence-card:hover { background: var(--light); }
 .evidence-main { flex: 1; }
@@ -414,12 +416,10 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 #profiles { background: var(--light); }
 .profiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1.25rem; margin-top: 0.5rem; }
 .profile-card {
-  background: var(--white); border: 1px solid var(--border); padding: 1.75rem;
+  background: var(--white); border: 1px solid var(--hairline); padding: 1.75rem;
   display: flex; flex-direction: column; gap: 0.75rem;
   text-decoration: none; color: inherit;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
-.profile-card:hover { border-color: var(--accent); box-shadow: 0 12px 24px rgba(14,14,14,0.1); transform: translateY(-4px); }
 .profile-icon { width: 36px; height: 36px; display: flex; align-items: center; }
 .profile-name { font-size: 0.875rem; font-weight: 600; color: var(--navy); }
 .profile-desc { font-size: 0.8rem; color: var(--slate); line-height: 1.55; flex: 1; }
@@ -449,11 +449,9 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 
 .impact-cards-row { display: grid; grid-template-columns: minmax(280px, 420px); gap: 1.25rem; margin-bottom: 2.5rem; }
 .impact-card {
-  background: var(--white); border: 1px solid var(--border); padding: 1.5rem;
+  background: var(--white); border: 1px solid var(--hairline); padding: 1.5rem;
   display: flex; flex-direction: column; gap: 0.5rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.impact-card:hover { border-color: var(--accent); box-shadow: 0 4px 14px rgba(184,147,90,0.1); }
 .impact-card-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.25rem; }
 .impact-card-icon { width: 28px; height: 28px; flex-shrink: 0; }
 .impact-card-platform {
@@ -470,7 +468,7 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 }
 .impact-card-secondary {
   display: flex; flex-wrap: wrap; gap: 0.4rem;
-  margin-top: auto; border-top: 1px solid var(--border); padding-top: 0.85rem;
+  margin-top: auto; border-top: 1px solid var(--hairline); padding-top: 0.85rem;
 }
 .impact-chip {
   display: inline-flex; align-items: baseline; gap: 0.3rem;
@@ -494,7 +492,7 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 }
 .impact-card-link:hover { opacity: 1; }
 .impact-charts-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 2.5rem; }
-.impact-chart-card { background: var(--white); border: 1px solid var(--border); padding: 1.5rem; }
+.impact-chart-card { background: var(--white); border: 1px solid var(--hairline); padding: 1.5rem; }
 .impact-chart-title {
   font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 500;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate);
@@ -508,8 +506,8 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 .impact-recognition-heading { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 2rem; font-weight: 300; color: var(--navy); margin: 2.5rem 0 0.5rem; }
 .impact-recognition-heading em { color: var(--accent); font-style: italic; }
 .impact-recognition-desc { font-size: 0.85rem; color: var(--slate); max-width: 540px; line-height: 1.75; margin: 0 0 1.5rem; }
-.impact-recognition-list { background: var(--white); border: 1px solid var(--border); margin-bottom: 2.5rem; }
-.impact-recog-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
+.impact-recognition-list { background: var(--white); border: 1px solid var(--hairline); margin-bottom: 2.5rem; }
+.impact-recog-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--hairline); background: var(--white); position: relative; }
 .impact-recog-row:last-child { border-bottom: none; }
 .impact-recog-left { display: flex; align-items: center; gap: 0.85rem; }
 .impact-recog-icon { width: 28px; height: 28px; flex-shrink: 0; }
@@ -529,8 +527,8 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 .impact-output-note { font-size: 0.7rem; color: var(--slate); margin-top: 0.2rem; }
 
 /* Academic Presence — bordered link list */
-.impact-presence-list { background: var(--white); border: 1px solid var(--border); }
-.impact-presence-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
+.impact-presence-list { background: var(--white); border: 1px solid var(--hairline); }
+.impact-presence-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--hairline); background: var(--white); position: relative; }
 .impact-presence-row:last-child { border-bottom: none; }
 .impact-presence-left { display: flex; align-items: center; gap: 0.85rem; }
 .impact-presence-icon { width: 26px; height: 26px; flex-shrink: 0; }
@@ -580,8 +578,42 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); color: rgba(255,255,255,0.32); text-align: center; padding: 1.5rem; font-size: 0.7rem; letter-spacing: 0.08em; }
 
 /* ── ANIMATIONS ── */
-.fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in { opacity: 0; transform: translateY(2rem); transition: opacity 800ms ease-out, transform 800ms ease-out; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── REVEAL + LIFT UTILITIES ──
+   .reveal-item  staggered scroll reveal for cards/rows (uses the `translate`
+                 property so it composes with the hover `transform` below)
+   .lift         tactile hover: 4px rise + diffuse soft shadow */
+.reveal-item {
+  opacity: 0; translate: 0 2rem;
+  transition: opacity 800ms ease-out var(--reveal-delay, 0ms), translate 800ms ease-out var(--reveal-delay, 0ms);
+}
+.reveal-item.visible { opacity: 1; translate: 0 0; }
+.lift { transition: transform 300ms ease-out, box-shadow 300ms ease-out, border-color 300ms ease-out; }
+.reveal-item.lift {
+  transition: opacity 800ms ease-out var(--reveal-delay, 0ms), translate 800ms ease-out var(--reveal-delay, 0ms),
+              transform 300ms ease-out, box-shadow 300ms ease-out, border-color 300ms ease-out;
+}
+.lift:hover {
+  transform: translateY(-0.25rem); z-index: 1;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05);
+  border-color: rgba(200,192,176,0.8);
+}
+@media print, (prefers-reduced-motion: reduce) {
+  .fade-in, .reveal-item { opacity: 1; transform: none; translate: none; transition: none; }
+  .lift, .lift:hover { transform: none; transition: box-shadow 300ms ease-out; }
+}
+
+/* ── EDITORIAL META LABELS — dates, metric names, subtitles ── */
+.impact-card-platform, .impact-primary-label, .impact-chart-title,
+.impact-recog-subtitle, .impact-presence-handle, .impact-output-label, .impact-last-updated,
+.evidence-meta {
+  font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 400;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--meta);
+}
+/* profile stat rows are too narrow (~144px) for 12px/0.15em labels — keep compact size, share the meta color */
+.stat-label { color: var(--meta); }
 .fade-in-delay-1 { transition-delay: 0.1s; }
 .fade-in-delay-2 { transition-delay: 0.2s; }
 .fade-in-delay-3 { transition-delay: 0.35s; }
@@ -797,7 +829,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       <button class="cat-tab" data-cat="Research &amp; Methodology">Research &amp; Methodology</button>
     </div>
     <div id="featuredBlock" class="featured-block fade-in fade-in-delay-3"></div>
-    <div class="articles-grid fade-in fade-in-delay-3" id="articlesGrid"></div>
+    <div class="articles-grid" id="articlesGrid"></div>
   </div>
 </section>
 
@@ -820,7 +852,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       <button class="cat-tab" data-cat="Implementation">Implementation</button>
       <button class="cat-tab" data-cat="Academic Participation">Academic Participation</button>
     </div>
-    <div class="evidence-list fade-in fade-in-delay-3" id="evidenceList">
+    <div class="evidence-list" id="evidenceList">
       <div class="articles-empty">Loading&hellip;</div>
     </div>
   </div>
@@ -845,7 +877,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       <button class="cat-tab" data-cat="Continuing Education">Continuing Education</button>
       <button class="cat-tab" data-cat="Memberships">Memberships</button>
     </div>
-    <div class="evidence-list fade-in fade-in-delay-3" id="engagementList">
+    <div class="evidence-list" id="engagementList">
       <div class="articles-empty">Loading&hellip;</div>
     </div>
   </div>
@@ -877,8 +909,8 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
       <h2 class="section-title" style="margin-bottom:0">Academic &amp; Professional <em>Presence</em></h2>
       <button class="btn-accent" id="btnEditProfileStats" onclick="openProfileStatsModal()">Edit Stats</button>
     </div>
-    <div class="profiles-grid fade-in fade-in-delay-2">
-      <a class="profile-card" data-platform="ssrn" href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener">
+    <div class="profiles-grid">
+      <a class="profile-card reveal-item lift" data-platform="ssrn" href="https://papers.ssrn.com/Sol3/Cf_Dev/AbsByAuth.cfm?per_id=10029776" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- SSRN — official Simple Icons path, navy bg, white mark -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -889,7 +921,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="profile-name">SSRN</div>
         <div class="profile-desc">Financial research papers and working papers in economics, finance, and governance.</div>
       </a>
-      <a class="profile-card" data-platform="google_scholar" href="https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en" target="_blank" rel="noopener">
+      <a class="profile-card reveal-item lift" data-platform="google_scholar" href="https://scholar.google.com/citations?user=rvw3vAwAAAAJ&hl=en" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- Google Scholar — official Simple Icons path (cap + circle), Google blue bg -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -900,7 +932,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="profile-name">Google Scholar</div>
         <div class="profile-desc">Citation metrics, academic impact, and indexed publications.</div>
       </a>
-      <a class="profile-card" data-platform="orcid" href="https://orcid.org/0009-0007-5773-1436" target="_blank" rel="noopener">
+      <a class="profile-card reveal-item lift" data-platform="orcid" href="https://orcid.org/0009-0007-5773-1436" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- ORCID — official Simple Icons path; evenodd knocks out iD letterforms to show white card bg -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -910,7 +942,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="profile-name">ORCID</div>
         <div class="profile-desc">Verified research identity and persistent digital identifier for academic work.</div>
       </a>
-      <a class="profile-card" data-platform="researchgate" href="https://www.researchgate.net/profile/Ivan-Bakalo-2" target="_blank" rel="noopener">
+      <a class="profile-card reveal-item lift" data-platform="researchgate" href="https://www.researchgate.net/profile/Ivan-Bakalo-2" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- ResearchGate — official Simple Icons path, teal bg, white mark -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -921,7 +953,7 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
         <div class="profile-name">ResearchGate</div>
         <div class="profile-desc">Academic network, publications, and research collaboration platform.</div>
       </a>
-      <a class="profile-card" data-platform="linkedin" href="https://www.linkedin.com/in/ivanbakalo" target="_blank" rel="noopener">
+      <a class="profile-card reveal-item lift" data-platform="linkedin" href="https://www.linkedin.com/in/ivanbakalo" target="_blank" rel="noopener">
         <div class="profile-icon">
           <!-- LinkedIn — official Simple Icons path; includes rounded-rect bg, evenodd knocks out letterforms -->
           <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -951,9 +983,9 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
 
     <!-- 01 Research Visibility -->
     <div class="impact-overline fade-in"><span class="num">01</span><span class="rule"></span><span class="title">Research Visibility</span></div>
-    <div class="impact-cards-row fade-in fade-in-delay-1">
+    <div class="impact-cards-row">
 
-      <div class="impact-card">
+      <div class="impact-card reveal-item lift">
         <div class="impact-card-header">
           <svg class="impact-card-icon" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#4285F4"/><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" fill="white"/></svg>
           <span class="impact-card-platform">Google Scholar</span>
@@ -986,12 +1018,12 @@ footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,0.07); 
   <div class="section-inner">
     <!-- 03 Research Output — injected from research-impact.json -->
     <div class="impact-overline fade-in"><span class="num">03</span><span class="rule"></span><span class="title">Research Output</span></div>
-    <div class="impact-output-grid fade-in fade-in-delay-1" id="impactOutputGrid"></div>
+    <div class="impact-output-grid" id="impactOutputGrid"></div>
     <p style="font-size:0.7rem;color:var(--slate);font-family:'DM Mono',monospace;letter-spacing:0.02em;">All output is publicly verifiable. Figures reflect works published, presented, or submitted as of the date above.</p>
 
     <!-- 04 Academic Presence — injected from research-impact.json -->
     <div class="impact-overline fade-in" style="margin-top:2.5rem;"><span class="num">04</span><span class="rule"></span><span class="title">Academic Presence</span></div>
-    <div class="impact-presence-list fade-in fade-in-delay-2" id="impactPresenceList"></div>
+    <div class="impact-presence-list" id="impactPresenceList"></div>
 
     <blockquote class="impact-quote-block fade-in fade-in-delay-3">
       Research is not only about creating knowledge, but also about making an impact and advancing practice.
@@ -1564,7 +1596,7 @@ async function renderArticles() {
   grid.innerHTML = list.map(a => {
     const tags    = a.tags ? a.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
     const tagHtml = tags.map(t => `<span class="tag-chip dark">${esc(t)}</span>`).join('');
-    return `<div class="article-card">
+    return `<div class="article-card reveal-item lift">
       <div class="article-card-admin">
         <button class="card-btn" title="Edit" onclick="editItem('article','${esc(a.id)}')">&#x270f;</button>
         <button class="card-btn del" title="Delete" onclick="delItem('article','${esc(a.id)}')">&#x2715;</button>
@@ -1630,7 +1662,7 @@ async function renderEvidence() {
     return;
   }
   container.innerHTML = items.map(item => `
-    <div class="evidence-card">
+    <div class="evidence-card reveal-item">
       <div class="evidence-main">
         <h3>${esc(item.title)}</h3>
         ${item.description ? `<p class="evidence-desc">${esc(item.description)}</p>` : ''}
@@ -1667,7 +1699,7 @@ async function renderEngagements() {
     return;
   }
   container.innerHTML = items.map(item => `
-    <div class="evidence-card">
+    <div class="evidence-card reveal-item">
       <div class="evidence-main">
         <h3>${esc(item.title)}</h3>
         ${item.description ? `<p class="evidence-desc">${esc(item.description)}</p>` : ''}
@@ -1995,7 +2027,7 @@ function renderImpactRecognition(list) {
   const grid = document.getElementById('impactRecognitionGrid');
   if (!grid) return;
   grid.innerHTML = list.map(item => `
-    <div class="impact-recog-row">
+    <div class="impact-recog-row reveal-item lift">
       <div class="impact-recog-left">
         <span class="impact-recog-icon">${IMPACT_RECOG_ICONS[item.id] || ''}</span>
         <div>
@@ -2012,7 +2044,7 @@ function renderImpactOutput(list) {
   const grid = document.getElementById('impactOutputGrid');
   if (!grid) return;
   grid.innerHTML = list.map(item => `
-    <div class="impact-output-box">
+    <div class="impact-output-box reveal-item">
       <div class="impact-output-value">${esc(item.value || '—')}</div>
       <div>
         <div class="impact-output-label">${esc(item.label || '')}</div>
@@ -2026,7 +2058,7 @@ function renderImpactPresence(list) {
   const wrap = document.getElementById('impactPresenceList');
   if (!wrap) return;
   wrap.innerHTML = list.map(item => `
-    <div class="impact-presence-row">
+    <div class="impact-presence-row reveal-item lift">
       <div class="impact-presence-left">
         <span class="impact-presence-icon">${IMPACT_PRESENCE_ICONS[item.id] || ''}</span>
         <div>
@@ -2162,11 +2194,26 @@ document.addEventListener('click', () =>
   document.querySelectorAll('.nav-dropdown.open').forEach(dd => dd.classList.remove('open'))
 );
 
-const obs = new IntersectionObserver(
-  es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-  { threshold: 0.08 }
-);
-document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+// Scroll reveal — .fade-in (section blocks) and .reveal-item (cards/rows).
+// Items entering the viewport in the same batch are staggered 70ms apart (capped).
+const REVEAL_SEL = '.fade-in, .reveal-item';
+const obs = new IntersectionObserver(es => {
+  let i = 0;
+  es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    if (el.classList.contains('reveal-item')) el.style.setProperty('--reveal-delay', Math.min(i++, 6) * 70 + 'ms');
+    el.classList.add('visible');
+    obs.unobserve(el);
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll(REVEAL_SEL).forEach(el => obs.observe(el));
+// Cards rendered later (articles, evidence, impact lists) — observe them as they're inserted
+new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => {
+  if (n.nodeType !== 1) return;
+  if (n.matches(REVEAL_SEL)) obs.observe(n);
+  n.querySelectorAll(REVEAL_SEL).forEach(el => obs.observe(el));
+}))).observe(document.body, { childList: true, subtree: true });
 // Trigger home section immediately
 document.querySelectorAll('#home .fade-in').forEach(el => setTimeout(() => el.classList.add('visible'), 80));
 
