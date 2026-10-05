@@ -45,7 +45,7 @@ nav {
   box-shadow: 0 10px 30px rgba(14,14,14,0.08);
 }
 .nav-logo-wrap { display: flex; align-items: center; cursor: pointer; text-decoration: none; flex-shrink: 0; }
-.nav-logo-wrap img { height: 32px; width: auto; }
+.nav-logo-wrap img { height: 32px; width: auto; border-radius: 12px; } /* soften the JPEG's baked-in black rectangle inside the pill */
 
 .nav-center { display: flex; align-items: center; gap: 0.35rem; }
 .nav-link, .nav-dropdown-trigger {
@@ -329,7 +329,7 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 .btn-sm-outline.light:hover { border-color: var(--accent); color: var(--accent); background: none; }
 .featured-admin { position: absolute; top: 1rem; right: 1rem; display: none; gap: 0.4rem; }
 .admin-mode .featured-admin { display: flex; }
-.articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+.articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 1.5rem; } /* min(): a 300px track must not exceed a narrow phone's content box */
 .article-card {
   background: var(--white); border: 1px solid var(--hairline); padding: 1.8rem;
   position: relative; display: flex; flex-direction: column; gap: 0.6rem;
@@ -438,7 +438,7 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 .impact-last-updated {
   font-family: 'DM Mono', monospace; font-size: 0.62rem; font-weight: 400;
   letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate);
-  border: 1px solid var(--border); padding: 0.3rem 0.75rem; white-space: nowrap; align-self: flex-end;
+  border: 1px solid var(--border); padding: 0.3rem 0.75rem; max-width: 100%; align-self: flex-end; /* wraps on narrow screens instead of forcing sideways scroll */
 }
 .impact-last-updated span { color: var(--accent); }
 
