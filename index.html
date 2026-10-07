@@ -23,6 +23,7 @@
   --slate:    #7a7468;
   --accent:   #b8935a;
   --accent-lt:#d4aa72;
+  --accent-dk:#8a6a3a;                /* darker gold for small text on white (5:1) — accent is only 2.9:1 there */
   --border:   #c8c0b0;
   --hairline: rgba(200,192,176,0.5);  /* ultra-subtle border for white cards on cream */
   --meta:     #6d6660;                /* warm gray for metadata labels — 5.65:1 on paper (AA) */
@@ -519,6 +520,35 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
 }
 .impact-recog-link:hover { opacity: 1; }
 
+/* Featured recognition entry (journal advisory-board appointment): accent bar, larger type, document links */
+.impact-recog-row--featured {
+  align-items: flex-start; gap: 1.5rem; padding: 1.75rem 1.5rem 1.75rem 1.75rem;
+  background: linear-gradient(90deg, rgba(184,147,90,0.08), rgba(184,147,90,0) 45%), var(--white);
+}
+.impact-recog-row--featured::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent); }
+.impact-recog-row--featured .impact-recog-left { align-items: flex-start; gap: 1.1rem; flex: 1 1 auto; min-width: 0; }
+.impact-recog-row--featured .impact-recog-icon { margin-top: 0.1rem; }
+.impact-recog-row--featured .impact-recog-title { font-size: 1.3rem; line-height: 1.25; }
+.impact-recog-kicker { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--meta); margin: 0 0 0.45rem; }
+.impact-recog-org { font-size: 1rem; font-style: italic; line-height: 1.45; color: var(--slate); margin: 0.25rem 0 0; }
+.impact-recog-org a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(184,147,90,0.4); transition: color 300ms ease-out, border-color 300ms ease-out; }
+.impact-recog-org a:hover, .impact-recog-org a:focus-visible { color: var(--navy); border-bottom-color: var(--accent); }
+.impact-recog-blurb { font-size: 0.95rem; line-height: 1.65; color: var(--text); max-width: 62ch; margin: 0.8rem 0 0; }
+.impact-recog-docs { display: flex; flex-wrap: wrap; gap: 0.5rem; flex-shrink: 0; align-self: center; }
+.impact-recog-doc {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; white-space: nowrap;
+  padding: 0.5rem 1rem; border: 1px solid rgba(138,106,58,0.35); border-radius: 999px; background: transparent;
+  font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent-dk); text-decoration: none;
+  transition: background-color 300ms ease-out, border-color 300ms ease-out, color 300ms ease-out;
+}
+.impact-recog-doc:hover, .impact-recog-doc:focus-visible { background: rgba(184,147,90,0.1); border-color: var(--accent); color: var(--navy); }
+.impact-recog-doc:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 900px) { /* side-by-side would squeeze the text to ~250px: stack documents under it, aligned with the text column */
+  .impact-recog-row--featured { flex-direction: column; align-items: flex-start; gap: 1.1rem; }
+  .impact-recog-docs { align-self: flex-start; margin-left: calc(28px + 1.1rem); }
+}
+
 /* Research Output — connected boxes */
 .impact-output-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 1px; background: var(--border); margin-bottom: 0.75rem; }
 .impact-output-box { background: var(--white); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; gap: 0.75rem; }
@@ -560,6 +590,12 @@ section { padding: 6rem 3rem 5rem; scroll-margin-top: 100px; }
   .impact-output-grid { grid-template-columns: 1fr; }
   .impact-presence-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
   .impact-recog-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .impact-recog-row--featured { gap: 1rem; padding: 1.4rem 1.1rem 1.4rem 1.35rem; }
+  .impact-recog-row--featured .impact-recog-left { flex-direction: column; gap: 0.7rem; width: 100%; }
+  .impact-recog-row--featured .impact-recog-title { font-size: 1.2rem; }
+  .impact-recog-kicker { letter-spacing: 0.12em; }
+  .impact-recog-docs { width: 100%; align-self: stretch; margin-left: 0; }
+  .impact-recog-doc { flex: 1 1 auto; min-height: 40px; white-space: normal; text-align: center; } /* wraps instead of spilling on very narrow screens */
 }
 
 /* ── CONTACT ── */
@@ -1948,7 +1984,8 @@ const IMPACT_RECOG_ICONS = {
   conference: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="11" y="4" width="6" height="10" rx="3" stroke="#d4aa72" stroke-width="1.5" fill="none"/><path d="M7 13c0 3.9 3.1 7 7 7s7-3.1 7-7" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="14" y1="20" x2="14" y2="24" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round"/><line x1="10" y1="24" x2="18" y2="24" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round"/></svg>`,
   peer_reviewed: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="#d4aa72" stroke-width="1.5" fill="none"/><path d="M9 14l3.5 3.5L19 10" stroke="#d4aa72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   doi: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M10 17a5 5 0 0 1 0-6" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M18 11a5 5 0 0 1 0 6" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" fill="none"/><line x1="10" y1="14" x2="18" y2="14" stroke="#d4aa72" stroke-width="1.5"/></svg>`,
-  ssrn_top_papers: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 20l5-6 4 4 8-10" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M17 8h5v5" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+  ssrn_top_papers: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 20l5-6 4 4 8-10" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M17 8h5v5" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`,
+  jdmfid_advisory_board: `<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="11" r="7.5" stroke="#d4aa72" stroke-width="1.5" fill="none"/><circle cx="14" cy="11" r="5.2" fill="#d4aa72" opacity="0.2"/><path d="M14.00 7.30 L14.88 9.79 L17.52 9.86 L15.43 11.46 L16.17 13.99 L14.00 12.50 L11.83 13.99 L12.57 11.46 L10.48 9.86 L13.12 9.79 Z" fill="#d4aa72"/><path d="M10.2 16.8L8.5 25.2 14 22.2l5.5 3-1.7-8.4" stroke="#d4aa72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
 };
 
 // Academic Presence icons (same official marks used in #profiles, smaller size)
@@ -2026,7 +2063,7 @@ function renderImpactSection(stats, history, impact) {
 function renderImpactRecognition(list) {
   const grid = document.getElementById('impactRecognitionGrid');
   if (!grid) return;
-  grid.innerHTML = list.map(item => `
+  grid.innerHTML = list.map(item => item.featured ? renderFeaturedRecognition(item) : `
     <div class="impact-recog-row reveal-item lift">
       <div class="impact-recog-left">
         <span class="impact-recog-icon">${IMPACT_RECOG_ICONS[item.id] || ''}</span>
@@ -2038,6 +2075,32 @@ function renderImpactRecognition(list) {
       <a class="impact-recog-link" href="${esc(item.url || '#')}">Learn more ↗</a>
     </div>
   `).join('');
+}
+
+// Expanded row for a featured appointment: date, role, organisation (optionally linked), summary, and PDF evidence links
+function renderFeaturedRecognition(item) {
+  const org = item.subtitle
+    ? (item.subtitleUrl
+        ? `<a href="${esc(item.subtitleUrl)}" target="_blank" rel="noopener" aria-label="${esc(item.subtitle)} — Editorial Team page (opens in a new tab)">${esc(item.subtitle)}</a>`
+        : esc(item.subtitle))
+    : '';
+  const docs = (item.documents || []).filter(d => d && d.url).map(d => `
+        <a class="impact-recog-doc" href="${esc(d.url)}" target="_blank" rel="noopener" type="application/pdf"
+           aria-label="${esc((d.title || d.label || 'Document') + ' (PDF, opens in a new tab)')}">${esc(d.label || d.title || 'Document')} <span aria-hidden="true">↗</span></a>`).join('');
+  return `
+    <div class="impact-recog-row impact-recog-row--featured reveal-item lift">
+      <div class="impact-recog-left">
+        <span class="impact-recog-icon">${IMPACT_RECOG_ICONS[item.id] || ''}</span>
+        <div>
+          ${item.date ? `<p class="impact-recog-kicker">${esc(item.date)}</p>` : ''}
+          <p class="impact-recog-title">${esc(item.title || '')}</p>
+          ${org ? `<p class="impact-recog-org">${org}</p>` : ''}
+          ${item.description ? `<p class="impact-recog-blurb">${esc(item.description)}</p>` : ''}
+        </div>
+      </div>
+      ${docs ? `<div class="impact-recog-docs" role="group" aria-label="Supporting documents">${docs}
+      </div>` : ''}
+    </div>`;
 }
 
 function renderImpactOutput(list) {

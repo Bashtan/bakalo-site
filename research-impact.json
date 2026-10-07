@@ -36,7 +36,21 @@
     "researchgate":  { "reads":          [] }
   },
 
+  "_recognition": "Display order = array order. Optional fields on an entry: featured (true = expanded row with accent bar), subtitleUrl, date, description, documents [{label, title, url}]. Document URLs must be /assets/documents/*.pdf and exist in the repo (test/research-impact-data.test.js enforces this).",
   "recognition": [
+    {
+      "id":          "jdmfid_advisory_board",
+      "featured":    true,
+      "title":       "Founding Advisory Board Member",
+      "subtitle":    "Journal of Dependence Modelling in Finance, Insurance and Demography (JDMFID)",
+      "subtitleUrl": "https://dependencemodelling.org/editorial-team",
+      "date":        "Effective 23 July 2026",
+      "description": "Advisory role contributing subject-matter expertise and, where relevant, professional assessment of research in financial stability, systemic risk, banking regulation and stress testing.",
+      "documents": [
+        { "label": "Official Letter", "title": "Official Appointment Letter", "url": "/assets/documents/JDMFID_Official_Appointment_Letter_Ivan_Bakalo.pdf" },
+        { "label": "Certificate",     "title": "Certificate of Appointment",  "url": "/assets/documents/JDMFID_Certificate_of_Appointment_Ivan_Bakalo.pdf" }
+      ]
+    },
     { "id": "clarivate",       "title": "Clarivate™",                "subtitle": "Reviewer for peer review",          "url": "/#implementation" },
     { "id": "taylor_francis",  "title": "Taylor & Francis",           "subtitle": "Reviewer for peer review",          "url": "/#implementation" },
     { "id": "conference",      "title": "Conference Presenter",       "subtitle": "Research presentations",            "url": "/#implementation" },
